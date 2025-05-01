@@ -172,7 +172,8 @@ def main(script_args, training_args, model_args):
         dataset = dataset.remove_columns("messages")
 
     
-    trainer_cls = Qwen2VLGRPOTrainer if not training_args.use_vllm else Qwen2VLGRPOVLLMTrainerModified
+    # trainer_cls = Qwen2VLGRPOTrainer if not training_args.use_vllm else Qwen2VLGRPOVLLMTrainerModified
+    trainer_cls = Qwen2VLGRPOTrainer
     print("using: ", trainer_cls)
 
     # Initialize the GRPO trainer

@@ -1,0 +1,926 @@
+W0430 10:47:14.394000 3223975 torch/distributed/run.py:792] 
+W0430 10:47:14.394000 3223975 torch/distributed/run.py:792] *****************************************
+W0430 10:47:14.394000 3223975 torch/distributed/run.py:792] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0430 10:47:14.394000 3223975 torch/distributed/run.py:792] *****************************************
+[2025-04-30 10:47:23,750] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-04-30 10:47:23,752] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-04-30 10:47:23,752] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-04-30 10:47:23,790] [INFO] [real_accelerator.py:219:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+INFO 04-30 10:47:26 [importing.py:53] Triton module has been replaced with a placeholder.
+INFO 04-30 10:47:26 [importing.py:53] Triton module has been replaced with a placeholder.
+INFO 04-30 10:47:26 [importing.py:53] Triton module has been replaced with a placeholder.
+INFO 04-30 10:47:26 [__init__.py:239] Automatically detected platform cuda.
+INFO 04-30 10:47:26 [__init__.py:239] Automatically detected platform cuda.
+INFO 04-30 10:47:26 [importing.py:53] Triton module has been replaced with a placeholder.
+INFO 04-30 10:47:26 [__init__.py:239] Automatically detected platform cuda.
+INFO 04-30 10:47:26 [__init__.py:239] Automatically detected platform cuda.
+[2025-04-30 10:47:28,240] [INFO] [comm.py:652:init_distributed] cdb=None
+[2025-04-30 10:47:28,240] [INFO] [comm.py:683:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2025-04-30 10:47:28,247] [INFO] [comm.py:652:init_distributed] cdb=None
+[2025-04-30 10:47:28,280] [INFO] [comm.py:652:init_distributed] cdb=None
+[2025-04-30 10:47:28,333] [INFO] [comm.py:652:init_distributed] cdb=None
+has image in dataset
+using:  <class 'open_r1.trainer.grpo_trainer.Qwen2VLGRPOTrainer'>
+[2025-04-30 10:47:30,537] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2VisionTransformerPretrainedModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+has image in dataset
+using:  <class 'open_r1.trainer.grpo_trainer.Qwen2VLGRPOTrainer'>
+has image in dataset
+using:  <class 'open_r1.trainer.grpo_trainer.Qwen2VLGRPOTrainer'>
+has image in dataset
+using:  <class 'open_r1.trainer.grpo_trainer.Qwen2VLGRPOTrainer'>
+[2025-04-30 10:47:31,401] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[2025-04-30 10:47:31,404] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2VisionTransformerPretrainedModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2VisionTransformerPretrainedModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[2025-04-30 10:47:31,484] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2VisionTransformerPretrainedModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[2025-04-30 10:47:33,924] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 730, num_elems = 2.44B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.11s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.12s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.12s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.13s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.16s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.30s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.16s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.31s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.16s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.30s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.18s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.32s/it]
+[2025-04-30 10:47:36,851] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+[2025-04-30 10:47:36,857] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+[2025-04-30 10:47:36,902] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+[2025-04-30 10:47:36,957] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s][2025-04-30 10:47:37,161] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 1460, num_elems = 4.88B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.19s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.18s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.23s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.13s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.20s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.35s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.21s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.35s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.16s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.31s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.21s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.35s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[2025-04-30 10:47:41,317] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+[2025-04-30 10:47:41,373] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed info: version=0.15.4, git-hash=unknown, git-branch=unknown
+[2025-04-30 10:47:41,373] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+[2025-04-30 10:47:41,382] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+[2025-04-30 10:47:41,386] [INFO] [logging.py:128:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2025-04-30 10:47:41,388] [INFO] [logging.py:128:log_dist] [Rank 0] Creating ZeRO Offload
+[2025-04-30 10:47:41,397] [INFO] [config.py:733:__init__] Config mesh_device None world_size = 4
+[2025-04-30 10:47:41,677] [INFO] [utils.py:781:see_memory_usage] DeepSpeedZeRoOffload initialize [begin]
+[2025-04-30 10:47:41,678] [INFO] [utils.py:782:see_memory_usage] MA 2.08 GB         Max_MA 3.39 GB         CA 3.62 GB         Max_CA 4 GB 
+[2025-04-30 10:47:41,678] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 40.6 GB, percent = 5.4%
+Parameter Offload: Total persistent parameters: 686592 in 401 params
+[2025-04-30 10:47:41,992] [INFO] [utils.py:781:see_memory_usage] DeepSpeedZeRoOffload initialize [end]
+[2025-04-30 10:47:41,992] [INFO] [utils.py:782:see_memory_usage] MA 2.08 GB         Max_MA 2.08 GB         CA 3.62 GB         Max_CA 4 GB 
+[2025-04-30 10:47:41,993] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 40.61 GB, percent = 5.4%
+[2025-04-30 10:47:41,994] [INFO] [config.py:999:print] DeepSpeedEngine configuration:
+[2025-04-30 10:47:41,994] [INFO] [config.py:1003:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2025-04-30 10:47:41,994] [INFO] [config.py:1003:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True, 'use_gds': False}
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   amp_enabled .................. False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   amp_params ................... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   bfloat16_enabled ............. True
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   bfloat16_immediate_grad_update  False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   checkpoint_parallel_write_pipeline  False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   checkpoint_tag_validation_enabled  True
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   checkpoint_tag_validation_fail  False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x14b978f216d0>
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   communication_data_type ...... None
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   curriculum_enabled_legacy .... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   curriculum_params_legacy ..... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   data_efficiency_enabled ...... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   dataloader_drop_last ......... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   disable_allgather ............ False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   dump_state ................... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   dynamic_loss_scale_args ...... None
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   eigenvalue_enabled ........... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   eigenvalue_gas_boundary_resolution  1
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   eigenvalue_layer_num ......... 0
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   eigenvalue_max_iter .......... 100
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   eigenvalue_stability ......... 1e-06
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   eigenvalue_tol ............... 0.01
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   eigenvalue_verbose ........... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   elasticity_enabled ........... False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   fp16_auto_cast ............... None
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   fp16_enabled ................. False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   fp16_master_weights_and_gradients  False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   global_rank .................. 0
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   grad_accum_dtype ............. None
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   gradient_accumulation_steps .. 2
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   gradient_clipping ............ 1.0
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   gradient_predivide_factor .... 1.0
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   graph_harvesting ............. False
+[2025-04-30 10:47:41,995] [INFO] [config.py:1003:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   initial_dynamic_scale ........ 1
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   load_universal_checkpoint .... False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   loss_scale ................... 1.0
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   memory_breakdown ............. False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   mics_hierarchial_params_gather  False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   mics_shard_size .............. -1
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName')
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   optimizer_legacy_fusion ...... False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   optimizer_name ............... None
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   optimizer_params ............. None
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   pld_enabled .................. False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   pld_params ................... False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   prescale_gradients ........... False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   scheduler_name ............... None
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   scheduler_params ............. None
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   seq_parallel_communication_data_type  torch.float32
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   sparse_attention ............. None
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   sparse_gradients_enabled ..... False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   steps_per_print .............. inf
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   timers_config ................ enabled=True synchronized=True
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   train_batch_size ............. 16
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   train_micro_batch_size_per_gpu  2
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   use_data_before_expert_parallel_  False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   use_node_local_storage ....... False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   wall_clock_breakdown ......... False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   weight_quantization_config ... None
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   world_size ................... 4
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   zero_allow_untested_optimizer  False
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   zero_config .................. stage=3 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500000000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=DeepSpeedZeroOffloadParamConfig(device='none', nvme_path=None, buffer_count=5, buffer_size=100000000, max_in_cpu=1000000000, pin_memory=False) offload_optimizer=DeepSpeedZeroOffloadOptimizerConfig(device='none', nvme_path=None, buffer_count=4, pin_memory=False, pipeline_read=False, pipeline_write=False, fast_init=False, ratio=1.0) sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50000000 param_persistence_threshold=100000 model_persistence_threshold=9223372036854775807 max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=True use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   zero_enabled ................. True
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   zero_force_ds_cpu_optimizer .. True
+[2025-04-30 10:47:41,996] [INFO] [config.py:1003:print]   zero_optimization_stage ...... 3
+[2025-04-30 10:47:41,996] [INFO] [config.py:989:print_user_config]   json = {
+    "fp16": {
+        "enabled": false, 
+        "loss_scale": 0, 
+        "loss_scale_window": 1000, 
+        "initial_scale_power": 16, 
+        "hysteresis": 2, 
+        "min_loss_scale": 1
+    }, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "zero_optimization": {
+        "stage": 3, 
+        "offload_optimizer": {
+            "device": "none", 
+            "pin_memory": false
+        }, 
+        "offload_param": {
+            "device": "none", 
+            "pin_memory": false
+        }, 
+        "overlap_comm": true, 
+        "contiguous_gradients": true, 
+        "sub_group_size": 1.000000e+09, 
+        "reduce_bucket_size": "auto", 
+        "stage3_prefetch_bucket_size": "auto", 
+        "stage3_param_persistence_threshold": "auto", 
+        "stage3_max_live_parameters": 1.000000e+09, 
+        "stage3_max_reuse_distance": 1.000000e+09, 
+        "stage3_gather_16bit_weights_on_model_save": true
+    }, 
+    "gradient_accumulation_steps": 2, 
+    "gradient_clipping": 1.0, 
+    "steps_per_print": inf, 
+    "train_batch_size": 16, 
+    "train_micro_batch_size_per_gpu": 2, 
+    "wall_clock_breakdown": false, 
+    "zero_optimization.reduce_bucket_size": 2.359296e+06, 
+    "zero_optimization.stage3_param_persistence_threshold": 1.536000e+04, 
+    "zero_optimization.stage3_prefetch_bucket_size": 2.123366e+06
+}
+Parameter Offload: Total persistent parameters: 686592 in 401 params
+wandb: Currently logged in as: raoulflorisritter (mae-testing) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.10
+wandb: Run data is saved locally in /gpfs/home6/rritter/test/R1-V/wandb/run-20250430_104746-erc5a8tz
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Qwen2-VL-2B-GRPO-CLEVR-70k
+wandb: ⭐️ View project at https://wandb.ai/mae-testing/grpo-testing
+wandb: 🚀 View run at https://wandb.ai/mae-testing/grpo-testing/runs/erc5a8tz
+  0%|          | 0/8750 [00:00<?, ?it/s]Invalidate trace cache @ step 0 and module 1458: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 2187: cache has only 0 modules
+  0%|          | 1/8750 [00:23<56:14:00, 23.14s/it]                                                   {'loss': -0.0, 'grad_norm': 57.9062190446228, 'learning_rate': 9.998857142857142e-07, 'completion_length': 60.0703125, 'rewards/accuracy_reward': 0.515625, 'rewards/format_reward': 0.3125, 'reward': 0.828125, 'reward_std': 0.6024260520935059, 'kl': 0.0, 'epoch': 0.0}
+  0%|          | 1/8750 [00:23<56:14:00, 23.14s/it]Invalidate trace cache @ step 0 and module 2916: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 3645: cache has only 0 modules
+  0%|          | 2/8750 [00:42<50:19:11, 20.71s/it]                                                   {'loss': 0.0001, 'grad_norm': 18.020453766610657, 'learning_rate': 9.997714285714284e-07, 'completion_length': 52.8828125, 'rewards/accuracy_reward': 0.625, 'rewards/format_reward': 0.21875, 'reward': 0.84375, 'reward_std': 0.5779312551021576, 'kl': 0.0017242431640625, 'epoch': 0.0}
+  0%|          | 2/8750 [00:42<50:19:11, 20.71s/it]Invalidate trace cache @ step 0 and module 4374: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 5103: cache has only 0 modules
+  0%|          | 3/8750 [01:08<57:01:51, 23.47s/it]                                                   {'loss': 0.0001, 'grad_norm': 16.01712541952181, 'learning_rate': 9.996571428571428e-07, 'completion_length': 62.09375, 'rewards/accuracy_reward': 0.5703125, 'rewards/format_reward': 0.3515625, 'reward': 0.921875, 'reward_std': 0.7377837300300598, 'kl': 0.002048492431640625, 'epoch': 0.0}
+  0%|          | 3/8750 [01:08<57:01:51, 23.47s/it]Invalidate trace cache @ step 0 and module 5832: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 6561: cache has only 0 modules
+[2025-04-30 10:49:28,068] [WARNING] [stage3.py:2114:step] 1 pytorch allocator cache flushes since last step. this happens when there is high memory pressure and is detrimental to performance. if this is happening frequently consider adjusting settings to reduce memory consumption. If you are unable to make the cache flushes go away consider adding get_accelerator().empty_cache() calls in your training loop to ensure that all ranks flush their caches at the same time
+  0%|          | 4/8750 [01:40<64:57:12, 26.74s/it]                                                   {'loss': 0.0005, 'grad_norm': 20.49150260317752, 'learning_rate': 9.99542857142857e-07, 'completion_length': 64.21875, 'rewards/accuracy_reward': 0.5703125, 'rewards/format_reward': 0.40625, 'reward': 0.9765625, 'reward_std': 0.6849933862686157, 'kl': 0.012725830078125, 'epoch': 0.0}
+  0%|          | 4/8750 [01:40<64:57:12, 26.74s/it]Invalidate trace cache @ step 0 and module 7290: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 8019: cache has only 0 modules
+  0%|          | 5/8750 [02:06<63:50:20, 26.28s/it]                                                   {'loss': 0.0004, 'grad_norm': 13.670206968962113, 'learning_rate': 9.994285714285715e-07, 'completion_length': 63.5859375, 'rewards/accuracy_reward': 0.4921875, 'rewards/format_reward': 0.4140625, 'reward': 0.90625, 'reward_std': 0.7197452485561371, 'kl': 0.009979248046875, 'epoch': 0.0}
+  0%|          | 5/8750 [02:06<63:50:20, 26.28s/it]Invalidate trace cache @ step 0 and module 8748: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 9477: cache has only 0 modules
+  0%|          | 6/8750 [02:45<74:37:57, 30.73s/it]                                                   {'loss': 0.0013, 'grad_norm': 14.830912542392973, 'learning_rate': 9.993142857142857e-07, 'completion_length': 60.46875, 'rewards/accuracy_reward': 0.671875, 'rewards/format_reward': 0.546875, 'reward': 1.21875, 'reward_std': 0.6941720843315125, 'kl': 0.0322265625, 'epoch': 0.0}
+  0%|          | 6/8750 [02:45<74:37:57, 30.73s/it]Invalidate trace cache @ step 0 and module 10206: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 10935: cache has only 0 modules
+  0%|          | 7/8750 [03:11<70:48:53, 29.16s/it]                                                   {'loss': 0.0019, 'grad_norm': 12.117301669414603, 'learning_rate': 9.992e-07, 'completion_length': 52.6640625, 'rewards/accuracy_reward': 0.796875, 'rewards/format_reward': 0.6796875, 'reward': 1.4765625, 'reward_std': 0.5367386341094971, 'kl': 0.0474853515625, 'epoch': 0.0}
+  0%|          | 7/8750 [03:11<70:48:53, 29.16s/it]Invalidate trace cache @ step 0 and module 11664: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 12393: cache has only 0 modules
+  0%|          | 8/8750 [03:27<61:03:53, 25.15s/it]                                                   {'loss': 0.0033, 'grad_norm': 14.748825044526006, 'learning_rate': 9.990857142857141e-07, 'completion_length': 46.203125, 'rewards/accuracy_reward': 0.625, 'rewards/format_reward': 0.7421875, 'reward': 1.3671875, 'reward_std': 0.625056654214859, 'kl': 0.082763671875, 'epoch': 0.0}
+  0%|          | 8/8750 [03:27<61:03:53, 25.15s/it]Invalidate trace cache @ step 0 and module 13122: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 13851: cache has only 0 modules
+  0%|          | 9/8750 [03:42<53:09:20, 21.89s/it]                                                   {'loss': 0.0045, 'grad_norm': 7.67390733678159, 'learning_rate': 9.989714285714285e-07, 'completion_length': 36.609375, 'rewards/accuracy_reward': 0.8046875, 'rewards/format_reward': 0.921875, 'reward': 1.7265625, 'reward_std': 0.349774569272995, 'kl': 0.111328125, 'epoch': 0.0}
+  0%|          | 9/8750 [03:42<53:09:20, 21.89s/it]Invalidate trace cache @ step 0 and module 14580: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 15309: cache has only 0 modules
+  0%|          | 10/8750 [03:57<47:47:44, 19.69s/it]                                                    {'loss': 0.0046, 'grad_norm': 10.98484971581006, 'learning_rate': 9.988571428571428e-07, 'completion_length': 33.046875, 'rewards/accuracy_reward': 0.7109375, 'rewards/format_reward': 0.96875, 'reward': 1.6796875, 'reward_std': 0.4121658056974411, 'kl': 0.115478515625, 'epoch': 0.0}
+  0%|          | 10/8750 [03:57<47:47:44, 19.69s/it]Invalidate trace cache @ step 0 and module 16038: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 16767: cache has only 0 modules
+  0%|          | 11/8750 [04:10<42:33:34, 17.53s/it]                                                    {'loss': 0.0105, 'grad_norm': 12.292485169245305, 'learning_rate': 9.987428571428572e-07, 'completion_length': 29.7421875, 'rewards/accuracy_reward': 0.8515625, 'rewards/format_reward': 0.96875, 'reward': 1.8203125, 'reward_std': 0.28513264656066895, 'kl': 0.26123046875, 'epoch': 0.0}
+  0%|          | 11/8750 [04:10<42:33:34, 17.53s/it]Invalidate trace cache @ step 0 and module 17496: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 18225: cache has only 0 modules
+  0%|          | 12/8750 [04:29<43:46:42, 18.04s/it]                                                    {'loss': 0.0097, 'grad_norm': 8.222355298023746, 'learning_rate': 9.986285714285714e-07, 'completion_length': 30.1328125, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 0.9921875, 'reward': 1.875, 'reward_std': 0.21884136646986008, 'kl': 0.2431640625, 'epoch': 0.0}
+  0%|          | 12/8750 [04:29<43:46:42, 18.04s/it]Invalidate trace cache @ step 0 and module 18954: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 19683: cache has only 0 modules
+  0%|          | 13/8750 [04:53<48:40:06, 20.05s/it]                                                    {'loss': 0.0095, 'grad_norm': 7.138815173306183, 'learning_rate': 9.985142857142856e-07, 'completion_length': 29.7578125, 'rewards/accuracy_reward': 0.8671875, 'rewards/format_reward': 0.9765625, 'reward': 1.84375, 'reward_std': 0.2768217623233795, 'kl': 0.236328125, 'epoch': 0.0}
+  0%|          | 13/8750 [04:53<48:40:06, 20.05s/it]Invalidate trace cache @ step 0 and module 20412: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 21141: cache has only 0 modules
+  0%|          | 14/8750 [05:05<42:03:23, 17.33s/it]                                                    {'loss': 0.0078, 'grad_norm': 9.044208652141124, 'learning_rate': 9.983999999999998e-07, 'completion_length': 25.5078125, 'rewards/accuracy_reward': 0.796875, 'rewards/format_reward': 0.9765625, 'reward': 1.7734375, 'reward_std': 0.3894929736852646, 'kl': 0.1943359375, 'epoch': 0.0}
+  0%|          | 14/8750 [05:05<42:03:23, 17.33s/it]Invalidate trace cache @ step 0 and module 21870: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 22599: cache has only 0 modules
+  0%|          | 15/8750 [05:12<34:57:14, 14.41s/it]                                                    {'loss': 0.0097, 'grad_norm': 6.127327862645272, 'learning_rate': 9.982857142857143e-07, 'completion_length': 22.859375, 'rewards/accuracy_reward': 0.8203125, 'rewards/format_reward': 0.9921875, 'reward': 1.8125, 'reward_std': 0.2567247971892357, 'kl': 0.244140625, 'epoch': 0.0}
+  0%|          | 15/8750 [05:12<34:57:14, 14.41s/it]Invalidate trace cache @ step 0 and module 23328: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 24057: cache has only 0 modules
+  0%|          | 16/8750 [05:21<30:44:25, 12.67s/it]                                                    {'loss': 0.0098, 'grad_norm': 6.522170107125044, 'learning_rate': 9.981714285714285e-07, 'completion_length': 22.4765625, 'rewards/accuracy_reward': 0.8203125, 'rewards/format_reward': 1.0, 'reward': 1.8203125, 'reward_std': 0.2314501330256462, 'kl': 0.2451171875, 'epoch': 0.0}
+  0%|          | 16/8750 [05:21<30:44:25, 12.67s/it]Invalidate trace cache @ step 0 and module 24786: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 25515: cache has only 0 modules
+  0%|          | 17/8750 [05:28<26:55:52, 11.10s/it]                                                    {'loss': 0.0109, 'grad_norm': 6.248267333215672, 'learning_rate': 9.98057142857143e-07, 'completion_length': 21.5703125, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 1.0, 'reward': 1.890625, 'reward_std': 0.24489018321037292, 'kl': 0.2724609375, 'epoch': 0.0}
+  0%|          | 17/8750 [05:28<26:55:52, 11.10s/it]Invalidate trace cache @ step 0 and module 26244: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 26973: cache has only 0 modules
+  0%|          | 18/8750 [05:41<27:49:17, 11.47s/it]                                                    {'loss': 0.0099, 'grad_norm': 5.112427816376571, 'learning_rate': 9.979428571428571e-07, 'completion_length': 23.6953125, 'rewards/accuracy_reward': 0.8046875, 'rewards/format_reward': 0.9921875, 'reward': 1.796875, 'reward_std': 0.2880107909440994, 'kl': 0.24853515625, 'epoch': 0.0}
+  0%|          | 18/8750 [05:41<27:49:17, 11.47s/it]Invalidate trace cache @ step 0 and module 27702: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 28431: cache has only 0 modules
+  0%|          | 19/8750 [05:51<27:11:13, 11.21s/it]                                                    {'loss': 0.0102, 'grad_norm': 5.483404559325226, 'learning_rate': 9.978285714285713e-07, 'completion_length': 22.984375, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.16151440143585205, 'kl': 0.25537109375, 'epoch': 0.0}
+  0%|          | 19/8750 [05:51<27:11:13, 11.21s/it]Invalidate trace cache @ step 0 and module 29160: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 29889: cache has only 0 modules
+  0%|          | 20/8750 [05:59<24:51:10, 10.25s/it]                                                    {'loss': 0.0093, 'grad_norm': 6.022297413519551, 'learning_rate': 9.977142857142856e-07, 'completion_length': 24.1171875, 'rewards/accuracy_reward': 0.859375, 'rewards/format_reward': 0.9765625, 'reward': 1.8359375, 'reward_std': 0.29538238048553467, 'kl': 0.23291015625, 'epoch': 0.0}
+  0%|          | 20/8750 [05:59<24:51:10, 10.25s/it]Invalidate trace cache @ step 0 and module 30618: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 31347: cache has only 0 modules
+  0%|          | 21/8750 [06:08<24:08:17,  9.95s/it]                                                    {'loss': 0.0073, 'grad_norm': 3.909278751016712, 'learning_rate': 9.976e-07, 'completion_length': 21.625, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 1.0, 'reward': 1.8828125, 'reward_std': 0.212006576359272, 'kl': 0.181640625, 'epoch': 0.0}
+  0%|          | 21/8750 [06:08<24:08:17,  9.95s/it]Invalidate trace cache @ step 0 and module 32076: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 32805: cache has only 0 modules
+  0%|          | 22/8750 [06:20<24:58:25, 10.30s/it]                                                    {'loss': 0.0098, 'grad_norm': 6.449758752716031, 'learning_rate': 9.974857142857142e-07, 'completion_length': 23.265625, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 1.0, 'reward': 1.8984375, 'reward_std': 0.17859892547130585, 'kl': 0.244140625, 'epoch': 0.01}
+  0%|          | 22/8750 [06:20<24:58:25, 10.30s/it]Invalidate trace cache @ step 0 and module 33534: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 34263: cache has only 0 modules
+  0%|          | 23/8750 [06:32<26:14:14, 10.82s/it]                                                    {'loss': 0.0072, 'grad_norm': 5.296028270717553, 'learning_rate': 9.973714285714286e-07, 'completion_length': 25.1015625, 'rewards/accuracy_reward': 0.8671875, 'rewards/format_reward': 1.0, 'reward': 1.8671875, 'reward_std': 0.2806568741798401, 'kl': 0.18017578125, 'epoch': 0.01}
+  0%|          | 23/8750 [06:32<26:14:14, 10.82s/it]Invalidate trace cache @ step 0 and module 34992: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 35721: cache has only 0 modules
+  0%|          | 24/8750 [06:43<26:38:31, 10.99s/it]                                                    {'loss': 0.0094, 'grad_norm': 5.321613972645642, 'learning_rate': 9.972571428571428e-07, 'completion_length': 25.8828125, 'rewards/accuracy_reward': 0.859375, 'rewards/format_reward': 0.9921875, 'reward': 1.8515625, 'reward_std': 0.24329258501529694, 'kl': 0.23583984375, 'epoch': 0.01}
+  0%|          | 24/8750 [06:43<26:38:31, 10.99s/it]Invalidate trace cache @ step 0 and module 36450: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 37179: cache has only 0 modules
+  0%|          | 25/8750 [06:54<26:37:49, 10.99s/it]                                                    {'loss': 0.0108, 'grad_norm': 6.456641407161314, 'learning_rate': 9.97142857142857e-07, 'completion_length': 27.4375, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9921875, 'reward': 1.8984375, 'reward_std': 0.20753080397844315, 'kl': 0.2705078125, 'epoch': 0.01}
+  0%|          | 25/8750 [06:54<26:37:49, 10.99s/it]Invalidate trace cache @ step 0 and module 37908: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 38637: cache has only 0 modules
+  0%|          | 26/8750 [07:07<28:00:02, 11.55s/it]                                                    {'loss': 0.0095, 'grad_norm': 5.894922488857449, 'learning_rate': 9.970285714285713e-07, 'completion_length': 30.21875, 'rewards/accuracy_reward': 0.84375, 'rewards/format_reward': 0.953125, 'reward': 1.796875, 'reward_std': 0.3661494255065918, 'kl': 0.23779296875, 'epoch': 0.01}
+  0%|          | 26/8750 [07:07<28:00:02, 11.55s/it]Invalidate trace cache @ step 0 and module 39366: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 40095: cache has only 0 modules
+  0%|          | 27/8750 [07:22<30:37:01, 12.64s/it]                                                    {'loss': 0.0055, 'grad_norm': 6.8907065290093374, 'learning_rate': 9.969142857142857e-07, 'completion_length': 50.28125, 'rewards/accuracy_reward': 0.875, 'rewards/format_reward': 0.9609375, 'reward': 1.8359375, 'reward_std': 0.2861885726451874, 'kl': 0.1376953125, 'epoch': 0.01}
+  0%|          | 27/8750 [07:22<30:37:01, 12.64s/it]Invalidate trace cache @ step 0 and module 40824: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 41553: cache has only 0 modules
+  0%|          | 28/8750 [07:45<38:10:15, 15.76s/it]                                                    {'loss': 0.0056, 'grad_norm': 9.750556995160212, 'learning_rate': 9.968e-07, 'completion_length': 50.6328125, 'rewards/accuracy_reward': 0.859375, 'rewards/format_reward': 0.9765625, 'reward': 1.8359375, 'reward_std': 0.2801200747489929, 'kl': 0.141357421875, 'epoch': 0.01}
+  0%|          | 28/8750 [07:45<38:10:15, 15.76s/it]Invalidate trace cache @ step 0 and module 42282: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 43011: cache has only 0 modules
+  0%|          | 29/8750 [07:57<35:41:11, 14.73s/it]                                                    {'loss': 0.0054, 'grad_norm': 8.870146491310969, 'learning_rate': 9.966857142857141e-07, 'completion_length': 50.28125, 'rewards/accuracy_reward': 0.84375, 'rewards/format_reward': 0.953125, 'reward': 1.796875, 'reward_std': 0.35677768290042877, 'kl': 0.133544921875, 'epoch': 0.01}
+  0%|          | 29/8750 [07:57<35:41:11, 14.73s/it]Invalidate trace cache @ step 0 and module 43740: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 44469: cache has only 0 modules
+  0%|          | 30/8750 [08:09<33:30:06, 13.83s/it]                                                    {'loss': 0.0056, 'grad_norm': 6.79329964353068, 'learning_rate': 9.965714285714286e-07, 'completion_length': 37.4453125, 'rewards/accuracy_reward': 0.8671875, 'rewards/format_reward': 0.96875, 'reward': 1.8359375, 'reward_std': 0.28060515969991684, 'kl': 0.14013671875, 'epoch': 0.01}
+  0%|          | 30/8750 [08:09<33:30:06, 13.83s/it]Invalidate trace cache @ step 0 and module 45198: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 45927: cache has only 0 modules
+  0%|          | 31/8750 [08:22<32:47:48, 13.54s/it]                                                    {'loss': 0.0121, 'grad_norm': 4.512142168767675, 'learning_rate': 9.964571428571428e-07, 'completion_length': 34.953125, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 1.0, 'reward': 1.890625, 'reward_std': 0.18648964166641235, 'kl': 0.3017578125, 'epoch': 0.01}
+  0%|          | 31/8750 [08:22<32:47:48, 13.54s/it]Invalidate trace cache @ step 0 and module 46656: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 47385: cache has only 0 modules
+  0%|          | 32/8750 [08:36<33:00:56, 13.63s/it]                                                    {'loss': 0.0114, 'grad_norm': 4.130570484801838, 'learning_rate': 9.963428571428572e-07, 'completion_length': 32.0625, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.2057085707783699, 'kl': 0.283203125, 'epoch': 0.01}
+  0%|          | 32/8750 [08:36<33:00:56, 13.63s/it]Invalidate trace cache @ step 0 and module 48114: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 48843: cache has only 0 modules
+  0%|          | 33/8750 [09:02<42:22:50, 17.50s/it]                                                    {'loss': 0.0115, 'grad_norm': 5.364908807714359, 'learning_rate': 9.962285714285714e-07, 'completion_length': 29.9140625, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.9765625, 'reward': 1.875, 'reward_std': 0.24936596304178238, 'kl': 0.287109375, 'epoch': 0.01}
+  0%|          | 33/8750 [09:02<42:22:50, 17.50s/it]Invalidate trace cache @ step 0 and module 49572: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 50301: cache has only 0 modules
+  0%|          | 34/8750 [09:16<39:29:40, 16.31s/it]                                                    {'loss': 0.0097, 'grad_norm': 4.691752018210976, 'learning_rate': 9.961142857142856e-07, 'completion_length': 24.6484375, 'rewards/accuracy_reward': 0.921875, 'rewards/format_reward': 1.0, 'reward': 1.921875, 'reward_std': 0.1530819907784462, 'kl': 0.2421875, 'epoch': 0.01}
+  0%|          | 34/8750 [09:16<39:29:40, 16.31s/it]Invalidate trace cache @ step 0 and module 51030: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 51759: cache has only 0 modules
+  0%|          | 35/8750 [09:29<37:15:52, 15.39s/it]                                                    {'loss': 0.0106, 'grad_norm': 6.307087952087108, 'learning_rate': 9.959999999999999e-07, 'completion_length': 29.4765625, 'rewards/accuracy_reward': 0.859375, 'rewards/format_reward': 0.984375, 'reward': 1.84375, 'reward_std': 0.3061221018433571, 'kl': 0.26416015625, 'epoch': 0.01}
+  0%|          | 35/8750 [09:29<37:15:52, 15.39s/it]Invalidate trace cache @ step 0 and module 52488: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 53217: cache has only 0 modules
+  0%|          | 36/8750 [09:40<33:40:07, 13.91s/it]                                                    {'loss': 0.0092, 'grad_norm': 4.390453146336464, 'learning_rate': 9.958857142857143e-07, 'completion_length': 26.0234375, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 1.0, 'reward': 1.90625, 'reward_std': 0.18885356932878494, 'kl': 0.22998046875, 'epoch': 0.01}
+  0%|          | 36/8750 [09:40<33:40:07, 13.91s/it]Invalidate trace cache @ step 0 and module 53946: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 54675: cache has only 0 modules
+  0%|          | 37/8750 [09:51<31:58:23, 13.21s/it]                                                    {'loss': 0.0115, 'grad_norm': 3.3081815530018712, 'learning_rate': 9.957714285714285e-07, 'completion_length': 26.6796875, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9765625, 'reward': 1.90625, 'reward_std': 0.1820138692855835, 'kl': 0.287109375, 'epoch': 0.01}
+  0%|          | 37/8750 [09:51<31:58:23, 13.21s/it]Invalidate trace cache @ step 0 and module 55404: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 56133: cache has only 0 modules
+  0%|          | 38/8750 [10:02<30:00:32, 12.40s/it]                                                    {'loss': 0.0112, 'grad_norm': 5.567012136238632, 'learning_rate': 9.95657142857143e-07, 'completion_length': 27.1875, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 0.9921875, 'reward': 1.875, 'reward_std': 0.21937816590070724, 'kl': 0.28125, 'epoch': 0.01}
+  0%|          | 38/8750 [10:02<30:00:32, 12.40s/it]Invalidate trace cache @ step 0 and module 56862: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 57591: cache has only 0 modules
+  0%|          | 39/8750 [10:14<29:38:39, 12.25s/it]                                                    {'loss': 0.0081, 'grad_norm': 4.084646114300239, 'learning_rate': 9.955428571428572e-07, 'completion_length': 28.40625, 'rewards/accuracy_reward': 0.8671875, 'rewards/format_reward': 0.984375, 'reward': 1.8515625, 'reward_std': 0.2650260925292969, 'kl': 0.20263671875, 'epoch': 0.01}
+  0%|          | 39/8750 [10:14<29:38:39, 12.25s/it]Invalidate trace cache @ step 0 and module 58320: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 59049: cache has only 0 modules
+  0%|          | 40/8750 [10:23<27:31:41, 11.38s/it]                                                    {'loss': 0.0104, 'grad_norm': 5.2272371829366815, 'learning_rate': 9.954285714285714e-07, 'completion_length': 25.765625, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 1.0, 'reward': 1.9375, 'reward_std': 0.14625210873782635, 'kl': 0.2587890625, 'epoch': 0.01}
+  0%|          | 40/8750 [10:23<27:31:41, 11.38s/it]Invalidate trace cache @ step 0 and module 59778: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 60507: cache has only 0 modules
+  0%|          | 41/8750 [10:40<31:20:03, 12.95s/it]                                                    {'loss': 0.0083, 'grad_norm': 5.534375731352423, 'learning_rate': 9.953142857142856e-07, 'completion_length': 33.2578125, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 0.984375, 'reward': 1.8671875, 'reward_std': 0.2887208163738251, 'kl': 0.20703125, 'epoch': 0.01}
+  0%|          | 41/8750 [10:40<31:20:03, 12.95s/it]Invalidate trace cache @ step 0 and module 61236: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 61965: cache has only 0 modules
+  0%|          | 42/8750 [11:05<40:42:27, 16.83s/it]                                                    {'loss': 0.0093, 'grad_norm': 4.85539101238792, 'learning_rate': 9.952e-07, 'completion_length': 37.875, 'rewards/accuracy_reward': 0.8125, 'rewards/format_reward': 0.984375, 'reward': 1.796875, 'reward_std': 0.35105542838573456, 'kl': 0.2314453125, 'epoch': 0.01}
+  0%|          | 42/8750 [11:05<40:42:27, 16.83s/it]Invalidate trace cache @ step 0 and module 62694: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 63423: cache has only 0 modules
+  0%|          | 43/8750 [11:46<57:35:33, 23.81s/it]                                                    {'loss': 0.0095, 'grad_norm': 3.966740378269833, 'learning_rate': 9.950857142857142e-07, 'completion_length': 37.015625, 'rewards/accuracy_reward': 0.8359375, 'rewards/format_reward': 0.96875, 'reward': 1.8046875, 'reward_std': 0.33846890926361084, 'kl': 0.2373046875, 'epoch': 0.01}
+  0%|          | 43/8750 [11:46<57:35:33, 23.81s/it]Invalidate trace cache @ step 0 and module 64152: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 64881: cache has only 0 modules
+  1%|          | 44/8750 [11:56<47:52:44, 19.80s/it]                                                    {'loss': 0.0091, 'grad_norm': 3.17405184216854, 'learning_rate': 9.949714285714287e-07, 'completion_length': 26.609375, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 1.0, 'reward': 1.890625, 'reward_std': 0.1751839779317379, 'kl': 0.22802734375, 'epoch': 0.01}
+  1%|          | 44/8750 [11:56<47:52:44, 19.80s/it]Invalidate trace cache @ step 0 and module 65610: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 66339: cache has only 0 modules
+  1%|          | 45/8750 [12:06<40:44:46, 16.85s/it]                                                    {'loss': 0.0085, 'grad_norm': 4.179876836222027, 'learning_rate': 9.948571428571429e-07, 'completion_length': 27.4140625, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.9921875, 'reward': 1.90625, 'reward_std': 0.2041158676147461, 'kl': 0.2119140625, 'epoch': 0.01}
+  1%|          | 45/8750 [12:06<40:44:46, 16.85s/it]Invalidate trace cache @ step 0 and module 67068: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 67797: cache has only 0 modules
+  1%|          | 46/8750 [12:19<37:46:26, 15.62s/it]                                                    {'loss': 0.0072, 'grad_norm': 2.755855629974503, 'learning_rate': 9.94742857142857e-07, 'completion_length': 26.7265625, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.984375, 'reward': 1.8984375, 'reward_std': 0.20753080397844315, 'kl': 0.1796875, 'epoch': 0.01}
+  1%|          | 46/8750 [12:19<37:46:26, 15.62s/it]Invalidate trace cache @ step 0 and module 68526: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 69255: cache has only 0 modules
+  1%|          | 47/8750 [12:28<33:20:35, 13.79s/it]                                                    {'loss': 0.0109, 'grad_norm': 4.598505991089044, 'learning_rate': 9.946285714285713e-07, 'completion_length': 26.0, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9921875, 'reward': 1.8984375, 'reward_std': 0.2227931022644043, 'kl': 0.27294921875, 'epoch': 0.01}
+  1%|          | 47/8750 [12:28<33:20:35, 13.79s/it]Invalidate trace cache @ step 0 and module 69984: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 70713: cache has only 0 modules
+  1%|          | 48/8750 [12:42<33:11:16, 13.73s/it]                                                    {'loss': 0.0102, 'grad_norm': 4.403062496435403, 'learning_rate': 9.945142857142857e-07, 'completion_length': 28.7265625, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 0.984375, 'reward': 1.9453125, 'reward_std': 0.13941730931401253, 'kl': 0.25390625, 'epoch': 0.01}
+  1%|          | 48/8750 [12:42<33:11:16, 13.73s/it]Invalidate trace cache @ step 0 and module 71442: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 72171: cache has only 0 modules
+  1%|          | 49/8750 [12:50<29:31:36, 12.22s/it]                                                    {'loss': 0.0099, 'grad_norm': 4.907612591853543, 'learning_rate': 9.944e-07, 'completion_length': 24.359375, 'rewards/accuracy_reward': 0.765625, 'rewards/format_reward': 0.984375, 'reward': 1.75, 'reward_std': 0.32591187953948975, 'kl': 0.2470703125, 'epoch': 0.01}
+  1%|          | 49/8750 [12:50<29:31:36, 12.22s/it]Invalidate trace cache @ step 0 and module 72900: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 73629: cache has only 0 modules
+  1%|          | 50/8750 [13:00<27:23:30, 11.33s/it]                                                    {'loss': 0.0107, 'grad_norm': 4.240371427785951, 'learning_rate': 9.942857142857144e-07, 'completion_length': 25.3984375, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.9921875, 'reward': 1.90625, 'reward_std': 0.2041158527135849, 'kl': 0.2685546875, 'epoch': 0.01}
+  1%|          | 50/8750 [13:00<27:23:30, 11.33s/it]Invalidate trace cache @ step 0 and module 74358: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 75087: cache has only 0 modules
+  1%|          | 51/8750 [13:14<29:46:22, 12.32s/it]                                                    {'loss': 0.0089, 'grad_norm': 3.206535958819016, 'learning_rate': 9.941714285714286e-07, 'completion_length': 24.8515625, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9921875, 'reward': 1.8984375, 'reward_std': 0.21701914072036743, 'kl': 0.22119140625, 'epoch': 0.01}
+  1%|          | 51/8750 [13:14<29:46:22, 12.32s/it]Invalidate trace cache @ step 0 and module 75816: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 76545: cache has only 0 modules
+  1%|          | 52/8750 [13:38<38:16:50, 15.84s/it]                                                    {'loss': 0.0092, 'grad_norm': 4.13099887053875, 'learning_rate': 9.940571428571428e-07, 'completion_length': 28.015625, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.9921875, 'reward': 1.890625, 'reward_std': 0.22510041296482086, 'kl': 0.2294921875, 'epoch': 0.01}
+  1%|          | 52/8750 [13:38<38:16:50, 15.84s/it]Invalidate trace cache @ step 0 and module 77274: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 78003: cache has only 0 modules
+  1%|          | 53/8750 [13:50<34:51:46, 14.43s/it]                                                    {'loss': 0.0134, 'grad_norm': 4.869525193397474, 'learning_rate': 9.93942857142857e-07, 'completion_length': 25.828125, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 1.0, 'reward': 1.8984375, 'reward_std': 0.21701914072036743, 'kl': 0.3359375, 'epoch': 0.01}
+  1%|          | 53/8750 [13:50<34:51:46, 14.43s/it]Invalidate trace cache @ step 0 and module 78732: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 79461: cache has only 0 modules
+  1%|          | 54/8750 [13:59<31:09:12, 12.90s/it]                                                    {'loss': 0.0126, 'grad_norm': 3.5104630851084213, 'learning_rate': 9.938285714285713e-07, 'completion_length': 25.8203125, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 0.9921875, 'reward': 1.9609375, 'reward_std': 0.11048543266952038, 'kl': 0.3134765625, 'epoch': 0.01}
+  1%|          | 54/8750 [13:59<31:09:12, 12.90s/it]Invalidate trace cache @ step 0 and module 80190: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 80919: cache has only 0 modules
+  1%|          | 55/8750 [14:13<32:18:45, 13.38s/it]                                                    {'loss': 0.0098, 'grad_norm': 3.792372732950699, 'learning_rate': 9.937142857142857e-07, 'completion_length': 28.7890625, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 1.0, 'reward': 1.90625, 'reward_std': 0.17623991891741753, 'kl': 0.24462890625, 'epoch': 0.01}
+  1%|          | 55/8750 [14:13<32:18:45, 13.38s/it]Invalidate trace cache @ step 0 and module 81648: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 82377: cache has only 0 modules
+  1%|          | 56/8750 [14:27<32:29:10, 13.45s/it]                                                    {'loss': 0.0093, 'grad_norm': 3.389668702928562, 'learning_rate': 9.936e-07, 'completion_length': 29.9453125, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.984375, 'reward': 1.9296875, 'reward_std': 0.16834919154644012, 'kl': 0.2314453125, 'epoch': 0.01}
+  1%|          | 56/8750 [14:27<32:29:10, 13.45s/it]Invalidate trace cache @ step 0 and module 83106: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 83835: cache has only 0 modules
+  1%|          | 57/8750 [14:42<33:50:50, 14.02s/it]                                                    {'loss': 0.011, 'grad_norm': 3.30552688705785, 'learning_rate': 9.934857142857143e-07, 'completion_length': 27.109375, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 0.984375, 'reward': 1.8671875, 'reward_std': 0.25135650485754013, 'kl': 0.2744140625, 'epoch': 0.01}
+  1%|          | 57/8750 [14:42<33:50:50, 14.02s/it]Invalidate trace cache @ step 0 and module 84564: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 85293: cache has only 0 modules
+  1%|          | 58/8750 [14:55<32:44:07, 13.56s/it]                                                    {'loss': 0.0134, 'grad_norm': 6.492645486888341, 'learning_rate': 9.933714285714285e-07, 'completion_length': 29.3828125, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.984375, 'reward': 1.890625, 'reward_std': 0.20374739915132523, 'kl': 0.3349609375, 'epoch': 0.01}
+  1%|          | 58/8750 [14:55<32:44:07, 13.56s/it]Invalidate trace cache @ step 0 and module 86022: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 86751: cache has only 0 modules
+  1%|          | 59/8750 [15:08<32:21:24, 13.40s/it]                                                    {'loss': 0.0143, 'grad_norm': 4.761007738212374, 'learning_rate': 9.932571428571428e-07, 'completion_length': 29.6484375, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.984375, 'reward': 1.8984375, 'reward_std': 0.20753081142902374, 'kl': 0.3583984375, 'epoch': 0.01}
+  1%|          | 59/8750 [15:08<32:21:24, 13.40s/it]Invalidate trace cache @ step 0 and module 87480: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 88209: cache has only 0 modules
+  1%|          | 60/8750 [15:28<37:15:13, 15.43s/it]                                                    {'loss': 0.0103, 'grad_norm': 3.6350237865359083, 'learning_rate': 9.93142857142857e-07, 'completion_length': 36.9609375, 'rewards/accuracy_reward': 0.8359375, 'rewards/format_reward': 0.984375, 'reward': 1.8203125, 'reward_std': 0.2818516343832016, 'kl': 0.2578125, 'epoch': 0.01}
+  1%|          | 60/8750 [15:28<37:15:13, 15.43s/it]Invalidate trace cache @ step 0 and module 88938: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 89667: cache has only 0 modules
+  1%|          | 61/8750 [15:54<45:04:46, 18.68s/it]                                                    {'loss': 0.0086, 'grad_norm': 4.650588266343749, 'learning_rate': 9.930285714285714e-07, 'completion_length': 37.9375, 'rewards/accuracy_reward': 0.8671875, 'rewards/format_reward': 0.984375, 'reward': 1.8515625, 'reward_std': 0.30053378641605377, 'kl': 0.2158203125, 'epoch': 0.01}
+  1%|          | 61/8750 [15:54<45:04:46, 18.68s/it]Invalidate trace cache @ step 0 and module 90396: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 91125: cache has only 0 modules
+  1%|          | 62/8750 [16:06<40:01:15, 16.58s/it]                                                    {'loss': 0.0099, 'grad_norm': 7.258133935853667, 'learning_rate': 9.929142857142856e-07, 'completion_length': 36.8203125, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 1.0, 'reward': 1.9140625, 'reward_std': 0.14966705068945885, 'kl': 0.24755859375, 'epoch': 0.01}
+  1%|          | 62/8750 [16:06<40:01:15, 16.58s/it]Invalidate trace cache @ step 0 and module 91854: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 92583: cache has only 0 modules
+  1%|          | 63/8750 [16:23<40:11:16, 16.65s/it]                                                    {'loss': 0.0094, 'grad_norm': 3.348233799265925, 'learning_rate': 9.928e-07, 'completion_length': 40.390625, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9765625, 'reward': 1.8828125, 'reward_std': 0.2533176839351654, 'kl': 0.234375, 'epoch': 0.01}
+  1%|          | 63/8750 [16:23<40:11:16, 16.65s/it]Invalidate trace cache @ step 0 and module 93312: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 94041: cache has only 0 modules
+  1%|          | 64/8750 [16:48<46:00:34, 19.07s/it]                                                    {'loss': 0.0106, 'grad_norm': 4.973210955655784, 'learning_rate': 9.926857142857143e-07, 'completion_length': 40.6171875, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.9765625, 'reward': 1.875, 'reward_std': 0.2704022228717804, 'kl': 0.2646484375, 'epoch': 0.01}
+  1%|          | 64/8750 [16:48<46:00:34, 19.07s/it]Invalidate trace cache @ step 0 and module 94770: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 95499: cache has only 0 modules
+  1%|          | 65/8750 [16:58<39:29:15, 16.37s/it]                                                    {'loss': 0.0111, 'grad_norm': 2.8654384654459015, 'learning_rate': 9.925714285714285e-07, 'completion_length': 34.15625, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 1.0, 'reward': 1.9296875, 'reward_std': 0.14966704696416855, 'kl': 0.2783203125, 'epoch': 0.01}
+  1%|          | 65/8750 [16:58<39:29:15, 16.37s/it]Invalidate trace cache @ step 0 and module 96228: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 96957: cache has only 0 modules
+  1%|          | 66/8750 [17:11<37:03:25, 15.36s/it]                                                    {'loss': 0.0104, 'grad_norm': 4.415548935915862, 'learning_rate': 9.924571428571427e-07, 'completion_length': 36.2734375, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.9921875, 'reward': 1.890625, 'reward_std': 0.22097086161375046, 'kl': 0.259765625, 'epoch': 0.02}
+  1%|          | 66/8750 [17:11<37:03:25, 15.36s/it]Invalidate trace cache @ step 0 and module 97686: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 98415: cache has only 0 modules
+  1%|          | 67/8750 [17:32<41:29:00, 17.20s/it]                                                    {'loss': 0.0099, 'grad_norm': 2.4043130892657967, 'learning_rate': 9.923428571428571e-07, 'completion_length': 37.109375, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 0.984375, 'reward': 1.953125, 'reward_std': 0.10205793008208275, 'kl': 0.24658203125, 'epoch': 0.02}
+  1%|          | 67/8750 [17:32<41:29:00, 17.20s/it]Invalidate trace cache @ step 0 and module 99144: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 99873: cache has only 0 modules
+  1%|          | 68/8750 [17:46<38:52:28, 16.12s/it]                                                    {'loss': 0.0073, 'grad_norm': 4.568077095882685, 'learning_rate': 9.922285714285713e-07, 'completion_length': 33.828125, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.9921875, 'reward': 1.9296875, 'reward_std': 0.1638217195868492, 'kl': 0.18359375, 'epoch': 0.02}
+  1%|          | 68/8750 [17:46<38:52:28, 16.12s/it]Invalidate trace cache @ step 0 and module 100602: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 101331: cache has only 0 modules
+  1%|          | 69/8750 [17:58<36:21:29, 15.08s/it]                                                    {'loss': 0.0077, 'grad_norm': 3.2154922979531047, 'learning_rate': 9.921142857142858e-07, 'completion_length': 33.7890625, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 0.984375, 'reward': 1.953125, 'reward_std': 0.13258251547813416, 'kl': 0.19287109375, 'epoch': 0.02}
+  1%|          | 69/8750 [17:58<36:21:29, 15.08s/it]Invalidate trace cache @ step 0 and module 102060: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 102789: cache has only 0 modules
+  1%|          | 70/8750 [18:10<34:10:48, 14.18s/it]                                                    {'loss': 0.0073, 'grad_norm': 6.223940711194148, 'learning_rate': 9.92e-07, 'completion_length': 35.8671875, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 1.0, 'reward': 1.8984375, 'reward_std': 0.2227931097149849, 'kl': 0.1826171875, 'epoch': 0.02}
+  1%|          | 70/8750 [18:10<34:10:48, 14.18s/it]Invalidate trace cache @ step 0 and module 103518: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 104247: cache has only 0 modules
+  1%|          | 71/8750 [18:30<37:53:27, 15.72s/it]                                                    {'loss': 0.0082, 'grad_norm': 8.355527285941418, 'learning_rate': 9.918857142857142e-07, 'completion_length': 37.5, 'rewards/accuracy_reward': 0.875, 'rewards/format_reward': 0.9765625, 'reward': 1.8515625, 'reward_std': 0.2806568592786789, 'kl': 0.20458984375, 'epoch': 0.02}
+  1%|          | 71/8750 [18:30<37:53:27, 15.72s/it]Invalidate trace cache @ step 0 and module 104976: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 105705: cache has only 0 modules
+  1%|          | 72/8750 [18:46<38:25:06, 15.94s/it]                                                    {'loss': 0.0082, 'grad_norm': 4.145176395490867, 'learning_rate': 9.917714285714284e-07, 'completion_length': 40.9609375, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.984375, 'reward': 1.8984375, 'reward_std': 0.17407144606113434, 'kl': 0.20458984375, 'epoch': 0.02}
+  1%|          | 72/8750 [18:46<38:25:06, 15.94s/it]Invalidate trace cache @ step 0 and module 106434: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 107163: cache has only 0 modules
+  1%|          | 73/8750 [19:11<44:50:15, 18.60s/it]                                                    {'loss': 0.0068, 'grad_norm': 4.148928990565276, 'learning_rate': 9.916571428571429e-07, 'completion_length': 43.2421875, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 1.0, 'reward': 1.9375, 'reward_std': 0.14283225685358047, 'kl': 0.17138671875, 'epoch': 0.02}
+  1%|          | 73/8750 [19:11<44:50:15, 18.60s/it]Invalidate trace cache @ step 0 and module 107892: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 108621: cache has only 0 modules
+  1%|          | 74/8750 [19:26<42:06:59, 17.48s/it]                                                    {'loss': 0.0086, 'grad_norm': 5.298355788911615, 'learning_rate': 9.91542857142857e-07, 'completion_length': 42.390625, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9765625, 'reward': 1.8828125, 'reward_std': 0.24830514192581177, 'kl': 0.2158203125, 'epoch': 0.02}
+  1%|          | 74/8750 [19:26<42:06:59, 17.48s/it]Invalidate trace cache @ step 0 and module 109350: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 110079: cache has only 0 modules
+  1%|          | 75/8750 [19:40<39:29:06, 16.39s/it]                                                    {'loss': 0.0066, 'grad_norm': 6.833978226331956, 'learning_rate': 9.914285714285715e-07, 'completion_length': 40.71875, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 0.984375, 'reward': 1.8671875, 'reward_std': 0.25620074570178986, 'kl': 0.16455078125, 'epoch': 0.02}
+  1%|          | 75/8750 [19:40<39:29:06, 16.39s/it]Invalidate trace cache @ step 0 and module 110808: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 111537: cache has only 0 modules
+  1%|          | 76/8750 [19:56<39:24:06, 16.35s/it]                                                    {'loss': 0.0059, 'grad_norm': 3.280019975042346, 'learning_rate': 9.913142857142857e-07, 'completion_length': 42.4375, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 0.9921875, 'reward': 1.8828125, 'reward_std': 0.24830514192581177, 'kl': 0.14697265625, 'epoch': 0.02}
+  1%|          | 76/8750 [19:56<39:24:06, 16.35s/it]Invalidate trace cache @ step 0 and module 112266: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 112995: cache has only 0 modules
+  1%|          | 77/8750 [20:08<36:00:22, 14.95s/it]                                                    {'loss': 0.0041, 'grad_norm': 3.991291062067173, 'learning_rate': 9.912e-07, 'completion_length': 45.5078125, 'rewards/accuracy_reward': 0.8671875, 'rewards/format_reward': 0.9921875, 'reward': 1.859375, 'reward_std': 0.2704022228717804, 'kl': 0.1015625, 'epoch': 0.02}
+  1%|          | 77/8750 [20:08<36:00:22, 14.95s/it]Invalidate trace cache @ step 0 and module 113724: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 114453: cache has only 0 modules
+  1%|          | 78/8750 [20:24<36:45:48, 15.26s/it]                                                    {'loss': 0.0041, 'grad_norm': 4.4248243031867, 'learning_rate': 9.910857142857141e-07, 'completion_length': 51.9921875, 'rewards/accuracy_reward': 0.84375, 'rewards/format_reward': 0.9765625, 'reward': 1.8203125, 'reward_std': 0.28247418999671936, 'kl': 0.10205078125, 'epoch': 0.02}
+  1%|          | 78/8750 [20:24<36:45:48, 15.26s/it]Invalidate trace cache @ step 0 and module 115182: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 115911: cache has only 0 modules
+  1%|          | 79/8750 [20:36<34:55:30, 14.50s/it]                                                    {'loss': 0.0044, 'grad_norm': 4.267290200118273, 'learning_rate': 9.909714285714286e-07, 'completion_length': 44.046875, 'rewards/accuracy_reward': 0.859375, 'rewards/format_reward': 0.9921875, 'reward': 1.8515625, 'reward_std': 0.2517249807715416, 'kl': 0.109130859375, 'epoch': 0.02}
+  1%|          | 79/8750 [20:36<34:55:30, 14.50s/it]Invalidate trace cache @ step 0 and module 116640: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 117369: cache has only 0 modules
+  1%|          | 80/8750 [20:49<33:27:39, 13.89s/it]                                                    {'loss': 0.0146, 'grad_norm': 8.646980849381299, 'learning_rate': 9.908571428571428e-07, 'completion_length': 46.109375, 'rewards/accuracy_reward': 0.84375, 'rewards/format_reward': 0.984375, 'reward': 1.828125, 'reward_std': 0.3282659947872162, 'kl': 0.364501953125, 'epoch': 0.02}
+  1%|          | 80/8750 [20:49<33:27:39, 13.89s/it]Invalidate trace cache @ step 0 and module 118098: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 118827: cache has only 0 modules
+  1%|          | 81/8750 [21:01<32:03:08, 13.31s/it]                                                    {'loss': 0.0039, 'grad_norm': 4.880104917664991, 'learning_rate': 9.90742857142857e-07, 'completion_length': 45.796875, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 1.0, 'reward': 1.9296875, 'reward_std': 0.14966704323887825, 'kl': 0.096435546875, 'epoch': 0.02}
+  1%|          | 81/8750 [21:01<32:03:08, 13.31s/it]Invalidate trace cache @ step 0 and module 119556: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 120285: cache has only 0 modules
+  1%|          | 82/8750 [21:15<32:33:05, 13.52s/it]                                                    {'loss': 0.0042, 'grad_norm': 5.412188154560521, 'learning_rate': 9.906285714285714e-07, 'completion_length': 46.484375, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.9765625, 'reward': 1.875, 'reward_std': 0.25403229892253876, 'kl': 0.104248046875, 'epoch': 0.02}
+  1%|          | 82/8750 [21:15<32:33:05, 13.52s/it]Invalidate trace cache @ step 0 and module 121014: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 121743: cache has only 0 modules
+  1%|          | 83/8750 [21:27<31:30:12, 13.09s/it]                                                    {'loss': 0.0046, 'grad_norm': 5.627412276826427, 'learning_rate': 9.905142857142857e-07, 'completion_length': 44.6328125, 'rewards/accuracy_reward': 0.859375, 'rewards/format_reward': 1.0, 'reward': 1.859375, 'reward_std': 0.24435341358184814, 'kl': 0.115478515625, 'epoch': 0.02}
+  1%|          | 83/8750 [21:27<31:30:12, 13.09s/it]Invalidate trace cache @ step 0 and module 122472: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 123201: cache has only 0 modules
+  1%|          | 84/8750 [21:39<30:54:27, 12.84s/it]                                                    {'loss': 0.0057, 'grad_norm': 3.2392242760545713, 'learning_rate': 9.903999999999999e-07, 'completion_length': 42.34375, 'rewards/accuracy_reward': 0.921875, 'rewards/format_reward': 1.0, 'reward': 1.921875, 'reward_std': 0.2057085782289505, 'kl': 0.142578125, 'epoch': 0.02}
+  1%|          | 84/8750 [21:39<30:54:27, 12.84s/it]Invalidate trace cache @ step 0 and module 123930: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 124659: cache has only 0 modules
+  1%|          | 85/8750 [21:57<34:47:07, 14.45s/it]                                                    {'loss': 0.0057, 'grad_norm': 2.928232161993217, 'learning_rate': 9.902857142857143e-07, 'completion_length': 41.4609375, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 1.0, 'reward': 1.890625, 'reward_std': 0.19568345695734024, 'kl': 0.1435546875, 'epoch': 0.02}
+  1%|          | 85/8750 [21:57<34:47:07, 14.45s/it]Invalidate trace cache @ step 0 and module 125388: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 126117: cache has only 0 modules
+  1%|          | 86/8750 [22:18<39:35:54, 16.45s/it]                                                    {'loss': 0.0065, 'grad_norm': 4.3254084075320085, 'learning_rate': 9.901714285714285e-07, 'completion_length': 40.5078125, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 1.0, 'reward': 1.90625, 'reward_std': 0.2346404418349266, 'kl': 0.16357421875, 'epoch': 0.02}
+  1%|          | 86/8750 [22:18<39:35:54, 16.45s/it]Invalidate trace cache @ step 0 and module 126846: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 127575: cache has only 0 modules
+  1%|          | 87/8750 [22:30<35:53:40, 14.92s/it]                                                    {'loss': 0.0075, 'grad_norm': 4.904792768322067, 'learning_rate': 9.900571428571427e-07, 'completion_length': 37.1796875, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.9921875, 'reward': 1.9296875, 'reward_std': 0.18361148238182068, 'kl': 0.1884765625, 'epoch': 0.02}
+  1%|          | 87/8750 [22:30<35:53:40, 14.92s/it]Invalidate trace cache @ step 0 and module 128304: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 129033: cache has only 0 modules
+  1%|          | 88/8750 [22:41<33:27:18, 13.90s/it]                                                    {'loss': 0.0074, 'grad_norm': 5.512619338246584, 'learning_rate': 9.899428571428572e-07, 'completion_length': 32.3125, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 1.0, 'reward': 1.890625, 'reward_std': 0.2109457552433014, 'kl': 0.185546875, 'epoch': 0.02}
+  1%|          | 88/8750 [22:41<33:27:18, 13.90s/it]Invalidate trace cache @ step 0 and module 129762: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 130491: cache has only 0 modules
+  1%|          | 89/8750 [22:52<31:17:04, 13.00s/it]                                                    {'loss': 0.0078, 'grad_norm': 6.5098144705281, 'learning_rate': 9.898285714285714e-07, 'completion_length': 37.28125, 'rewards/accuracy_reward': 0.859375, 'rewards/format_reward': 1.0, 'reward': 1.859375, 'reward_std': 0.24777324497699738, 'kl': 0.19482421875, 'epoch': 0.02}
+  1%|          | 89/8750 [22:52<31:17:04, 13.00s/it]Invalidate trace cache @ step 0 and module 131220: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 131949: cache has only 0 modules
+  1%|          | 90/8750 [23:07<32:50:12, 13.65s/it]                                                    {'loss': 0.0098, 'grad_norm': 3.98923257714731, 'learning_rate': 9.897142857142858e-07, 'completion_length': 36.125, 'rewards/accuracy_reward': 0.859375, 'rewards/format_reward': 0.9921875, 'reward': 1.8515625, 'reward_std': 0.23068872839212418, 'kl': 0.244140625, 'epoch': 0.02}
+  1%|          | 90/8750 [23:07<32:50:12, 13.65s/it]Invalidate trace cache @ step 0 and module 132678: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 133407: cache has only 0 modules
+  1%|          | 91/8750 [23:19<31:17:03, 13.01s/it]                                                    {'loss': 0.0076, 'grad_norm': 4.1387101962044, 'learning_rate': 9.896e-07, 'completion_length': 36.7578125, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.984375, 'reward': 1.9140625, 'reward_std': 0.22327818721532822, 'kl': 0.189453125, 'epoch': 0.02}
+  1%|          | 91/8750 [23:19<31:17:03, 13.01s/it]Invalidate trace cache @ step 0 and module 134136: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 134865: cache has only 0 modules
+  1%|          | 92/8750 [23:31<30:37:10, 12.73s/it]                                                    {'loss': 0.0071, 'grad_norm': 4.442247572546079, 'learning_rate': 9.894857142857142e-07, 'completion_length': 33.6875, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.19044627249240875, 'kl': 0.17724609375, 'epoch': 0.02}
+  1%|          | 92/8750 [23:31<30:37:10, 12.73s/it]Invalidate trace cache @ step 0 and module 135594: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 136323: cache has only 0 modules
+  1%|          | 93/8750 [23:45<31:23:42, 13.06s/it]                                                    {'loss': 0.0078, 'grad_norm': 2.347210281596957, 'learning_rate': 9.893714285714285e-07, 'completion_length': 35.9765625, 'rewards/accuracy_reward': 0.953125, 'rewards/format_reward': 1.0, 'reward': 1.953125, 'reward_std': 0.1173202283680439, 'kl': 0.19384765625, 'epoch': 0.02}
+  1%|          | 93/8750 [23:45<31:23:42, 13.06s/it]Invalidate trace cache @ step 0 and module 137052: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 137781: cache has only 0 modules
+  1%|          | 94/8750 [24:04<35:34:02, 14.79s/it]                                                    {'loss': 0.0075, 'grad_norm': 5.7684832942497035, 'learning_rate': 9.892571428571429e-07, 'completion_length': 34.4453125, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.9921875, 'reward': 1.90625, 'reward_std': 0.1643974706530571, 'kl': 0.1875, 'epoch': 0.02}
+  1%|          | 94/8750 [24:04<35:34:02, 14.79s/it]Invalidate trace cache @ step 0 and module 138510: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 139239: cache has only 0 modules
+  1%|          | 95/8750 [24:17<34:14:14, 14.24s/it]                                                    {'loss': 0.0059, 'grad_norm': 9.44101631742774, 'learning_rate': 9.89142857142857e-07, 'completion_length': 33.8046875, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.14283226057887077, 'kl': 0.14794921875, 'epoch': 0.02}
+  1%|          | 95/8750 [24:17<34:14:14, 14.24s/it]Invalidate trace cache @ step 0 and module 139968: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 140697: cache has only 0 modules
+  1%|          | 96/8750 [24:30<33:22:19, 13.88s/it]                                                    {'loss': 0.0083, 'grad_norm': 2.566354986948601, 'learning_rate': 9.890285714285715e-07, 'completion_length': 31.703125, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.984375, 'reward': 1.921875, 'reward_std': 0.19044627249240875, 'kl': 0.20703125, 'epoch': 0.02}
+  1%|          | 96/8750 [24:30<33:22:19, 13.88s/it]Invalidate trace cache @ step 0 and module 141426: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 142155: cache has only 0 modules
+  1%|          | 97/8750 [24:44<34:00:50, 14.15s/it]                                                    {'loss': 0.0078, 'grad_norm': 2.885345683293443, 'learning_rate': 9.889142857142857e-07, 'completion_length': 30.2421875, 'rewards/accuracy_reward': 0.9765625, 'rewards/format_reward': 0.9921875, 'reward': 1.96875, 'reward_std': 0.0883883461356163, 'kl': 0.19384765625, 'epoch': 0.02}
+  1%|          | 97/8750 [24:44<34:00:50, 14.15s/it]Invalidate trace cache @ step 0 and module 142884: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 143613: cache has only 0 modules
+  1%|          | 98/8750 [24:55<31:41:00, 13.18s/it]                                                    {'loss': 0.0086, 'grad_norm': 3.7693975444514183, 'learning_rate': 9.888e-07, 'completion_length': 33.625, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9921875, 'reward': 1.8984375, 'reward_std': 0.2227931022644043, 'kl': 0.21484375, 'epoch': 0.02}
+  1%|          | 98/8750 [24:55<31:41:00, 13.18s/it]Invalidate trace cache @ step 0 and module 144342: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 145071: cache has only 0 modules
+  1%|          | 99/8750 [25:09<32:17:48, 13.44s/it]                                                    {'loss': 0.0083, 'grad_norm': 3.0766609428389238, 'learning_rate': 9.886857142857142e-07, 'completion_length': 34.0390625, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.9765625, 'reward': 1.875, 'reward_std': 0.2001592218875885, 'kl': 0.20654296875, 'epoch': 0.02}
+  1%|          | 99/8750 [25:09<32:17:48, 13.44s/it]Invalidate trace cache @ step 0 and module 145800: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 146529: cache has only 0 modules
+  1%|          | 100/8750 [25:24<33:06:45, 13.78s/it]                                                     {'loss': 0.0073, 'grad_norm': 3.4770037037928065, 'learning_rate': 9.885714285714286e-07, 'completion_length': 34.984375, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 1.0, 'reward': 1.9453125, 'reward_std': 0.13941731676459312, 'kl': 0.181640625, 'epoch': 0.02}
+  1%|          | 100/8750 [25:24<33:06:45, 13.78s/it]Invalidate trace cache @ step 0 and module 147258: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 147987: cache has only 0 modules
+  1%|          | 101/8750 [25:41<35:20:34, 14.71s/it]                                                     {'loss': 0.0088, 'grad_norm': 3.650135706590848, 'learning_rate': 9.884571428571428e-07, 'completion_length': 36.2265625, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.984375, 'reward': 1.921875, 'reward_std': 0.19044628739356995, 'kl': 0.220703125, 'epoch': 0.02}
+  1%|          | 101/8750 [25:41<35:20:34, 14.71s/it]Invalidate trace cache @ step 0 and module 148716: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 149445: cache has only 0 modules
+  1%|          | 102/8750 [25:53<33:17:37, 13.86s/it]                                                     {'loss': 0.0069, 'grad_norm': 3.1127893519356356, 'learning_rate': 9.883428571428573e-07, 'completion_length': 37.265625, 'rewards/accuracy_reward': 0.953125, 'rewards/format_reward': 0.984375, 'reward': 1.9375, 'reward_std': 0.16151440143585205, 'kl': 0.17333984375, 'epoch': 0.02}
+  1%|          | 102/8750 [25:53<33:17:37, 13.86s/it]Invalidate trace cache @ step 0 and module 150174: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 150903: cache has only 0 modules
+  1%|          | 103/8750 [26:05<32:30:03, 13.53s/it]                                                     {'loss': 0.0064, 'grad_norm': 3.249013508355963, 'learning_rate': 9.882285714285715e-07, 'completion_length': 38.3984375, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.1462521031498909, 'kl': 0.159912109375, 'epoch': 0.02}
+  1%|          | 103/8750 [26:05<32:30:03, 13.53s/it]Invalidate trace cache @ step 0 and module 151632: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 152361: cache has only 0 modules
+  1%|          | 104/8750 [26:18<31:43:34, 13.21s/it]                                                     {'loss': 0.0062, 'grad_norm': 6.411765469462508, 'learning_rate': 9.881142857142857e-07, 'completion_length': 40.53125, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 1.0, 'reward': 1.9140625, 'reward_std': 0.20912351459264755, 'kl': 0.15380859375, 'epoch': 0.02}
+  1%|          | 104/8750 [26:18<31:43:34, 13.21s/it]Invalidate trace cache @ step 0 and module 153090: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 153819: cache has only 0 modules
+  1%|          | 105/8750 [26:35<34:27:21, 14.35s/it]                                                     {'loss': 0.006, 'grad_norm': 4.190810190712777, 'learning_rate': 9.88e-07, 'completion_length': 43.4921875, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9765625, 'reward': 1.90625, 'reward_std': 0.17028804123401642, 'kl': 0.150146484375, 'epoch': 0.02}
+  1%|          | 105/8750 [26:35<34:27:21, 14.35s/it]Invalidate trace cache @ step 0 and module 154548: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 155277: cache has only 0 modules
+  1%|          | 106/8750 [26:47<32:56:02, 13.72s/it]                                                     {'loss': 0.0064, 'grad_norm': 3.1217987668383653, 'learning_rate': 9.878857142857141e-07, 'completion_length': 42.765625, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.9921875, 'reward': 1.90625, 'reward_std': 0.17481552064418793, 'kl': 0.1611328125, 'epoch': 0.02}
+  1%|          | 106/8750 [26:47<32:56:02, 13.72s/it]Invalidate trace cache @ step 0 and module 156006: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 156735: cache has only 0 modules
+  1%|          | 107/8750 [27:02<33:29:42, 13.95s/it]                                                     {'loss': 0.0048, 'grad_norm': 2.5141156643517455, 'learning_rate': 9.877714285714285e-07, 'completion_length': 39.5, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.9921875, 'reward': 1.90625, 'reward_std': 0.1514892801642418, 'kl': 0.119140625, 'epoch': 0.02}
+  1%|          | 107/8750 [27:02<33:29:42, 13.95s/it]Invalidate trace cache @ step 0 and module 157464: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 158193: cache has only 0 modules
+  1%|          | 108/8750 [27:15<33:16:53, 13.86s/it]                                                     {'loss': 0.0048, 'grad_norm': 4.33766090230573, 'learning_rate': 9.876571428571428e-07, 'completion_length': 43.1171875, 'rewards/accuracy_reward': 0.875, 'rewards/format_reward': 1.0, 'reward': 1.875, 'reward_std': 0.22962789237499237, 'kl': 0.119384765625, 'epoch': 0.02}
+  1%|          | 108/8750 [27:15<33:16:53, 13.86s/it]Invalidate trace cache @ step 0 and module 158922: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 159651: cache has only 0 modules
+  1%|          | 109/8750 [27:26<31:07:37, 12.97s/it]                                                     {'loss': 0.0058, 'grad_norm': 7.556223314344758, 'learning_rate': 9.875428571428572e-07, 'completion_length': 39.5390625, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 1.0, 'reward': 1.8828125, 'reward_std': 0.19332443177700043, 'kl': 0.14404296875, 'epoch': 0.02}
+  1%|          | 109/8750 [27:26<31:07:37, 12.97s/it]Invalidate trace cache @ step 0 and module 160380: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 161109: cache has only 0 modules
+  1%|▏         | 110/8750 [27:39<30:55:03, 12.88s/it]                                                     {'loss': 0.0045, 'grad_norm': 3.7617675773321495, 'learning_rate': 9.874285714285714e-07, 'completion_length': 42.734375, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 1.0, 'reward': 1.890625, 'reward_std': 0.18543372303247452, 'kl': 0.112060546875, 'epoch': 0.03}
+  1%|▏         | 110/8750 [27:39<30:55:03, 12.88s/it]Invalidate trace cache @ step 0 and module 161838: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 162567: cache has only 0 modules
+  1%|▏         | 111/8750 [27:50<29:56:02, 12.47s/it]                                                     {'loss': 0.0049, 'grad_norm': 3.742426010834383, 'learning_rate': 9.873142857142856e-07, 'completion_length': 39.0078125, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.14283226057887077, 'kl': 0.12158203125, 'epoch': 0.03}
+  1%|▏         | 111/8750 [27:50<29:56:02, 12.47s/it]Invalidate trace cache @ step 0 and module 163296: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 164025: cache has only 0 modules
+  1%|▏         | 112/8750 [28:07<32:37:28, 13.60s/it]                                                     {'loss': 0.0051, 'grad_norm': 2.5495078072370667, 'learning_rate': 9.871999999999998e-07, 'completion_length': 43.6796875, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 1.0, 'reward': 1.9296875, 'reward_std': 0.134404756128788, 'kl': 0.126708984375, 'epoch': 0.03}
+  1%|▏         | 112/8750 [28:07<32:37:28, 13.60s/it]Invalidate trace cache @ step 0 and module 164754: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 165483: cache has only 0 modules
+  1%|▏         | 113/8750 [28:26<36:37:39, 15.27s/it]                                                     {'loss': 0.0044, 'grad_norm': 3.219574246634983, 'learning_rate': 9.870857142857143e-07, 'completion_length': 44.40625, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 1.0, 'reward': 1.9375, 'reward_std': 0.12756996601819992, 'kl': 0.1103515625, 'epoch': 0.03}
+  1%|▏         | 113/8750 [28:26<36:37:39, 15.27s/it]Invalidate trace cache @ step 0 and module 166212: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 166941: cache has only 0 modules
+  1%|▏         | 114/8750 [28:38<34:25:05, 14.35s/it]                                                     {'loss': 0.0062, 'grad_norm': 4.606472633482862, 'learning_rate': 9.869714285714285e-07, 'completion_length': 41.53125, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 1.0, 'reward': 1.8828125, 'reward_std': 0.2227931097149849, 'kl': 0.1552734375, 'epoch': 0.03}
+  1%|▏         | 114/8750 [28:38<34:25:05, 14.35s/it]Invalidate trace cache @ step 0 and module 167670: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 168399: cache has only 0 modules
+  1%|▏         | 115/8750 [28:53<35:04:41, 14.62s/it]                                                     {'loss': 0.0046, 'grad_norm': 2.293182247701459, 'learning_rate': 9.86857142857143e-07, 'completion_length': 44.1640625, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.1751839742064476, 'kl': 0.115966796875, 'epoch': 0.03}
+  1%|▏         | 115/8750 [28:53<35:04:41, 14.62s/it]Invalidate trace cache @ step 0 and module 169128: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 169857: cache has only 0 modules
+  1%|▏         | 116/8750 [29:12<37:56:26, 15.82s/it]                                                     {'loss': 0.0052, 'grad_norm': 2.6662074287106843, 'learning_rate': 9.867428571428571e-07, 'completion_length': 48.1484375, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.984375, 'reward': 1.9140625, 'reward_std': 0.13888052478432655, 'kl': 0.12939453125, 'epoch': 0.03}
+  1%|▏         | 116/8750 [29:12<37:56:26, 15.82s/it]Invalidate trace cache @ step 0 and module 170586: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 171315: cache has only 0 modules
+  1%|▏         | 117/8750 [29:25<35:58:50, 15.00s/it]                                                     {'loss': 0.0043, 'grad_norm': 3.530500436763354, 'learning_rate': 9.866285714285713e-07, 'completion_length': 46.8359375, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 1.0, 'reward': 1.9453125, 'reward_std': 0.1054728738963604, 'kl': 0.1064453125, 'epoch': 0.03}
+  1%|▏         | 117/8750 [29:25<35:58:50, 15.00s/it]Invalidate trace cache @ step 0 and module 172044: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 172773: cache has only 0 modules
+  1%|▏         | 118/8750 [29:40<36:08:22, 15.07s/it]                                                     {'loss': 0.0042, 'grad_norm': 4.88465478534352, 'learning_rate': 9.865142857142856e-07, 'completion_length': 44.0078125, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 1.0, 'reward': 1.9296875, 'reward_std': 0.16834919154644012, 'kl': 0.10595703125, 'epoch': 0.03}
+  1%|▏         | 118/8750 [29:40<36:08:22, 15.07s/it]Invalidate trace cache @ step 0 and module 173502: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 174231: cache has only 0 modules
+  1%|▏         | 119/8750 [29:55<35:39:10, 14.87s/it]                                                     {'loss': 0.0052, 'grad_norm': 2.295259064030145, 'learning_rate': 9.864e-07, 'completion_length': 42.6015625, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 1.0, 'reward': 1.90625, 'reward_std': 0.11678344011306763, 'kl': 0.130859375, 'epoch': 0.03}
+  1%|▏         | 119/8750 [29:55<35:39:10, 14.87s/it]Invalidate trace cache @ step 0 and module 174960: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 175689: cache has only 0 modules
+  1%|▏         | 120/8750 [30:09<35:11:13, 14.68s/it]                                                     {'loss': 0.005, 'grad_norm': 3.5337950958944795, 'learning_rate': 9.862857142857142e-07, 'completion_length': 43.4296875, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 1.0, 'reward': 1.8984375, 'reward_std': 0.20175684243440628, 'kl': 0.1240234375, 'epoch': 0.03}
+  1%|▏         | 120/8750 [30:09<35:11:13, 14.68s/it]Invalidate trace cache @ step 0 and module 176418: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 177147: cache has only 0 modules
+  1%|▏         | 121/8750 [30:22<34:17:43, 14.31s/it]                                                     {'loss': 0.0083, 'grad_norm': 6.507209250237378, 'learning_rate': 9.861714285714286e-07, 'completion_length': 40.625, 'rewards/accuracy_reward': 0.8671875, 'rewards/format_reward': 1.0, 'reward': 1.8671875, 'reward_std': 0.23751860857009888, 'kl': 0.20849609375, 'epoch': 0.03}
+  1%|▏         | 121/8750 [30:22<34:17:43, 14.31s/it]Invalidate trace cache @ step 0 and module 177876: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 178605: cache has only 0 modules
+  1%|▏         | 122/8750 [30:36<33:34:32, 14.01s/it]                                                     {'loss': 0.0046, 'grad_norm': 9.812235277976402, 'learning_rate': 9.860571428571429e-07, 'completion_length': 42.9609375, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 1.0, 'reward': 1.890625, 'reward_std': 0.20069600641727448, 'kl': 0.11376953125, 'epoch': 0.03}
+  1%|▏         | 122/8750 [30:36<33:34:32, 14.01s/it]Invalidate trace cache @ step 0 and module 179334: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 180063: cache has only 0 modules
+  1%|▏         | 123/8750 [30:50<34:03:26, 14.21s/it]                                                     {'loss': 0.0045, 'grad_norm': 3.1015937363409756, 'learning_rate': 9.85942857142857e-07, 'completion_length': 42.8203125, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 0.9921875, 'reward': 1.953125, 'reward_std': 0.11732022278010845, 'kl': 0.11376953125, 'epoch': 0.03}
+  1%|▏         | 123/8750 [30:50<34:03:26, 14.21s/it]Invalidate trace cache @ step 0 and module 180792: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 181521: cache has only 0 modules
+  1%|▏         | 124/8750 [31:03<33:16:22, 13.89s/it]                                                     {'loss': 0.0051, 'grad_norm': 2.201842822396597, 'learning_rate': 9.858285714285713e-07, 'completion_length': 41.2890625, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 0.9921875, 'reward': 1.953125, 'reward_std': 0.10205793380737305, 'kl': 0.126953125, 'epoch': 0.03}
+  1%|▏         | 124/8750 [31:03<33:16:22, 13.89s/it]Invalidate trace cache @ step 0 and module 182250: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 182979: cache has only 0 modules
+  1%|▏         | 125/8750 [31:16<32:29:41, 13.56s/it]                                                     {'loss': 0.0047, 'grad_norm': 3.3528645133992896, 'learning_rate': 9.857142857142857e-07, 'completion_length': 43.2265625, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 1.0, 'reward': 1.90625, 'reward_std': 0.18543371558189392, 'kl': 0.1171875, 'epoch': 0.03}
+  1%|▏         | 125/8750 [31:16<32:29:41, 13.56s/it]Invalidate trace cache @ step 0 and module 183708: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 184437: cache has only 0 modules
+  1%|▏         | 126/8750 [31:30<32:42:41, 13.66s/it]                                                     {'loss': 0.0047, 'grad_norm': 3.7336706694285335, 'learning_rate': 9.856e-07, 'completion_length': 44.6171875, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.984375, 'reward': 1.921875, 'reward_std': 0.19044627994298935, 'kl': 0.117919921875, 'epoch': 0.03}
+  1%|▏         | 126/8750 [31:30<32:42:41, 13.66s/it]Invalidate trace cache @ step 0 and module 185166: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 185895: cache has only 0 modules
+  1%|▏         | 127/8750 [31:44<32:55:57, 13.75s/it]                                                     {'loss': 0.0042, 'grad_norm': 39.29207694461001, 'learning_rate': 9.854857142857141e-07, 'completion_length': 43.6484375, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.19044627249240875, 'kl': 0.10546875, 'epoch': 0.03}
+  1%|▏         | 127/8750 [31:44<32:55:57, 13.75s/it]Invalidate trace cache @ step 0 and module 186624: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 187353: cache has only 0 modules
+  1%|▏         | 128/8750 [31:58<33:04:20, 13.81s/it]                                                     {'loss': 0.0048, 'grad_norm': 5.492830576073934, 'learning_rate': 9.853714285714286e-07, 'completion_length': 42.203125, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9921875, 'reward': 1.8984375, 'reward_std': 0.13941730931401253, 'kl': 0.120849609375, 'epoch': 0.03}
+  1%|▏         | 128/8750 [31:58<33:04:20, 13.81s/it]Invalidate trace cache @ step 0 and module 188082: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 188811: cache has only 0 modules
+  1%|▏         | 129/8750 [32:19<37:58:38, 15.86s/it]                                                     {'loss': 0.0053, 'grad_norm': 7.17060875803128, 'learning_rate': 9.852571428571428e-07, 'completion_length': 44.484375, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.9921875, 'reward': 1.90625, 'reward_std': 0.2346404492855072, 'kl': 0.13232421875, 'epoch': 0.03}
+  1%|▏         | 129/8750 [32:19<37:58:38, 15.86s/it]Invalidate trace cache @ step 0 and module 189540: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 190269: cache has only 0 modules
+  1%|▏         | 130/8750 [32:30<34:56:32, 14.59s/it]                                                     {'loss': 0.0053, 'grad_norm': 2.2944347617159995, 'learning_rate': 9.85142857142857e-07, 'completion_length': 42.1328125, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 1.0, 'reward': 1.9609375, 'reward_std': 0.11048543080687523, 'kl': 0.1318359375, 'epoch': 0.03}
+  1%|▏         | 130/8750 [32:30<34:56:32, 14.59s/it]Invalidate trace cache @ step 0 and module 190998: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 191727: cache has only 0 modules
+  1%|▏         | 131/8750 [32:46<35:52:27, 14.98s/it]                                                     {'loss': 0.0051, 'grad_norm': 2.7060301827116264, 'learning_rate': 9.850285714285714e-07, 'completion_length': 44.0625, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 1.0, 'reward': 1.9296875, 'reward_std': 0.13098490796983242, 'kl': 0.1279296875, 'epoch': 0.03}
+  1%|▏         | 131/8750 [32:46<35:52:27, 14.98s/it]Invalidate trace cache @ step 0 and module 192456: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 193185: cache has only 0 modules
+  2%|▏         | 132/8750 [32:58<33:29:18, 13.99s/it]                                                     {'loss': 0.0065, 'grad_norm': 17.029074028649948, 'learning_rate': 9.849142857142857e-07, 'completion_length': 33.015625, 'rewards/accuracy_reward': 0.828125, 'rewards/format_reward': 1.0, 'reward': 1.828125, 'reward_std': 0.18543372303247452, 'kl': 0.162109375, 'epoch': 0.03}
+  2%|▏         | 132/8750 [32:58<33:29:18, 13.99s/it]Invalidate trace cache @ step 0 and module 193914: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 194643: cache has only 0 modules
+  2%|▏         | 133/8750 [33:09<31:29:16, 13.15s/it]                                                     {'loss': 0.0077, 'grad_norm': 3.8086291925666838, 'learning_rate': 9.847999999999999e-07, 'completion_length': 36.984375, 'rewards/accuracy_reward': 0.921875, 'rewards/format_reward': 1.0, 'reward': 1.921875, 'reward_std': 0.17176413536071777, 'kl': 0.19189453125, 'epoch': 0.03}
+  2%|▏         | 133/8750 [33:09<31:29:16, 13.15s/it]Invalidate trace cache @ step 0 and module 195372: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 196101: cache has only 0 modules
+  2%|▏         | 134/8750 [33:22<31:04:48, 12.99s/it]                                                     {'loss': 0.0074, 'grad_norm': 3.5462054271078993, 'learning_rate': 9.846857142857143e-07, 'completion_length': 34.5078125, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.18702643364667892, 'kl': 0.18408203125, 'epoch': 0.03}
+  2%|▏         | 134/8750 [33:22<31:04:48, 12.99s/it]Invalidate trace cache @ step 0 and module 196830: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 197559: cache has only 0 modules
+  2%|▏         | 135/8750 [33:36<31:49:59, 13.30s/it]                                                     {'loss': 0.0072, 'grad_norm': 4.137411391866906, 'learning_rate': 9.845714285714285e-07, 'completion_length': 36.4296875, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 1.0, 'reward': 1.90625, 'reward_std': 0.1949220597743988, 'kl': 0.1806640625, 'epoch': 0.03}
+  2%|▏         | 135/8750 [33:36<31:49:59, 13.30s/it]Invalidate trace cache @ step 0 and module 198288: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 199017: cache has only 0 modules
+  2%|▏         | 136/8750 [33:50<32:41:49, 13.66s/it]                                                     {'loss': 0.0078, 'grad_norm': 3.0659523448600963, 'learning_rate': 9.844571428571427e-07, 'completion_length': 35.359375, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 0.9765625, 'reward': 1.9453125, 'reward_std': 0.13941731303930283, 'kl': 0.19580078125, 'epoch': 0.03}
+  2%|▏         | 136/8750 [33:50<32:41:49, 13.66s/it]Invalidate trace cache @ step 0 and module 199746: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 200475: cache has only 0 modules
+  2%|▏         | 137/8750 [34:01<30:36:10, 12.79s/it]                                                     {'loss': 0.0092, 'grad_norm': 2.3272583204211013, 'learning_rate': 9.843428571428572e-07, 'completion_length': 31.234375, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 1.0, 'reward': 1.96875, 'reward_std': 0.07312605157494545, 'kl': 0.23046875, 'epoch': 0.03}
+  2%|▏         | 137/8750 [34:01<30:36:10, 12.79s/it]Invalidate trace cache @ step 0 and module 201204: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 201933: cache has only 0 modules
+  2%|▏         | 138/8750 [34:11<28:39:25, 11.98s/it]                                                     {'loss': 0.0102, 'grad_norm': 42.2253717692061, 'learning_rate': 9.842285714285714e-07, 'completion_length': 30.796875, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.9921875, 'reward': 1.9296875, 'reward_std': 0.16834919899702072, 'kl': 0.25634765625, 'epoch': 0.03}
+  2%|▏         | 138/8750 [34:11<28:39:25, 11.98s/it]Invalidate trace cache @ step 0 and module 202662: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 203391: cache has only 0 modules
+  2%|▏         | 139/8750 [34:27<31:10:23, 13.03s/it]                                                     {'loss': 0.0087, 'grad_norm': 2.7807965575250604, 'learning_rate': 9.841142857142856e-07, 'completion_length': 32.359375, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 1.0, 'reward': 1.9609375, 'reward_std': 0.11048543080687523, 'kl': 0.21728515625, 'epoch': 0.03}
+  2%|▏         | 139/8750 [34:27<31:10:23, 13.03s/it]Invalidate trace cache @ step 0 and module 204120: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 204849: cache has only 0 modules
+  2%|▏         | 140/8750 [34:36<28:45:56, 12.03s/it]                                                     {'loss': 0.0081, 'grad_norm': 3.081097239743402, 'learning_rate': 9.84e-07, 'completion_length': 30.375, 'rewards/accuracy_reward': 0.953125, 'rewards/format_reward': 0.9921875, 'reward': 1.9453125, 'reward_std': 0.12415501475334167, 'kl': 0.20166015625, 'epoch': 0.03}
+  2%|▏         | 140/8750 [34:36<28:45:56, 12.03s/it]Invalidate trace cache @ step 0 and module 205578: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 206307: cache has only 0 modules
+  2%|▏         | 141/8750 [34:54<32:49:20, 13.73s/it]                                                     {'loss': 0.0082, 'grad_norm': 3.338799775925386, 'learning_rate': 9.838857142857142e-07, 'completion_length': 34.828125, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 1.0, 'reward': 1.9453125, 'reward_std': 0.13941731676459312, 'kl': 0.20458984375, 'epoch': 0.03}
+  2%|▏         | 141/8750 [34:54<32:49:20, 13.73s/it]Invalidate trace cache @ step 0 and module 207036: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 207765: cache has only 0 modules
+  2%|▏         | 142/8750 [35:15<37:52:47, 15.84s/it]                                                     {'loss': 0.009, 'grad_norm': 3.4772221219655703, 'learning_rate': 9.837714285714285e-07, 'completion_length': 37.2265625, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 1.0, 'reward': 1.9375, 'reward_std': 0.09863808378577232, 'kl': 0.22412109375, 'epoch': 0.03}
+  2%|▏         | 142/8750 [35:15<37:52:47, 15.84s/it]Invalidate trace cache @ step 0 and module 208494: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 209223: cache has only 0 modules
+  2%|▏         | 143/8750 [35:29<36:53:34, 15.43s/it]                                                     {'loss': 0.0096, 'grad_norm': 4.970918764819302, 'learning_rate': 9.836571428571429e-07, 'completion_length': 34.5, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 0.984375, 'reward': 1.875, 'reward_std': 0.2346404492855072, 'kl': 0.2392578125, 'epoch': 0.03}
+  2%|▏         | 143/8750 [35:29<36:53:34, 15.43s/it]Invalidate trace cache @ step 0 and module 209952: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 210681: cache has only 0 modules
+  2%|▏         | 144/8750 [35:44<36:14:46, 15.16s/it]                                                     {'loss': 0.0115, 'grad_norm': 2.7470469068314656, 'learning_rate': 9.83542857142857e-07, 'completion_length': 34.375, 'rewards/accuracy_reward': 0.9765625, 'rewards/format_reward': 1.0, 'reward': 1.9765625, 'reward_std': 0.06629125773906708, 'kl': 0.2861328125, 'epoch': 0.03}
+  2%|▏         | 144/8750 [35:44<36:14:46, 15.16s/it]Invalidate trace cache @ step 0 and module 211410: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 212139: cache has only 0 modules
+  2%|▏         | 145/8750 [35:56<34:30:58, 14.44s/it]                                                     {'loss': 0.0116, 'grad_norm': 2.485558470555951, 'learning_rate': 9.834285714285713e-07, 'completion_length': 34.5703125, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 1.0, 'reward': 1.96875, 'reward_std': 0.08838834427297115, 'kl': 0.2900390625, 'epoch': 0.03}
+  2%|▏         | 145/8750 [35:56<34:30:58, 14.44s/it]Invalidate trace cache @ step 0 and module 212868: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 213597: cache has only 0 modules
+  2%|▏         | 146/8750 [36:13<36:13:09, 15.15s/it]                                                     {'loss': 0.011, 'grad_norm': 8.738969567128905, 'learning_rate': 9.833142857142857e-07, 'completion_length': 36.71875, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9921875, 'reward': 1.8984375, 'reward_std': 0.1830747053027153, 'kl': 0.275390625, 'epoch': 0.03}
+  2%|▏         | 146/8750 [36:13<36:13:09, 15.15s/it]Invalidate trace cache @ step 0 and module 214326: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 215055: cache has only 0 modules
+  2%|▏         | 147/8750 [36:24<33:22:26, 13.97s/it]                                                     {'loss': 0.0117, 'grad_norm': 1.9793182042769986, 'learning_rate': 9.832e-07, 'completion_length': 33.0, 'rewards/accuracy_reward': 0.9765625, 'rewards/format_reward': 1.0, 'reward': 1.9765625, 'reward_std': 0.05102896690368652, 'kl': 0.2919921875, 'epoch': 0.03}
+  2%|▏         | 147/8750 [36:24<33:22:26, 13.97s/it]Invalidate trace cache @ step 0 and module 215784: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 216513: cache has only 0 modules
+  2%|▏         | 148/8750 [36:39<33:55:53, 14.20s/it]                                                     {'loss': 0.0083, 'grad_norm': 2.498823681080866, 'learning_rate': 9.830857142857144e-07, 'completion_length': 43.6015625, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 1.0, 'reward': 1.9609375, 'reward_std': 0.07654099725186825, 'kl': 0.20751953125, 'epoch': 0.03}
+  2%|▏         | 148/8750 [36:39<33:55:53, 14.20s/it]Invalidate trace cache @ step 0 and module 217242: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 217971: cache has only 0 modules
+  2%|▏         | 149/8750 [36:58<37:34:01, 15.72s/it]                                                     {'loss': 0.008, 'grad_norm': 6.494664850266416, 'learning_rate': 9.829714285714286e-07, 'completion_length': 40.0625, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.9921875, 'reward': 1.9296875, 'reward_std': 0.15308689326047897, 'kl': 0.2001953125, 'epoch': 0.03}
+  2%|▏         | 149/8750 [36:58<37:34:01, 15.72s/it]Invalidate trace cache @ step 0 and module 218700: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 219429: cache has only 0 modules
+  2%|▏         | 150/8750 [37:25<44:59:06, 18.83s/it]                                                     {'loss': 0.0069, 'grad_norm': 5.0710997464405825, 'learning_rate': 9.828571428571428e-07, 'completion_length': 55.5390625, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.9765625, 'reward': 1.9140625, 'reward_std': 0.20801588147878647, 'kl': 0.17236328125, 'epoch': 0.03}
+  2%|▏         | 150/8750 [37:25<44:59:06, 18.83s/it]Invalidate trace cache @ step 0 and module 220158: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 220887: cache has only 0 modules
+  2%|▏         | 151/8750 [37:44<45:32:04, 19.06s/it]                                                     {'loss': 0.0066, 'grad_norm': 3.846658452926833, 'learning_rate': 9.82742857142857e-07, 'completion_length': 49.4140625, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.9921875, 'reward': 1.890625, 'reward_std': 0.1712273433804512, 'kl': 0.16357421875, 'epoch': 0.03}
+  2%|▏         | 151/8750 [37:44<45:32:04, 19.06s/it]Invalidate trace cache @ step 0 and module 221616: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 222345: cache has only 0 modules
+  2%|▏         | 152/8750 [38:02<44:23:45, 18.59s/it]                                                     {'loss': 0.005, 'grad_norm': 3.9553150588932495, 'learning_rate': 9.826285714285713e-07, 'completion_length': 55.640625, 'rewards/accuracy_reward': 0.921875, 'rewards/format_reward': 0.9921875, 'reward': 1.9140625, 'reward_std': 0.17859894037246704, 'kl': 0.125244140625, 'epoch': 0.03}
+  2%|▏         | 152/8750 [38:02<44:23:45, 18.59s/it]Invalidate trace cache @ step 0 and module 223074: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 223803: cache has only 0 modules
+  2%|▏         | 153/8750 [38:35<54:38:33, 22.88s/it]                                                     {'loss': 0.0048, 'grad_norm': 18.96995527672634, 'learning_rate': 9.825142857142857e-07, 'completion_length': 67.5390625, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.9921875, 'reward': 1.90625, 'reward_std': 0.19727616757154465, 'kl': 0.1201171875, 'epoch': 0.03}
+  2%|▏         | 153/8750 [38:35<54:38:33, 22.88s/it]Invalidate trace cache @ step 0 and module 224532: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 225261: cache has only 0 modules
+  2%|▏         | 154/8750 [39:01<57:01:21, 23.88s/it]                                                     {'loss': 0.0047, 'grad_norm': 2.830436656386007, 'learning_rate': 9.824e-07, 'completion_length': 68.1796875, 'rewards/accuracy_reward': 0.953125, 'rewards/format_reward': 0.9921875, 'reward': 1.9453125, 'reward_std': 0.12415502220392227, 'kl': 0.116455078125, 'epoch': 0.04}
+  2%|▏         | 154/8750 [39:01<57:01:21, 23.88s/it]Invalidate trace cache @ step 0 and module 225990: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 226719: cache has only 0 modules
+  2%|▏         | 155/8750 [39:20<53:39:49, 22.48s/it]                                                     {'loss': 0.0089, 'grad_norm': 3.3961052103919918, 'learning_rate': 9.822857142857143e-07, 'completion_length': 56.8671875, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 0.9921875, 'reward': 1.9609375, 'reward_std': 0.09522313624620438, 'kl': 0.220703125, 'epoch': 0.04}
+  2%|▏         | 155/8750 [39:20<53:39:49, 22.48s/it]Invalidate trace cache @ step 0 and module 227448: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 228177: cache has only 0 modules
+  2%|▏         | 156/8750 [39:48<57:28:24, 24.08s/it]                                                     {'loss': 0.0039, 'grad_norm': 4.677197269485285, 'learning_rate': 9.821714285714285e-07, 'completion_length': 66.7734375, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 0.984375, 'reward': 1.875, 'reward_std': 0.2398776412010193, 'kl': 0.0966796875, 'epoch': 0.04}
+  2%|▏         | 156/8750 [39:48<57:28:24, 24.08s/it]Invalidate trace cache @ step 0 and module 228906: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 229635: cache has only 0 modules
+  2%|▏         | 157/8750 [40:12<57:40:15, 24.16s/it]                                                     {'loss': 0.006, 'grad_norm': 5.044242122719664, 'learning_rate': 9.820571428571428e-07, 'completion_length': 67.8359375, 'rewards/accuracy_reward': 0.84375, 'rewards/format_reward': 0.984375, 'reward': 1.828125, 'reward_std': 0.24758517742156982, 'kl': 0.150390625, 'epoch': 0.04}
+  2%|▏         | 157/8750 [40:12<57:40:15, 24.16s/it]Invalidate trace cache @ step 0 and module 230364: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 231093: cache has only 0 modules
+  2%|▏         | 158/8750 [40:29<52:08:51, 21.85s/it]                                                     {'loss': 0.005, 'grad_norm': 2.903277513202116, 'learning_rate': 9.81942857142857e-07, 'completion_length': 59.890625, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 1.0, 'reward': 1.9453125, 'reward_std': 0.12415502220392227, 'kl': 0.12548828125, 'epoch': 0.04}
+  2%|▏         | 158/8750 [40:29<52:08:51, 21.85s/it]Invalidate trace cache @ step 0 and module 231822: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 232551: cache has only 0 modules
+  2%|▏         | 159/8750 [40:48<50:10:48, 21.03s/it]                                                     {'loss': 0.0155, 'grad_norm': 14.897268781506241, 'learning_rate': 9.818285714285714e-07, 'completion_length': 63.5234375, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.14283225685358047, 'kl': 0.384765625, 'epoch': 0.04}
+  2%|▏         | 159/8750 [40:48<50:10:48, 21.03s/it]Invalidate trace cache @ step 0 and module 233280: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 234009: cache has only 0 modules
+  2%|▏         | 160/8750 [41:14<53:37:11, 22.47s/it]                                                     {'loss': 0.0053, 'grad_norm': 4.551106545355999, 'learning_rate': 9.817142857142856e-07, 'completion_length': 67.984375, 'rewards/accuracy_reward': 0.7734375, 'rewards/format_reward': 0.984375, 'reward': 1.7578125, 'reward_std': 0.250948429107666, 'kl': 0.1328125, 'epoch': 0.04}
+  2%|▏         | 160/8750 [41:14<53:37:11, 22.47s/it]Invalidate trace cache @ step 0 and module 234738: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 235467: cache has only 0 modules
+  2%|▏         | 161/8750 [41:35<52:58:32, 22.20s/it]                                                     {'loss': 0.0061, 'grad_norm': 4.375643476918285, 'learning_rate': 9.816e-07, 'completion_length': 60.484375, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.984375, 'reward': 1.921875, 'reward_std': 0.1519743613898754, 'kl': 0.15234375, 'epoch': 0.04}
+  2%|▏         | 161/8750 [41:35<52:58:32, 22.20s/it]Invalidate trace cache @ step 0 and module 236196: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 236925: cache has only 0 modules
+  2%|▏         | 162/8750 [41:58<53:10:20, 22.29s/it]                                                     {'loss': 0.0068, 'grad_norm': 9.887684535569795, 'learning_rate': 9.814857142857143e-07, 'completion_length': 60.546875, 'rewards/accuracy_reward': 0.84375, 'rewards/format_reward': 1.0, 'reward': 1.84375, 'reward_std': 0.2238539382815361, 'kl': 0.1689453125, 'epoch': 0.04}
+  2%|▏         | 162/8750 [41:58<53:10:20, 22.29s/it]Invalidate trace cache @ step 0 and module 237654: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 238383: cache has only 0 modules
+  2%|▏         | 163/8750 [42:17<51:15:35, 21.49s/it]                                                     {'loss': 0.0064, 'grad_norm': 5.310498805545972, 'learning_rate': 9.813714285714285e-07, 'completion_length': 54.3515625, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 1.0, 'reward': 1.9140625, 'reward_std': 0.21254336088895798, 'kl': 0.15966796875, 'epoch': 0.04}
+  2%|▏         | 163/8750 [42:17<51:15:35, 21.49s/it]Invalidate trace cache @ step 0 and module 239112: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 239841: cache has only 0 modules
+  2%|▏         | 164/8750 [42:46<56:17:06, 23.60s/it]                                                     {'loss': 0.0071, 'grad_norm': 1.9778149597736008, 'learning_rate': 9.812571428571427e-07, 'completion_length': 61.609375, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 0.9921875, 'reward': 1.953125, 'reward_std': 0.11279275082051754, 'kl': 0.17626953125, 'epoch': 0.04}
+  2%|▏         | 164/8750 [42:46<56:17:06, 23.60s/it]Invalidate trace cache @ step 0 and module 240570: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 241299: cache has only 0 modules
+  2%|▏         | 165/8750 [43:05<53:16:45, 22.34s/it]                                                     {'loss': 0.0072, 'grad_norm': 6.097030277553809, 'learning_rate': 9.811428571428571e-07, 'completion_length': 51.7109375, 'rewards/accuracy_reward': 0.8515625, 'rewards/format_reward': 0.9765625, 'reward': 1.828125, 'reward_std': 0.2616111636161804, 'kl': 0.1806640625, 'epoch': 0.04}
+  2%|▏         | 165/8750 [43:05<53:16:45, 22.34s/it]Invalidate trace cache @ step 0 and module 242028: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 242757: cache has only 0 modules
+  2%|▏         | 166/8750 [43:26<51:55:13, 21.77s/it]                                                     {'loss': 0.009, 'grad_norm': 2.9453450964336483, 'learning_rate': 9.810285714285713e-07, 'completion_length': 56.28125, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.17176414281129837, 'kl': 0.22607421875, 'epoch': 0.04}
+  2%|▏         | 166/8750 [43:26<51:55:13, 21.77s/it]Invalidate trace cache @ step 0 and module 243486: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 244215: cache has only 0 modules
+  2%|▏         | 167/8750 [43:42<48:08:09, 20.19s/it]                                                     {'loss': 0.0065, 'grad_norm': 2.855465368856302, 'learning_rate': 9.809142857142858e-07, 'completion_length': 58.515625, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 1.0, 'reward': 1.9140625, 'reward_std': 0.19728107750415802, 'kl': 0.162841796875, 'epoch': 0.04}
+  2%|▏         | 167/8750 [43:42<48:08:09, 20.19s/it]Invalidate trace cache @ step 0 and module 244944: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 245673: cache has only 0 modules
+  2%|▏         | 168/8750 [43:58<45:13:32, 18.97s/it]                                                     {'loss': 0.0095, 'grad_norm': 2.332776995190597, 'learning_rate': 9.808e-07, 'completion_length': 46.8515625, 'rewards/accuracy_reward': 0.921875, 'rewards/format_reward': 1.0, 'reward': 1.921875, 'reward_std': 0.15650184080004692, 'kl': 0.23828125, 'epoch': 0.04}
+  2%|▏         | 168/8750 [43:58<45:13:32, 18.97s/it]Invalidate trace cache @ step 0 and module 246402: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 247131: cache has only 0 modules
+  2%|▏         | 169/8750 [44:27<52:28:53, 22.02s/it]                                                     {'loss': 0.0079, 'grad_norm': 4.339403923233285, 'learning_rate': 9.806857142857142e-07, 'completion_length': 49.7109375, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 0.984375, 'reward': 1.953125, 'reward_std': 0.13258251547813416, 'kl': 0.19921875, 'epoch': 0.04}
+  2%|▏         | 169/8750 [44:27<52:28:53, 22.02s/it]Invalidate trace cache @ step 0 and module 247860: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 248589: cache has only 0 modules
+  2%|▏         | 170/8750 [44:56<56:59:59, 23.92s/it]                                                     {'loss': 0.007, 'grad_norm': 5.719331862402935, 'learning_rate': 9.805714285714284e-07, 'completion_length': 50.6953125, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.9921875, 'reward': 1.9296875, 'reward_std': 0.16834919154644012, 'kl': 0.1748046875, 'epoch': 0.04}
+  2%|▏         | 170/8750 [44:56<56:59:59, 23.92s/it]Invalidate trace cache @ step 0 and module 249318: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 250047: cache has only 0 modules
+  2%|▏         | 171/8750 [45:18<56:07:23, 23.55s/it]                                                     {'loss': 0.008, 'grad_norm': 3.2021068581224763, 'learning_rate': 9.804571428571429e-07, 'completion_length': 41.9453125, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 1.0, 'reward': 1.9453125, 'reward_std': 0.13941731676459312, 'kl': 0.19921875, 'epoch': 0.04}
+  2%|▏         | 171/8750 [45:18<56:07:23, 23.55s/it]Invalidate trace cache @ step 0 and module 250776: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 251505: cache has only 0 modules
+  2%|▏         | 172/8750 [45:37<52:49:25, 22.17s/it]                                                     {'loss': 0.0101, 'grad_norm': 1.8787560363948583, 'learning_rate': 9.80342857142857e-07, 'completion_length': 39.375, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 1.0, 'reward': 1.8984375, 'reward_std': 0.20175684615969658, 'kl': 0.251953125, 'epoch': 0.04}
+  2%|▏         | 172/8750 [45:37<52:49:25, 22.17s/it]Invalidate trace cache @ step 0 and module 252234: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 252963: cache has only 0 modules
+  2%|▏         | 173/8750 [45:54<49:05:18, 20.60s/it]                                                     {'loss': 0.0078, 'grad_norm': 2.3918160227189933, 'learning_rate': 9.802285714285715e-07, 'completion_length': 40.0703125, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.1462520956993103, 'kl': 0.19384765625, 'epoch': 0.04}
+  2%|▏         | 173/8750 [45:54<49:05:18, 20.60s/it]Invalidate trace cache @ step 0 and module 253692: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 254421: cache has only 0 modules
+  2%|▏         | 174/8750 [46:07<43:39:50, 18.33s/it]                                                     {'loss': 0.0087, 'grad_norm': 1.5923433484151477, 'learning_rate': 9.801142857142857e-07, 'completion_length': 38.390625, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 1.0, 'reward': 1.9609375, 'reward_std': 0.09522313997149467, 'kl': 0.21875, 'epoch': 0.04}
+  2%|▏         | 174/8750 [46:07<43:39:50, 18.33s/it]Invalidate trace cache @ step 0 and module 255150: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 255879: cache has only 0 modules
+  2%|▏         | 175/8750 [46:21<40:25:37, 16.97s/it]                                                     {'loss': 0.0111, 'grad_norm': 4.08141583464986, 'learning_rate': 9.8e-07, 'completion_length': 35.4453125, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.9921875, 'reward': 1.9296875, 'reward_std': 0.16834919154644012, 'kl': 0.27783203125, 'epoch': 0.04}
+  2%|▏         | 175/8750 [46:21<40:25:37, 16.97s/it]Invalidate trace cache @ step 0 and module 256608: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 257337: cache has only 0 modules
+  2%|▏         | 176/8750 [46:36<39:16:36, 16.49s/it]                                                     {'loss': 0.0106, 'grad_norm': 2.4289016419929825, 'learning_rate': 9.798857142857142e-07, 'completion_length': 35.234375, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 1.0, 'reward': 1.90625, 'reward_std': 0.1820138692855835, 'kl': 0.265625, 'epoch': 0.04}
+  2%|▏         | 176/8750 [46:36<39:16:36, 16.49s/it]Invalidate trace cache @ step 0 and module 258066: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 258795: cache has only 0 modules
+  2%|▏         | 177/8750 [46:52<38:49:04, 16.30s/it]                                                     {'loss': 0.0089, 'grad_norm': 2.7457719964586436, 'learning_rate': 9.797714285714286e-07, 'completion_length': 33.296875, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.1751839816570282, 'kl': 0.22412109375, 'epoch': 0.04}
+  2%|▏         | 177/8750 [46:52<38:49:04, 16.30s/it]Invalidate trace cache @ step 0 and module 259524: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 260253: cache has only 0 modules
+  2%|▏         | 178/8750 [47:07<37:20:58, 15.69s/it]                                                     {'loss': 0.0094, 'grad_norm': 5.134364975493064, 'learning_rate': 9.796571428571428e-07, 'completion_length': 37.140625, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 1.0, 'reward': 1.9296875, 'reward_std': 0.15308690071105957, 'kl': 0.234375, 'epoch': 0.04}
+  2%|▏         | 178/8750 [47:07<37:20:58, 15.69s/it]Invalidate trace cache @ step 0 and module 260982: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 261711: cache has only 0 modules
+  2%|▏         | 179/8750 [47:25<39:29:13, 16.59s/it]                                                     {'loss': 0.01, 'grad_norm': 2.5011685680000273, 'learning_rate': 9.79542857142857e-07, 'completion_length': 37.2890625, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 1.0, 'reward': 1.9453125, 'reward_std': 0.15467960759997368, 'kl': 0.2509765625, 'epoch': 0.04}
+  2%|▏         | 179/8750 [47:25<39:29:13, 16.59s/it]Invalidate trace cache @ step 0 and module 262440: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 263169: cache has only 0 modules
+  2%|▏         | 180/8750 [47:40<37:48:20, 15.88s/it]                                                     {'loss': 0.0088, 'grad_norm': 2.8014713814792316, 'learning_rate': 9.794285714285714e-07, 'completion_length': 36.359375, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9921875, 'reward': 1.8984375, 'reward_std': 0.18649455159902573, 'kl': 0.2197265625, 'epoch': 0.04}
+  2%|▏         | 180/8750 [47:40<37:48:20, 15.88s/it]Invalidate trace cache @ step 0 and module 263898: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 264627: cache has only 0 modules
+  2%|▏         | 181/8750 [47:59<40:30:26, 17.02s/it]                                                     {'loss': 0.0074, 'grad_norm': 3.980914700751407, 'learning_rate': 9.793142857142857e-07, 'completion_length': 41.8359375, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.9921875, 'reward': 1.9296875, 'reward_std': 0.19887378066778183, 'kl': 0.18505859375, 'epoch': 0.04}
+  2%|▏         | 181/8750 [47:59<40:30:26, 17.02s/it]Invalidate trace cache @ step 0 and module 265356: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 266085: cache has only 0 modules
+  2%|▏         | 182/8750 [48:14<38:51:02, 16.32s/it]                                                     {'loss': 0.0092, 'grad_norm': 2.831838704095622, 'learning_rate': 9.791999999999999e-07, 'completion_length': 36.1875, 'rewards/accuracy_reward': 0.953125, 'rewards/format_reward': 1.0, 'reward': 1.953125, 'reward_std': 0.09863808564841747, 'kl': 0.2294921875, 'epoch': 0.04}
+  2%|▏         | 182/8750 [48:14<38:51:02, 16.32s/it]Invalidate trace cache @ step 0 and module 266814: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 267543: cache has only 0 modules
+  2%|▏         | 183/8750 [48:33<40:57:23, 17.21s/it]                                                     {'loss': 0.0115, 'grad_norm': 3.6830635251188744, 'learning_rate': 9.790857142857143e-07, 'completion_length': 42.65625, 'rewards/accuracy_reward': 0.9765625, 'rewards/format_reward': 0.9921875, 'reward': 1.96875, 'reward_std': 0.08838834427297115, 'kl': 0.2890625, 'epoch': 0.04}
+  2%|▏         | 183/8750 [48:33<40:57:23, 17.21s/it]Invalidate trace cache @ step 0 and module 268272: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 269001: cache has only 0 modules
+  2%|▏         | 184/8750 [48:50<40:59:12, 17.23s/it]                                                     {'loss': 0.008, 'grad_norm': 4.8630506455242815, 'learning_rate': 9.789714285714285e-07, 'completion_length': 47.5859375, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.9921875, 'reward': 1.890625, 'reward_std': 0.23911622166633606, 'kl': 0.19921875, 'epoch': 0.04}
+  2%|▏         | 184/8750 [48:50<40:59:12, 17.23s/it]Invalidate trace cache @ step 0 and module 269730: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 270459: cache has only 0 modules
+  2%|▏         | 185/8750 [49:07<40:30:39, 17.03s/it]                                                     {'loss': 0.0063, 'grad_norm': 3.53118941988557, 'learning_rate': 9.788571428571427e-07, 'completion_length': 47.890625, 'rewards/accuracy_reward': 0.90625, 'rewards/format_reward': 0.9921875, 'reward': 1.8984375, 'reward_std': 0.2227930948138237, 'kl': 0.15771484375, 'epoch': 0.04}
+  2%|▏         | 185/8750 [49:07<40:30:39, 17.03s/it]Invalidate trace cache @ step 0 and module 271188: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 271917: cache has only 0 modules
+  2%|▏         | 186/8750 [49:28<43:21:09, 18.22s/it]                                                     {'loss': 0.0074, 'grad_norm': 2.399952078973382, 'learning_rate': 9.787428571428572e-07, 'completion_length': 48.1875, 'rewards/accuracy_reward': 0.890625, 'rewards/format_reward': 0.9921875, 'reward': 1.8828125, 'reward_std': 0.1649293452501297, 'kl': 0.18505859375, 'epoch': 0.04}
+  2%|▏         | 186/8750 [49:28<43:21:09, 18.22s/it]Invalidate trace cache @ step 0 and module 272646: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 273375: cache has only 0 modules
+  2%|▏         | 187/8750 [49:42<40:15:36, 16.93s/it]                                                     {'loss': 0.0092, 'grad_norm': 2.026501871095686, 'learning_rate': 9.786285714285714e-07, 'completion_length': 40.703125, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.9921875, 'reward': 1.90625, 'reward_std': 0.0883883461356163, 'kl': 0.22900390625, 'epoch': 0.04}
+  2%|▏         | 187/8750 [49:42<40:15:36, 16.93s/it]Invalidate trace cache @ step 0 and module 274104: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 274833: cache has only 0 modules
+  2%|▏         | 188/8750 [49:56<38:23:57, 16.15s/it]                                                     {'loss': 0.0073, 'grad_norm': 2.3314719392542393, 'learning_rate': 9.785142857142856e-07, 'completion_length': 41.15625, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.12304248660802841, 'kl': 0.18310546875, 'epoch': 0.04}
+  2%|▏         | 188/8750 [49:56<38:23:57, 16.15s/it]Invalidate trace cache @ step 0 and module 275562: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 276291: cache has only 0 modules
+  2%|▏         | 189/8750 [50:25<47:29:54, 19.97s/it]                                                     {'loss': 0.0062, 'grad_norm': 2.5692998819296036, 'learning_rate': 9.784e-07, 'completion_length': 53.046875, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.984375, 'reward': 1.9140625, 'reward_std': 0.17140057682991028, 'kl': 0.15576171875, 'epoch': 0.04}
+  2%|▏         | 189/8750 [50:25<47:29:54, 19.97s/it]Invalidate trace cache @ step 0 and module 277020: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 277749: cache has only 0 modules
+  2%|▏         | 190/8750 [50:40<44:03:07, 18.53s/it]                                                     {'loss': 0.0081, 'grad_norm': 2.4495109882692336, 'learning_rate': 9.782857142857142e-07, 'completion_length': 42.8671875, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 1.0, 'reward': 1.96875, 'reward_std': 0.0731260534375906, 'kl': 0.2021484375, 'epoch': 0.04}
+  2%|▏         | 190/8750 [50:40<44:03:07, 18.53s/it]Invalidate trace cache @ step 0 and module 278478: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 279207: cache has only 0 modules
+  2%|▏         | 191/8750 [51:08<50:40:40, 21.32s/it]                                                     {'loss': 0.0082, 'grad_norm': 2.6604800106008195, 'learning_rate': 9.781714285714285e-07, 'completion_length': 51.3203125, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.984375, 'reward': 1.9296875, 'reward_std': 0.1649293377995491, 'kl': 0.20458984375, 'epoch': 0.04}
+  2%|▏         | 191/8750 [51:08<50:40:40, 21.32s/it]Invalidate trace cache @ step 0 and module 279936: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 280665: cache has only 0 modules
+  2%|▏         | 192/8750 [51:22<45:11:17, 19.01s/it]                                                     {'loss': 0.0082, 'grad_norm': 2.5349751918097563, 'learning_rate': 9.780571428571429e-07, 'completion_length': 42.390625, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 0.9921875, 'reward': 1.9609375, 'reward_std': 0.11048543266952038, 'kl': 0.20458984375, 'epoch': 0.04}
+  2%|▏         | 192/8750 [51:22<45:11:17, 19.01s/it]Invalidate trace cache @ step 0 and module 281394: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 282123: cache has only 0 modules
+  2%|▏         | 193/8750 [51:36<42:05:12, 17.71s/it]                                                     {'loss': 0.0069, 'grad_norm': 5.2823312276587, 'learning_rate': 9.77942857142857e-07, 'completion_length': 48.2265625, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 1.0, 'reward': 1.9609375, 'reward_std': 0.09522314183413982, 'kl': 0.17333984375, 'epoch': 0.04}
+  2%|▏         | 193/8750 [51:36<42:05:12, 17.71s/it]Invalidate trace cache @ step 0 and module 282852: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 283581: cache has only 0 modules
+  2%|▏         | 194/8750 [51:51<39:50:00, 16.76s/it]                                                     {'loss': 0.009, 'grad_norm': 3.414124485260301, 'learning_rate': 9.778285714285713e-07, 'completion_length': 51.640625, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.12179600074887276, 'kl': 0.224609375, 'epoch': 0.04}
+  2%|▏         | 194/8750 [51:51<39:50:00, 16.76s/it]Invalidate trace cache @ step 0 and module 284310: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 285039: cache has only 0 modules
+  2%|▏         | 195/8750 [52:05<37:49:03, 15.91s/it]                                                     {'loss': 0.0055, 'grad_norm': 2.7146110515333586, 'learning_rate': 9.777142857142857e-07, 'completion_length': 52.6796875, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.16151440143585205, 'kl': 0.138671875, 'epoch': 0.04}
+  2%|▏         | 195/8750 [52:05<37:49:03, 15.91s/it]Invalidate trace cache @ step 0 and module 285768: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 286497: cache has only 0 modules
+  2%|▏         | 196/8750 [52:24<40:05:52, 16.88s/it]                                                     {'loss': 0.0054, 'grad_norm': 1.7385692201362857, 'learning_rate': 9.776e-07, 'completion_length': 61.5, 'rewards/accuracy_reward': 0.984375, 'rewards/format_reward': 1.0, 'reward': 1.984375, 'reward_std': 0.0289318785071373, 'kl': 0.134765625, 'epoch': 0.04}
+  2%|▏         | 196/8750 [52:24<40:05:52, 16.88s/it]Invalidate trace cache @ step 0 and module 287226: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 287955: cache has only 0 modules
+  2%|▏         | 197/8750 [52:43<41:37:20, 17.52s/it]                                                     {'loss': 0.0051, 'grad_norm': 3.386338364032069, 'learning_rate': 9.774857142857142e-07, 'completion_length': 56.3671875, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 1.0, 'reward': 1.9375, 'reward_std': 0.1767766922712326, 'kl': 0.126953125, 'epoch': 0.05}
+  2%|▏         | 197/8750 [52:43<41:37:20, 17.52s/it]Invalidate trace cache @ step 0 and module 288684: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 289413: cache has only 0 modules
+  2%|▏         | 198/8750 [53:04<44:21:57, 18.68s/it]                                                     {'loss': 0.006, 'grad_norm': 5.031463224698695, 'learning_rate': 9.773714285714286e-07, 'completion_length': 61.5546875, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 1.0, 'reward': 1.9140625, 'reward_std': 0.21254336833953857, 'kl': 0.14990234375, 'epoch': 0.05}
+  2%|▏         | 198/8750 [53:04<44:21:57, 18.68s/it]Invalidate trace cache @ step 0 and module 290142: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 290871: cache has only 0 modules
+  2%|▏         | 199/8750 [53:25<45:28:52, 19.15s/it]                                                     {'loss': 0.006, 'grad_norm': 3.527070694399915, 'learning_rate': 9.772571428571428e-07, 'completion_length': 63.4921875, 'rewards/accuracy_reward': 0.953125, 'rewards/format_reward': 0.9921875, 'reward': 1.9453125, 'reward_std': 0.13941731303930283, 'kl': 0.1513671875, 'epoch': 0.05}
+  2%|▏         | 199/8750 [53:25<45:28:52, 19.15s/it]Invalidate trace cache @ step 0 and module 291600: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 292329: cache has only 0 modules
+  2%|▏         | 200/8750 [53:43<44:56:03, 18.92s/it]                                                     {'loss': 0.0038, 'grad_norm': 3.533454614955937, 'learning_rate': 9.77142857142857e-07, 'completion_length': 68.328125, 'rewards/accuracy_reward': 0.8984375, 'rewards/format_reward': 0.984375, 'reward': 1.8828125, 'reward_std': 0.22584447264671326, 'kl': 0.093994140625, 'epoch': 0.05}
+  2%|▏         | 200/8750 [53:43<44:56:03, 18.92s/it]Invalidate trace cache @ step 0 and module 293058: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 293787: cache has only 0 modules
+  2%|▏         | 201/8750 [54:03<45:43:27, 19.25s/it]                                                     {'loss': 0.0038, 'grad_norm': 2.1530953309706873, 'learning_rate': 9.770285714285715e-07, 'completion_length': 65.7890625, 'rewards/accuracy_reward': 0.9453125, 'rewards/format_reward': 0.9921875, 'reward': 1.9375, 'reward_std': 0.14283226244151592, 'kl': 0.095703125, 'epoch': 0.05}
+  2%|▏         | 201/8750 [54:03<45:43:27, 19.25s/it]Invalidate trace cache @ step 0 and module 294516: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 295245: cache has only 0 modules
+  2%|▏         | 202/8750 [54:17<41:58:37, 17.68s/it]                                                     {'loss': 0.0036, 'grad_norm': 2.0878858223242656, 'learning_rate': 9.769142857142857e-07, 'completion_length': 58.3515625, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 1.0, 'reward': 1.9296875, 'reward_std': 0.08679073303937912, 'kl': 0.091064453125, 'epoch': 0.05}
+  2%|▏         | 202/8750 [54:17<41:58:37, 17.68s/it]Invalidate trace cache @ step 0 and module 295974: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 296703: cache has only 0 modules
+  2%|▏         | 203/8750 [54:35<41:50:43, 17.63s/it]                                                     {'loss': 0.0055, 'grad_norm': 2.6385310406744265, 'learning_rate': 9.768e-07, 'completion_length': 65.328125, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 1.0, 'reward': 1.9609375, 'reward_std': 0.09522314183413982, 'kl': 0.137939453125, 'epoch': 0.05}
+  2%|▏         | 203/8750 [54:35<41:50:43, 17.63s/it]Invalidate trace cache @ step 0 and module 297432: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 298161: cache has only 0 modules
+  2%|▏         | 204/8750 [54:49<39:30:56, 16.65s/it]                                                     {'loss': 0.0057, 'grad_norm': 4.161693579474826, 'learning_rate': 9.766857142857141e-07, 'completion_length': 54.4609375, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.984375, 'reward': 1.8984375, 'reward_std': 0.20300333201885223, 'kl': 0.141357421875, 'epoch': 0.05}
+  2%|▏         | 204/8750 [54:49<39:30:56, 16.65s/it]Invalidate trace cache @ step 0 and module 298890: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 299619: cache has only 0 modules
+  2%|▏         | 205/8750 [55:04<38:18:36, 16.14s/it]                                                     {'loss': 0.0055, 'grad_norm': 1.9657864302278045, 'learning_rate': 9.765714285714286e-07, 'completion_length': 55.8828125, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 0.9921875, 'reward': 1.953125, 'reward_std': 0.07760182581841946, 'kl': 0.138671875, 'epoch': 0.05}
+  2%|▏         | 205/8750 [55:04<38:18:36, 16.14s/it]Invalidate trace cache @ step 0 and module 300348: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 301077: cache has only 0 modules
+  2%|▏         | 206/8750 [55:22<39:23:38, 16.60s/it]                                                     {'loss': 0.0063, 'grad_norm': 8.027001435992222, 'learning_rate': 9.764571428571428e-07, 'completion_length': 54.25, 'rewards/accuracy_reward': 0.9140625, 'rewards/format_reward': 0.984375, 'reward': 1.8984375, 'reward_std': 0.20753081142902374, 'kl': 0.15673828125, 'epoch': 0.05}
+  2%|▏         | 206/8750 [55:22<39:23:38, 16.60s/it]Invalidate trace cache @ step 0 and module 301806: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 302535: cache has only 0 modules
+  2%|▏         | 207/8750 [55:41<41:05:12, 17.31s/it]                                                     {'loss': 0.0053, 'grad_norm': 2.893495128406233, 'learning_rate': 9.763428571428572e-07, 'completion_length': 58.453125, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.1417246274650097, 'kl': 0.1318359375, 'epoch': 0.05}
+  2%|▏         | 207/8750 [55:41<41:05:12, 17.31s/it]Invalidate trace cache @ step 0 and module 303264: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 303993: cache has only 0 modules
+  2%|▏         | 208/8750 [55:57<40:16:09, 16.97s/it]                                                     {'loss': 0.0075, 'grad_norm': 3.7839784465843507, 'learning_rate': 9.762285714285714e-07, 'completion_length': 57.6328125, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.96875, 'reward': 1.8984375, 'reward_std': 0.20189570635557175, 'kl': 0.18701171875, 'epoch': 0.05}
+  2%|▏         | 208/8750 [55:57<40:16:09, 16.97s/it]Invalidate trace cache @ step 0 and module 304722: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 305451: cache has only 0 modules
+  2%|▏         | 209/8750 [56:16<42:02:59, 17.72s/it]                                                     {'loss': 0.0056, 'grad_norm': 4.340325592944372, 'learning_rate': 9.761142857142856e-07, 'completion_length': 54.2578125, 'rewards/accuracy_reward': 0.96875, 'rewards/format_reward': 0.984375, 'reward': 1.953125, 'reward_std': 0.09863807819783688, 'kl': 0.14111328125, 'epoch': 0.05}
+  2%|▏         | 209/8750 [56:16<42:02:59, 17.72s/it]Invalidate trace cache @ step 0 and module 306180: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 306909: cache has only 0 modules
+  2%|▏         | 210/8750 [56:31<39:47:16, 16.77s/it]                                                     {'loss': 0.0056, 'grad_norm': 2.317972699703795, 'learning_rate': 9.759999999999998e-07, 'completion_length': 52.7265625, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 1.0, 'reward': 1.9609375, 'reward_std': 0.09522313997149467, 'kl': 0.1396484375, 'epoch': 0.05}
+  2%|▏         | 210/8750 [56:31<39:47:16, 16.77s/it]Invalidate trace cache @ step 0 and module 307638: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 308367: cache has only 0 modules
+  2%|▏         | 211/8750 [56:48<39:51:12, 16.80s/it]                                                     {'loss': 0.0059, 'grad_norm': 3.0826620782144163, 'learning_rate': 9.758857142857143e-07, 'completion_length': 57.3203125, 'rewards/accuracy_reward': 0.875, 'rewards/format_reward': 0.96875, 'reward': 1.84375, 'reward_std': 0.24435339868068695, 'kl': 0.1484375, 'epoch': 0.05}
+  2%|▏         | 211/8750 [56:48<39:51:12, 16.80s/it]Invalidate trace cache @ step 0 and module 309096: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 309825: cache has only 0 modules
+  2%|▏         | 212/8750 [57:03<38:44:32, 16.34s/it]                                                     {'loss': 0.0059, 'grad_norm': 3.107298085650911, 'learning_rate': 9.757714285714285e-07, 'completion_length': 54.7265625, 'rewards/accuracy_reward': 0.9375, 'rewards/format_reward': 0.984375, 'reward': 1.921875, 'reward_std': 0.1751839816570282, 'kl': 0.146728515625, 'epoch': 0.05}
+  2%|▏         | 212/8750 [57:03<38:44:32, 16.34s/it]Invalidate trace cache @ step 0 and module 310554: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 311283: cache has only 0 modules
+  2%|▏         | 213/8750 [57:15<35:37:43, 15.02s/it]                                                     {'loss': 0.0058, 'grad_norm': 4.585312888333712, 'learning_rate': 9.75657142857143e-07, 'completion_length': 48.4296875, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 0.9921875, 'reward': 1.953125, 'reward_std': 0.10205793380737305, 'kl': 0.14453125, 'epoch': 0.05}
+  2%|▏         | 213/8750 [57:15<35:37:43, 15.02s/it]Invalidate trace cache @ step 0 and module 312012: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 312741: cache has only 0 modules
+  2%|▏         | 214/8750 [57:34<38:19:27, 16.16s/it]                                                     {'loss': 0.0059, 'grad_norm': 2.8518924649903226, 'learning_rate': 9.755428571428571e-07, 'completion_length': 54.921875, 'rewards/accuracy_reward': 0.9765625, 'rewards/format_reward': 1.0, 'reward': 1.9765625, 'reward_std': 0.06629125773906708, 'kl': 0.1484375, 'epoch': 0.05}
+  2%|▏         | 214/8750 [57:34<38:19:27, 16.16s/it]Invalidate trace cache @ step 0 and module 313470: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 314199: cache has only 0 modules
+  2%|▏         | 215/8750 [57:47<35:57:24, 15.17s/it]                                                     {'loss': 0.0062, 'grad_norm': 4.587275675511531, 'learning_rate': 9.754285714285714e-07, 'completion_length': 47.140625, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 0.9921875, 'reward': 1.921875, 'reward_std': 0.14123954623937607, 'kl': 0.15625, 'epoch': 0.05}
+  2%|▏         | 215/8750 [57:47<35:57:24, 15.17s/it]Invalidate trace cache @ step 0 and module 314928: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 315657: cache has only 0 modules
+  2%|▏         | 216/8750 [58:02<36:25:15, 15.36s/it]                                                     {'loss': 0.0054, 'grad_norm': 9.204739024301912, 'learning_rate': 9.753142857142856e-07, 'completion_length': 52.6015625, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 0.9921875, 'reward': 1.953125, 'reward_std': 0.1173202209174633, 'kl': 0.13623046875, 'epoch': 0.05}
+  2%|▏         | 216/8750 [58:02<36:25:15, 15.36s/it]Invalidate trace cache @ step 0 and module 316386: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 317115: cache has only 0 modules
+  2%|▏         | 217/8750 [58:19<37:36:26, 15.87s/it]                                                     {'loss': 0.0057, 'grad_norm': 3.303122839395016, 'learning_rate': 9.752e-07, 'completion_length': 47.9140625, 'rewards/accuracy_reward': 0.9296875, 'rewards/format_reward': 1.0, 'reward': 1.9296875, 'reward_std': 0.1649293452501297, 'kl': 0.14208984375, 'epoch': 0.05}
+  2%|▏         | 217/8750 [58:19<37:36:26, 15.87s/it]Invalidate trace cache @ step 0 and module 317844: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 318573: cache has only 0 modules
+  2%|▏         | 218/8750 [58:33<36:18:58, 15.32s/it]                                                     {'loss': 0.0039, 'grad_norm': 1.8414100201610155, 'learning_rate': 9.750857142857142e-07, 'completion_length': 57.4453125, 'rewards/accuracy_reward': 0.984375, 'rewards/format_reward': 0.9765625, 'reward': 1.9609375, 'reward_std': 0.09069566056132317, 'kl': 0.097900390625, 'epoch': 0.05}
+  2%|▏         | 218/8750 [58:33<36:18:58, 15.32s/it]Invalidate trace cache @ step 0 and module 319302: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 320031: cache has only 0 modules
+  3%|▎         | 219/8750 [58:47<35:13:57, 14.87s/it]                                                     {'loss': 0.0048, 'grad_norm': 2.3832274852378346, 'learning_rate': 9.749714285714286e-07, 'completion_length': 57.9296875, 'rewards/accuracy_reward': 0.9609375, 'rewards/format_reward': 0.9921875, 'reward': 1.953125, 'reward_std': 0.13258251920342445, 'kl': 0.119873046875, 'epoch': 0.05}
+  3%|▎         | 219/8750 [58:47<35:13:57, 14.87s/it]Invalidate trace cache @ step 0 and module 320760: cache has only 0 modules
+Invalidate trace cache @ step 0 and module 321489: cache has only 0 modules
+  3%|▎         | 220/8750 [59:09<40:08:18, 16.94s/it]                                                     {'loss': 0.0045, 'grad_norm': 4.452139162556704, 'learning_rate': 9.748571428571429e-07, 'completion_length': 58.7265625, 'rewards/accuracy_reward': 0.8828125, 'rewards/format_reward': 0.9921875, 'reward': 1.875, 'reward_std': 0.2057085782289505, 'kl': 0.1123046875, 'epoch': 0.05}
+  3%|▎         | 220/8750 [59:09<40:08:18, 16.94s/it]Invalidate trace cache @ step 0 and module 322218: cache has only 0 modules
+slurmstepd: error: *** JOB 11455337 ON gcn145 CANCELLED AT 2025-04-30T11:47:05 DUE TO TIME LIMIT ***
+
+JOB STATISTICS
+==============
+Job ID: 11455337
+Cluster: snellius
+User/Group: rritter/rritter
+State: TIMEOUT (exit code 0)
+Nodes: 1
+Cores per node: 64
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 2-16:03:12 core-walltime
+Job Wall-clock time: 01:00:03
+Memory Utilized: 16.77 GB
+Memory Efficiency: 2.33% of 720.00 GB (720.00 GB/node)
