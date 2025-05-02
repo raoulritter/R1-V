@@ -21,7 +21,6 @@ from pathlib import Path
 
 from setuptools import find_packages, setup
 
-
 # Remove stale open_r1.egg-info directory to avoid https://github.com/pypa/pip/issues/5466
 stale_egg_info = Path(__file__).parent / "open_r1.egg-info"
 if stale_egg_info.exists():
@@ -42,7 +41,6 @@ if stale_egg_info.exists():
 #   * If a dependency is fast-moving (e.g. transformers), pin to the exact version
 _deps = [
     "accelerate>=1.2.1",
-    "bitsandbytes>=0.43.0",
     "black>=24.4.2",
     "datasets>=3.2.0",
     "deepspeed==0.15.4",
@@ -52,7 +50,6 @@ _deps = [
     "hf_transfer>=0.1.4",
     "huggingface-hub[cli]>=0.19.2,<1.0",
     "isort>=5.12.0",
-    "liger_kernel==0.5.2",
     "lighteval @ git+https://github.com/huggingface/lighteval.git@4f381b352c0e467b5870a97d41cb66b487a2c503#egg=lighteval[math]",
     "math-verify",  # Used for math verification in grpo
     "packaging>=23.0",
@@ -74,7 +71,13 @@ _deps = [
 # packaging: "packaging"
 #
 # some of the values are versioned whereas others aren't.
-deps = {b: a for a, b in (re.findall(r"^(([^!=<>~ \[\]]+)(?:\[[^\]]+\])?(?:[!=<>~ ].*)?$)", x)[0] for x in _deps)}
+deps = {
+    b: a
+    for a, b in (
+        re.findall(r"^(([^!=<>~ \[\]]+)(?:\[[^\]]+\])?(?:[!=<>~ ].*)?$)", x)[0]
+        for x in _deps
+    )
+}
 
 
 def deps_list(*pkgs):
@@ -91,13 +94,11 @@ extras["dev"] = extras["quality"] + extras["tests"] + extras["eval"]
 # core dependencies shared across the whole project - keep this to a bare minimum :)
 install_requires = [
     deps["accelerate"],
-    deps["bitsandbytes"],
     deps["einops"],
     deps["datasets"],
     deps["deepspeed"],
     deps["hf_transfer"],
     deps["huggingface-hub"],
-    deps["liger_kernel"],
     deps["packaging"],  # utilities from PyPA to e.g., compare versions
     deps["safetensors"],
     deps["sentencepiece"],

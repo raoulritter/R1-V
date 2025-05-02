@@ -24,32 +24,35 @@ from datasets import Dataset, IterableDataset
 from packaging import version
 from transformers import (
     AriaForConditionalGeneration,
-    AriaProcessor,
     AutoModelForCausalLM,
     AutoModelForSequenceClassification,
     AutoProcessor,
     AutoTokenizer,
     GenerationConfig,
-    PreTrainedModel,
-    PreTrainedTokenizerBase,
-    Qwen2VLForConditionalGeneration,
-    Qwen2_5_VLForConditionalGeneration,
     JanusForConditionalGeneration,
     JanusProcessor,
+    PreTrainedModel,
+    PreTrainedTokenizerBase,
+    Qwen2_5_VLForConditionalGeneration,
+    Qwen2VLForConditionalGeneration,
     Trainer,
     TrainerCallback,
     is_wandb_available,
 )
 from transformers.integrations.deepspeed import is_deepspeed_zero3_enabled
 from transformers.utils import is_peft_available
-
-from trl.data_utils import apply_chat_template, is_conversational, maybe_apply_chat_template
-from trl.models import create_reference_model, prepare_deepspeed, unwrap_model_for_generation
+from trl.data_utils import (
+    apply_chat_template,
+    is_conversational,
+    maybe_apply_chat_template,
+)
+from trl.models import (
+    create_reference_model,
+    prepare_deepspeed,
+    unwrap_model_for_generation,
+)
 from trl.trainer.grpo_config import GRPOConfig
 from trl.trainer.utils import generate_model_card, get_comet_experiment_url
-
-import copy
-
 
 if is_peft_available():
     from peft import PeftConfig, get_peft_model
@@ -196,7 +199,8 @@ class Qwen2VLGRPOTrainer(Trainer):
             elif "Aria" in model_id:
                 model_init_kwargs.pop("use_cache")
                 model = AriaForConditionalGeneration.from_pretrained(model, **model_init_kwargs)
-            elif "Janus" in model_id:
+            elif "janus" in model_id:
+                model_init_kwargs.pop("use_cache")
                 model = JanusForConditionalGeneration.from_pretrained(model, **model_init_kwargs)
             else:
                 model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
@@ -220,7 +224,7 @@ class Qwen2VLGRPOTrainer(Trainer):
                 self.ref_model = Qwen2_5_VLForConditionalGeneration.from_pretrained(model_id, **model_init_kwargs)
             elif "Aria" in model_id:
                 self.ref_model = AriaForConditionalGeneration.from_pretrained(model_id, **model_init_kwargs)
-            elif "Janus" in model_id:
+            elif "janus" in model_id:
                 self.ref_model = JanusForConditionalGeneration.from_pretrained(model_id, **model_init_kwargs)
             else:
                 self.ref_model = AutoModelForCausalLM.from_pretrained(model_id, **model_init_kwargs)
@@ -234,7 +238,7 @@ class Qwen2VLGRPOTrainer(Trainer):
 
         # Processing class
         if processing_class is None:
-            if "Qwen2-VL" in model_id or "Qwen2.5-VL" in model_id or "Aria" in model_id or "Janus" in model_id:
+            if "Qwen2-VL" in model_id or "Qwen2.5-VL" in model_id or "Aria" in model_id or "janus" in model_id:
                 processing_class = AutoProcessor.from_pretrained(model_id)
                 pad_token_id = processing_class.tokenizer.pad_token_id
                 processing_class.pad_token_id = pad_token_id
@@ -342,7 +346,18 @@ class Qwen2VLGRPOTrainer(Trainer):
 
     # Get the per-token log probabilities for the completions for the model and the reference model
     def _get_per_token_logps(self, model, input_ids, attention_mask, pixel_values, image_grid_thw):
-        logits = model(input_ids, attention_mask=attention_mask, pixel_values=pixel_values, image_grid_thw=image_grid_thw).logits  # (B, L, V)
+        if isinstance(model, JanusForConditionalGeneration):
+            # For Janus models, we need to reshape the pixel_values 
+            # Remove the second dimension (batch_size, 1, channels, height, width) -> (batch_size, channels, height, width)
+            if len(pixel_values.shape) == 5:
+                pixel_values = pixel_values.squeeze(1)
+                logits = model(input_ids, attention_mask=attention_mask, pixel_values=pixel_values, image_grid_thw=image_grid_thw).logits  # (B, L, V)    
+        else:
+            logits = model(input_ids, attention_mask=attention_mask, pixel_values=pixel_values, image_grid_thw=image_grid_thw).logits  # (B, L, V)
+
+
+        
+
         logits = logits[:, :-1, :]  # (B, L-1, V), exclude the last logit: it corresponds to the next token pred
         input_ids = input_ids[:, 1:]  # (B, L-1), exclude the first input ID since we don't have logits for it
         # Compute the log probabilities for the input tokens. Use a loop to reduce memory peak.
@@ -366,6 +381,8 @@ class Qwen2VLGRPOTrainer(Trainer):
         prompts = [x["prompt"] for x in inputs]
         prompts_text = [maybe_apply_chat_template(example, self.processing_class)["prompt"] for example in inputs]
         images = [x["image"] for x in inputs]
+        if isinstance(self.processing_class, JanusProcessor):
+            images = [image.convert("RGB") for image in images]
         prompt_inputs = self.processing_class(
             text=prompts_text,
             images=images,
@@ -377,8 +394,11 @@ class Qwen2VLGRPOTrainer(Trainer):
         prompt_inputs = super()._prepare_inputs(prompt_inputs)
 
         prompt_ids, prompt_mask = prompt_inputs["input_ids"], prompt_inputs["attention_mask"]
-        pixel_values = prompt_inputs["pixel_values"]
-        image_grid_thw = prompt_inputs["image_grid_thw"]
+        pixel_values = prompt_inputs["pixel_values"] #FOR QWEN2.5-VL ITS torch.Size([748, 1176])
+        if isinstance(self.processing_class, JanusProcessor):
+            image_grid_thw = None
+        else:
+            image_grid_thw = prompt_inputs["image_grid_thw"]
 
         
         if self.max_prompt_length is not None:
@@ -403,9 +423,13 @@ class Qwen2VLGRPOTrainer(Trainer):
         completion_mask = (sequence_indices <= eos_idx.unsqueeze(1)).int()
 
         # Concatenate prompt_mask with completion_mask for logit computation
-        attention_mask = torch.cat([prompt_mask, completion_mask], dim=1)  # (B*G, P+C)
-        pixel_values = prompt_inputs["pixel_values"].repeat(self.num_generations, 1)
-        image_grid_thw = prompt_inputs["image_grid_thw"].repeat_interleave(self.num_generations, dim=0)
+        attention_mask = torch.cat([prompt_mask, completion_mask], dim=1)  # (B*G, P+C) 
+        if isinstance(self.processing_class, JanusProcessor):
+            pixel_values = prompt_inputs["pixel_values"].repeat(self.num_generations, 1, 1, 1, 1) #
+            image_grid_thw = None
+        else:
+            pixel_values = prompt_inputs["pixel_values"].repeat(self.num_generations, 1) 
+            image_grid_thw = prompt_inputs["image_grid_thw"].repeat_interleave(self.num_generations, dim=0)
 
         per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, pixel_values, image_grid_thw)
         # Get rid of the prompt (-1 because of the shift done in get_per_token_logps)
