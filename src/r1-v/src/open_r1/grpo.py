@@ -94,10 +94,56 @@ def accuracy_reward(completions, solution, **kwargs):
 
 def format_reward(completions, **kwargs):
     """Reward function that checks if the completion has a specific format."""
-    pattern = r"<think>.*?</think>\s*<answer>.*?</answer>"
+    # Debug info for the first few batches
+    if not hasattr(format_reward, 'debug_counter'):
+        format_reward.debug_counter = 0
+    
     completion_contents = [completion[0]["content"] for completion in completions]
-    matches = [re.fullmatch(pattern, content, re.DOTALL) for content in completion_contents]
-    return [1.0 if match else 0.0 for match in matches]
+    rewards = []
+    
+    # Log debug information for first few batches
+    if format_reward.debug_counter < 3:
+        print(f"\n----- FORMAT REWARD DEBUGGING (Batch {format_reward.debug_counter}) -----")
+        print(f"Number of completions: {len(completion_contents)}")
+    
+    for i, content in enumerate(completion_contents):
+        # Check for both tags separately to give more flexible rewards
+        has_think_tags = "<think>" in content and "</think>" in content
+        has_answer_tags = "<answer>" in content and "</answer>" in content
+        
+        # Debug info
+        if format_reward.debug_counter < 3 and i < 2:  # Only first 2 samples from first 3 batches
+            print(f"\nCompletion #{i}:")
+            print(f"Content: {content[:150]}..." if len(content) > 150 else f"Content: {content}")
+            print(f"Has <think> tags: {has_think_tags}")
+            print(f"Has <answer> tags: {has_answer_tags}")
+        
+        # Three reward levels: 
+        # 1.0 for having both tags in the right order
+        # 0.5 for having both tags but in wrong order
+        # 0.0 for missing either tag
+        if has_think_tags and has_answer_tags:
+            # Check if think comes before answer (correct order)
+            think_pos = content.find("<think>")
+            answer_pos = content.find("<answer>")
+            if think_pos < answer_pos:
+                rewards.append(1.0)
+                if format_reward.debug_counter < 3 and i < 2:
+                    print("Reward: 1.0 (both tags in correct order)")
+            else:
+                rewards.append(0.5)
+                if format_reward.debug_counter < 3 and i < 2:
+                    print("Reward: 0.5 (both tags but wrong order)")
+        else:
+            rewards.append(0.0)
+            if format_reward.debug_counter < 3 and i < 2:
+                print("Reward: 0.0 (missing one or both tags)")
+    
+    if format_reward.debug_counter < 3:
+        print("----- END FORMAT REWARD DEBUGGING -----\n")
+        format_reward.debug_counter += 1
+    
+    return rewards
 
 
 reward_funcs_registry = {
@@ -144,7 +190,7 @@ def main(script_args, training_args, model_args):
     #         ],
     #     }
 
-    QUESTION_TEMPLATE = "{Question}  Output the thinking process in <think> </think> and final answer (number) in <answer> </answer> tags."
+    QUESTION_TEMPLATE = "{Question} You must output your thinking process between <think> and </think> tags, followed by your final answer between <answer> and </answer> tags. Your response MUST follow this format: '<think>your reasoning here</think><answer>your answer here</answer>'"
 
     def make_conversation_image(example):
         return {

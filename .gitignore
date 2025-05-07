@@ -10,3 +10,4 @@ wandb/
 .pytest_cache/
 .cache/
 debug_log_*.txt
+CLAUDE.md

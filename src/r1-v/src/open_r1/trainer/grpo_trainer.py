@@ -345,18 +345,50 @@ class Qwen2VLGRPOTrainer(Trainer):
 
 
     # Get the per-token log probabilities for the completions for the model and the reference model
-    def _get_per_token_logps(self, model, input_ids, attention_mask, pixel_values, image_grid_thw):
-        if isinstance(model, JanusForConditionalGeneration):
-            # For Janus models, we need to reshape the pixel_values 
-            # Remove the second dimension (batch_size, 1, channels, height, width) -> (batch_size, channels, height, width)
-            if len(pixel_values.shape) == 5:
-                pixel_values = pixel_values.squeeze(1)
-                logits = model(input_ids, attention_mask=attention_mask, pixel_values=pixel_values, image_grid_thw=image_grid_thw).logits  # (B, L, V)    
-        else:
-            logits = model(input_ids, attention_mask=attention_mask, pixel_values=pixel_values, image_grid_thw=image_grid_thw).logits  # (B, L, V)
+    # def _get_per_token_logps(self, model, input_ids, attention_mask, pixel_values, image_grid_thw):
+    #     if isinstance(model, JanusForConditionalGeneration):
+    #         # For Janus models, we need to reshape the pixel_values 
+    #         # Remove the second dimension (batch_size, 1, channels, height, width) -> (batch_size, channels, height, width)
+    #         if len(pixel_values.shape) == 5:
+    #             pixel_values = pixel_values.squeeze(1)
+    #             logits = model(input_ids, attention_mask=attention_mask, pixel_values=pixel_values).logits  # (B, L, V)    
+    #     else:
+    #         logits = model(input_ids, attention_mask=attention_mask, pixel_values=pixel_values, image_grid_thw=image_grid_thw).logits  # (B, L, V)
 
 
         
+
+    #     logits = logits[:, :-1, :]  # (B, L-1, V), exclude the last logit: it corresponds to the next token pred
+    #     input_ids = input_ids[:, 1:]  # (B, L-1), exclude the first input ID since we don't have logits for it
+    #     # Compute the log probabilities for the input tokens. Use a loop to reduce memory peak.
+    #     per_token_logps = []
+    #     for logits_row, input_ids_row in zip(logits, input_ids):
+    #         log_probs = logits_row.log_softmax(dim=-1)
+    #         token_log_prob = torch.gather(log_probs, dim=1, index=input_ids_row.unsqueeze(1)).squeeze(1)
+    #         per_token_logps.append(token_log_prob)
+    #     return torch.stack(per_token_logps)
+
+    def _get_per_token_logps(self, model, input_ids, attention_mask, pixel_values, image_grid_thw):
+        # Get the underlying model using the accelerator's unwrap method
+        unwrapped_model = self.accelerator.unwrap_model(model)
+
+        # Prepare arguments, potentially modifying pixel_values for Janus
+        model_kwargs = {"input_ids": input_ids, "attention_mask": attention_mask}
+        processed_pixel_values = pixel_values # Keep original for non-Janus call if needed
+
+        if isinstance(unwrapped_model, JanusForConditionalGeneration):
+            # For Janus models, ensure pixel_values is 4D: (batch_size, channels, height, width)
+            if processed_pixel_values.ndim == 5:
+                processed_pixel_values = processed_pixel_values.squeeze(1)
+            # Janus doesn't expect image_grid_thw
+            model_kwargs["pixel_values"] = processed_pixel_values
+        else:
+            # For other models, pass original pixel_values and image_grid_thw
+            model_kwargs["pixel_values"] = pixel_values
+            model_kwargs["image_grid_thw"] = image_grid_thw
+
+        # Call the model (potentially wrapped) with the prepared arguments
+        logits = model(**model_kwargs).logits
 
         logits = logits[:, :-1, :]  # (B, L-1, V), exclude the last logit: it corresponds to the next token pred
         input_ids = input_ids[:, 1:]  # (B, L-1), exclude the first input ID since we don't have logits for it
@@ -373,6 +405,151 @@ class Qwen2VLGRPOTrainer(Trainer):
     # Since we preprocess the data in `compute_loss`, we need to override this method to skip this step.
     def _prepare_inputs(self, inputs: dict[str, Union[torch.Tensor, Any]]) -> dict[str, Union[torch.Tensor, Any]]:
         return inputs
+
+    # def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+    #     if return_outputs:
+    #         raise ValueError("The GRPOTrainer does not support returning outputs")
+
+    #     prompts = [x["prompt"] for x in inputs]
+    #     prompts_text = [maybe_apply_chat_template(example, self.processing_class)["prompt"] for example in inputs]
+    #     images = [x["image"] for x in inputs]
+    #     if isinstance(self.processing_class, JanusProcessor):
+    #         images = [image.convert("RGB") for image in images]
+    #     prompt_inputs = self.processing_class(
+    #         text=prompts_text,
+    #         images=images,
+    #         return_tensors="pt",
+    #         padding=True,
+    #         padding_side="left",
+    #         add_special_tokens=False,
+    #     )
+    #     prompt_inputs = super()._prepare_inputs(prompt_inputs)
+
+    #     prompt_ids, prompt_mask = prompt_inputs["input_ids"], prompt_inputs["attention_mask"]
+    #     pixel_values = prompt_inputs["pixel_values"] #FOR QWEN2.5-VL ITS torch.Size([748, 1176])
+    #     if isinstance(self.processing_class, JanusProcessor):
+    #         image_grid_thw = None
+    #     else:
+    #         image_grid_thw = prompt_inputs["image_grid_thw"]
+
+        
+    #     if self.max_prompt_length is not None:
+    #         prompt_ids = prompt_ids[:, -self.max_prompt_length :]
+    #         prompt_mask = prompt_mask[:, -self.max_prompt_length :]
+
+    #     # Generate completions
+    #     with unwrap_model_for_generation(model, self.accelerator) as unwrapped_model:
+    #         prompt_completion_ids = unwrapped_model.generate(**prompt_inputs, generation_config=self.generation_config)
+
+    #         prompt_length = prompt_ids.size(1)
+    #         prompt_ids = prompt_completion_ids[:, :prompt_length]
+    #         completion_ids = prompt_completion_ids[:, prompt_length:]
+    #         prompt_mask = prompt_mask.repeat_interleave(self.num_generations, dim=0)
+
+    #     # Mask everything after the first EOS token
+    #     is_eos = completion_ids == self.processing_class.eos_token_id
+    #     device = self.accelerator.device
+    #     eos_idx = torch.full((is_eos.size(0),), is_eos.size(1), dtype=torch.long, device=device)
+    #     eos_idx[is_eos.any(dim=1)] = is_eos.int().argmax(dim=1)[is_eos.any(dim=1)]
+    #     sequence_indices = torch.arange(is_eos.size(1), device=device).expand(is_eos.size(0), -1)
+    #     completion_mask = (sequence_indices <= eos_idx.unsqueeze(1)).int()
+
+    #     # Concatenate prompt_mask with completion_mask for logit computation
+    #     attention_mask = torch.cat([prompt_mask, completion_mask], dim=1)  # (B*G, P+C) 
+    #     if isinstance(self.processing_class, JanusProcessor):
+    #         pixel_values = prompt_inputs["pixel_values"].repeat(self.num_generations, 1, 1, 1, 1) #
+    #         image_grid_thw = None
+    #     else:
+    #         pixel_values = prompt_inputs["pixel_values"].repeat(self.num_generations, 1) 
+    #         image_grid_thw = prompt_inputs["image_grid_thw"].repeat_interleave(self.num_generations, dim=0)
+
+    #     per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, pixel_values, image_grid_thw)
+    #     # Get rid of the prompt (-1 because of the shift done in get_per_token_logps)
+    #     per_token_logps = per_token_logps[:, prompt_length - 1 :]
+
+    #     with torch.inference_mode():
+    #         if self.ref_model is not None:
+    #             ref_per_token_logps = self._get_per_token_logps(self.ref_model, prompt_completion_ids, attention_mask, pixel_values, image_grid_thw)
+    #         else:
+    #             with self.accelerator.unwrap_model(model).disable_adapter():
+    #                 ref_per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, pixel_values, image_grid_thw)
+    #     ref_per_token_logps = ref_per_token_logps[:, prompt_length - 1 :]
+
+    #     # Compute the KL divergence between the model and the reference model
+    #     per_token_kl = torch.exp(ref_per_token_logps - per_token_logps) - (ref_per_token_logps - per_token_logps) - 1
+
+    #     # Decode the generated completions
+    #     completions = self.processing_class.batch_decode(completion_ids, skip_special_tokens=True)
+    #     if is_conversational(inputs[0]):
+    #         completions = [[{"role": "assistant", "content": completion}] for completion in completions]
+
+    #     # Compute the rewards
+    #     prompts = [prompt for prompt in prompts for _ in range(self.num_generations)]
+
+    #     rewards_per_func = torch.zeros(len(prompts), len(self.reward_funcs), device=device)
+    #     for i, (reward_func, reward_processing_class) in enumerate(
+    #         zip(self.reward_funcs, self.reward_processing_classes)
+    #     ):
+    #         if isinstance(reward_func, PreTrainedModel):
+    #             if is_conversational(inputs[0]):
+    #                 messages = [{"messages": p + c} for p, c in zip(prompts, completions)]
+    #                 texts = [apply_chat_template(x, reward_processing_class)["text"] for x in messages]
+    #             else:
+    #                 texts = [p + c for p, c in zip(prompts, completions)]
+    #             reward_inputs = reward_processing_class(
+    #                 texts, return_tensors="pt", padding=True, padding_side="right", add_special_tokens=False
+    #             )
+    #             reward_inputs = super()._prepare_inputs(reward_inputs)
+    #             with torch.inference_mode():
+    #                 rewards_per_func[:, i] = reward_func(**reward_inputs).logits[:, 0]  # Shape (B*G,)
+    #         else:
+    #             # Repeat all input columns (but "prompt" and "completion") to match the number of generations
+    #             reward_kwargs = {key: [] for key in inputs[0].keys() if key not in ["prompt", "completion"]}
+    #             for key in reward_kwargs:
+    #                 for example in inputs:
+    #                     # Repeat each value in the column for `num_generations` times
+    #                     reward_kwargs[key].extend([example[key]] * self.num_generations)
+    #             output_reward_func = reward_func(prompts=prompts, completions=completions, **reward_kwargs)
+    #             rewards_per_func[:, i] = torch.tensor(output_reward_func, dtype=torch.float32, device=device)
+
+    #     # Sum the rewards from all reward functions
+    #     rewards = rewards_per_func.sum(dim=1)
+
+    #     # Compute grouped-wise rewards
+    #     mean_grouped_rewards = rewards.view(-1, self.num_generations).mean(dim=1)
+    #     std_grouped_rewards = rewards.view(-1, self.num_generations).std(dim=1)
+
+    #     # Normalize the rewards to compute the advantages
+    #     mean_grouped_rewards = mean_grouped_rewards.repeat_interleave(self.num_generations, dim=0)
+    #     std_grouped_rewards = std_grouped_rewards.repeat_interleave(self.num_generations, dim=0)
+    #     advantages = (rewards - mean_grouped_rewards) / (std_grouped_rewards + 1e-4)
+
+    #     # x - x.detach() allows for preserving gradients from x
+    #     per_token_loss = torch.exp(per_token_logps - per_token_logps.detach()) * advantages.unsqueeze(1)
+    #     per_token_loss = -(per_token_loss - self.beta * per_token_kl)
+    #     loss = ((per_token_loss * completion_mask).sum(dim=1) / completion_mask.sum(dim=1)).mean()
+
+    #     # Log the metrics
+    #     completion_length = self.accelerator.gather_for_metrics(completion_mask.sum(1)).float().mean().item()
+    #     self._metrics["completion_length"].append(completion_length)
+
+    #     reward_per_func = self.accelerator.gather_for_metrics(rewards_per_func).mean(0)
+    #     for i, reward_func in enumerate(self.reward_funcs):
+    #         if isinstance(reward_func, PreTrainedModel):
+    #             reward_func_name = reward_func.config._name_or_path.split("/")[-1]
+    #         else:
+    #             reward_func_name = reward_func.__name__
+    #         self._metrics[f"rewards/{reward_func_name}"].append(reward_per_func[i].item())
+
+    #     self._metrics["reward"].append(self.accelerator.gather_for_metrics(rewards).mean().item())
+
+    #     self._metrics["reward_std"].append(self.accelerator.gather_for_metrics(std_grouped_rewards).mean().item())
+
+    #     mean_kl = ((per_token_kl * completion_mask).sum(dim=1) / completion_mask.sum(dim=1)).mean()
+    #     self._metrics["kl"].append(self.accelerator.gather_for_metrics(mean_kl).mean().item())
+
+    #     return loss
+
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
         if return_outputs:
@@ -394,12 +571,24 @@ class Qwen2VLGRPOTrainer(Trainer):
         prompt_inputs = super()._prepare_inputs(prompt_inputs)
 
         prompt_ids, prompt_mask = prompt_inputs["input_ids"], prompt_inputs["attention_mask"]
-        pixel_values = prompt_inputs["pixel_values"] #FOR QWEN2.5-VL ITS torch.Size([748, 1176])
+        pixel_values = prompt_inputs["pixel_values"]
+        
+        # Determine if we're using a Janus model
+        unwrapped_model = self.accelerator.unwrap_model(model)
+        is_janus_model = isinstance(unwrapped_model, JanusForConditionalGeneration)
+        
         if isinstance(self.processing_class, JanusProcessor):
             image_grid_thw = None
+            # For Janus models, reshape pixel_values if needed
+            if is_janus_model and pixel_values.ndim == 5:
+                # Create a copy of prompt_inputs with reshaped pixel_values for generation
+                generation_inputs = prompt_inputs.copy()
+                generation_inputs["pixel_values"] = pixel_values.squeeze(1)
+            else:
+                generation_inputs = prompt_inputs
         else:
             image_grid_thw = prompt_inputs["image_grid_thw"]
-
+            generation_inputs = prompt_inputs
         
         if self.max_prompt_length is not None:
             prompt_ids = prompt_ids[:, -self.max_prompt_length :]
@@ -407,7 +596,7 @@ class Qwen2VLGRPOTrainer(Trainer):
 
         # Generate completions
         with unwrap_model_for_generation(model, self.accelerator) as unwrapped_model:
-            prompt_completion_ids = unwrapped_model.generate(**prompt_inputs, generation_config=self.generation_config)
+            prompt_completion_ids = unwrapped_model.generate(**generation_inputs, generation_config=self.generation_config)
 
             prompt_length = prompt_ids.size(1)
             prompt_ids = prompt_completion_ids[:, :prompt_length]
@@ -424,30 +613,92 @@ class Qwen2VLGRPOTrainer(Trainer):
 
         # Concatenate prompt_mask with completion_mask for logit computation
         attention_mask = torch.cat([prompt_mask, completion_mask], dim=1)  # (B*G, P+C) 
+        
+        # Handle pixel values appropriately based on model type
         if isinstance(self.processing_class, JanusProcessor):
-            pixel_values = prompt_inputs["pixel_values"].repeat(self.num_generations, 1, 1, 1, 1) #
+            if is_janus_model:
+                # For Janus models with JanusProcessor, handle the 5D tensor
+                if pixel_values.ndim == 5:
+                    # Reshape to 4D
+                    processed_pixel_values = pixel_values.squeeze(1)
+                    # Repeat for num_generations
+                    processed_pixel_values = processed_pixel_values.repeat(self.num_generations, 1, 1, 1)
+                else:
+                    processed_pixel_values = pixel_values.repeat(self.num_generations, 1, 1, 1)
+            else:
+                # For non-Janus models with JanusProcessor (unusual case)
+                processed_pixel_values = pixel_values.repeat(self.num_generations, 1, 1, 1, 1)
+            
             image_grid_thw = None
         else:
-            pixel_values = prompt_inputs["pixel_values"].repeat(self.num_generations, 1) 
-            image_grid_thw = prompt_inputs["image_grid_thw"].repeat_interleave(self.num_generations, dim=0)
+            # For non-Janus processors
+            processed_pixel_values = pixel_values.repeat(self.num_generations, 1)
+            if image_grid_thw is not None:
+                image_grid_thw = image_grid_thw.repeat_interleave(self.num_generations, dim=0)
 
-        per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, pixel_values, image_grid_thw)
+        # Get log probabilities
+        per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
         # Get rid of the prompt (-1 because of the shift done in get_per_token_logps)
         per_token_logps = per_token_logps[:, prompt_length - 1 :]
 
         with torch.inference_mode():
             if self.ref_model is not None:
-                ref_per_token_logps = self._get_per_token_logps(self.ref_model, prompt_completion_ids, attention_mask, pixel_values, image_grid_thw)
+                ref_per_token_logps = self._get_per_token_logps(self.ref_model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
             else:
                 with self.accelerator.unwrap_model(model).disable_adapter():
-                    ref_per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, pixel_values, image_grid_thw)
+                    ref_per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
         ref_per_token_logps = ref_per_token_logps[:, prompt_length - 1 :]
 
+        # Rest of the function remains the same
         # Compute the KL divergence between the model and the reference model
         per_token_kl = torch.exp(ref_per_token_logps - per_token_logps) - (ref_per_token_logps - per_token_logps) - 1
 
         # Decode the generated completions
         completions = self.processing_class.batch_decode(completion_ids, skip_special_tokens=True)
+        
+        # Log the first few completions at the beginning of training for debugging format rewards
+        if self.state.global_step < 3:  # Only log during the first few steps
+            print("\n-----DEBUGGING FORMAT REWARD-----")
+            print(f"Step {self.state.global_step} - First 2 completions:")
+            for i in range(min(2, len(completions))):
+                print(f"Completion {i+1}:")
+                print(completions[i])
+                print("-----")
+            print("-----END DEBUGGING-----\n")
+        
+        # Log completions to wandb if enabled
+        if is_wandb_available() and self.args.report_to and "wandb" in self.args.report_to:
+            if wandb.run is not None and self.state.global_step % 10 == 0:  # Log every 10 steps
+                completion_samples = []
+                for i in range(min(3, len(completions))):  # Log up to 3 samples
+                    if i < len(inputs) and "problem" in inputs[i]:
+                        problem = inputs[i]["problem"]
+                    else:
+                        problem = "N/A"
+                    
+                    completion_samples.append({
+                        "step": self.state.global_step,
+                        "problem": problem,
+                        "completion": completions[i],
+                        "has_think_tags": "<think>" in completions[i] and "</think>" in completions[i],
+                        "has_answer_tags": "<answer>" in completions[i] and "</answer>" in completions[i]
+                    })
+                
+                # Create a wandb Table
+                columns = ["step", "problem", "completion", "has_think_tags", "has_answer_tags"]
+                wandb_table = wandb.Table(columns=columns)
+                
+                for sample in completion_samples:
+                    wandb_table.add_data(
+                        sample["step"],
+                        sample["problem"],
+                        sample["completion"],
+                        sample["has_think_tags"],
+                        sample["has_answer_tags"]
+                    )
+                
+                wandb.log({"completion_samples": wandb_table}, step=self.state.global_step)
+        
         if is_conversational(inputs[0]):
             completions = [[{"role": "assistant", "content": completion}] for completion in completions]
 
