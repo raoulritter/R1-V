@@ -656,16 +656,6 @@ class Qwen2VLGRPOTrainer(Trainer):
         # Decode the generated completions
         completions = self.processing_class.batch_decode(completion_ids, skip_special_tokens=True)
         
-        # Log the first few completions at the beginning of training for debugging format rewards
-        if self.state.global_step < 3:  # Only log during the first few steps
-            print("\n-----DEBUGGING FORMAT REWARD-----")
-            print(f"Step {self.state.global_step} - First 2 completions:")
-            for i in range(min(2, len(completions))):
-                print(f"Completion {i+1}:")
-                print(completions[i])
-                print("-----")
-            print("-----END DEBUGGING-----\n")
-        
         # Log completions to wandb if enabled
         if is_wandb_available() and self.args.report_to and "wandb" in self.args.report_to:
             if wandb.run is not None and self.state.global_step % 10 == 0:  # Log every 10 steps
