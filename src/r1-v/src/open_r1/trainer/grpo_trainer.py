@@ -41,11 +41,6 @@ from transformers import (
 )
 from transformers.integrations.deepspeed import is_deepspeed_zero3_enabled
 from transformers.utils import is_peft_available
-from trl.data_utils import (
-    apply_chat_template,
-    is_conversational,
-    maybe_apply_chat_template,
-)
 from trl.models import (
     create_reference_model,
     prepare_deepspeed,
@@ -202,6 +197,10 @@ class Qwen2VLGRPOTrainer(Trainer):
             elif "janus" in model_id:
                 model_init_kwargs.pop("use_cache")
                 model = JanusForConditionalGeneration.from_pretrained(model, **model_init_kwargs)
+            elif "Janus" in model_id:
+                model_init_kwargs.pop("use_cache")
+                model_init_kwargs.pop("attn_implementation")
+                model = JanusForConditionalGeneration.from_pretrained(model, **model_init_kwargs)
             else:
                 model = AutoModelForCausalLM.from_pretrained(model, **model_init_kwargs)
 
@@ -238,7 +237,7 @@ class Qwen2VLGRPOTrainer(Trainer):
 
         # Processing class
         if processing_class is None:
-            if "Qwen2-VL" in model_id or "Qwen2.5-VL" in model_id or "Aria" in model_id or "janus" in model_id:
+            if "Qwen2-VL" in model_id or "Qwen2.5-VL" in model_id or "Aria" in model_id or "janus" in model_id or "Janus" in model_id:
                 processing_class = AutoProcessor.from_pretrained(model_id)
                 pad_token_id = processing_class.tokenizer.pad_token_id
                 processing_class.pad_token_id = pad_token_id
@@ -374,18 +373,20 @@ class Qwen2VLGRPOTrainer(Trainer):
 
         # Prepare arguments, potentially modifying pixel_values for Janus
         model_kwargs = {"input_ids": input_ids, "attention_mask": attention_mask}
-        processed_pixel_values = pixel_values # Keep original for non-Janus call if needed
-
-        if isinstance(unwrapped_model, JanusForConditionalGeneration):
-            # For Janus models, ensure pixel_values is 4D: (batch_size, channels, height, width)
-            if processed_pixel_values.ndim == 5:
-                processed_pixel_values = processed_pixel_values.squeeze(1)
-            # Janus doesn't expect image_grid_thw
-            model_kwargs["pixel_values"] = processed_pixel_values
-        else:
-            # For other models, pass original pixel_values and image_grid_thw
-            model_kwargs["pixel_values"] = pixel_values
-            model_kwargs["image_grid_thw"] = image_grid_thw
+        
+        # Check if pixel_values is None before trying to process it
+        if pixel_values is not None:
+            if isinstance(unwrapped_model, JanusForConditionalGeneration):
+                # For Janus models, ensure pixel_values is 4D: (batch_size, channels, height, width)
+                if pixel_values.ndim == 5:
+                    pixel_values = pixel_values.squeeze(1)
+                # Janus doesn't expect image_grid_thw
+                model_kwargs["pixel_values"] = pixel_values
+            else:
+                # For other models, pass original pixel_values and image_grid_thw
+                model_kwargs["pixel_values"] = pixel_values
+                if image_grid_thw is not None:
+                    model_kwargs["image_grid_thw"] = image_grid_thw
 
         # Call the model (potentially wrapped) with the prepared arguments
         logits = model(**model_kwargs).logits
@@ -551,212 +552,736 @@ class Qwen2VLGRPOTrainer(Trainer):
     #     return loss
 
 
+    # def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+    #     if return_outputs:
+    #         raise ValueError("The GRPOTrainer does not support returning outputs")
+
+    #     prompts = [x["prompt"] for x in inputs]
+    #     prompts_text = [maybe_apply_chat_template(example, self.processing_class)["prompt"] for example in inputs]
+    #     images = [x["image"] for x in inputs]
+    #     if isinstance(self.processing_class, JanusProcessor):
+    #         images = [image.convert("RGB") for image in images]
+    #     prompt_inputs = self.processing_class(
+    #         text=prompts_text,
+    #         images=images,
+    #         return_tensors="pt",
+    #         padding=True,
+    #         padding_side="left",
+    #         add_special_tokens=False,
+    #     )
+    #     prompt_inputs = super()._prepare_inputs(prompt_inputs)
+
+    #     prompt_ids, prompt_mask = prompt_inputs["input_ids"], prompt_inputs["attention_mask"]
+    #     pixel_values = prompt_inputs["pixel_values"]
+        
+    #     # Determine if we're using a Janus model
+    #     unwrapped_model = self.accelerator.unwrap_model(model)
+    #     is_janus_model = isinstance(unwrapped_model, JanusForConditionalGeneration)
+        
+    #     if isinstance(self.processing_class, JanusProcessor):
+    #         image_grid_thw = None
+    #         # For Janus models, reshape pixel_values if needed
+    #         if is_janus_model and pixel_values.ndim == 5:
+    #             # Create a copy of prompt_inputs with reshaped pixel_values for generation
+    #             generation_inputs = prompt_inputs.copy()
+    #             generation_inputs["pixel_values"] = pixel_values.squeeze(1)
+    #         else:
+    #             generation_inputs = prompt_inputs
+    #     else:
+    #         image_grid_thw = prompt_inputs["image_grid_thw"]
+    #         generation_inputs = prompt_inputs
+        
+    #     if self.max_prompt_length is not None:
+    #         prompt_ids = prompt_ids[:, -self.max_prompt_length :]
+    #         prompt_mask = prompt_mask[:, -self.max_prompt_length :]
+
+    #     # Generate completions
+    #     with unwrap_model_for_generation(model, self.accelerator) as unwrapped_model:
+    #         prompt_completion_ids = unwrapped_model.generate(**generation_inputs, generation_config=self.generation_config)
+
+    #         prompt_length = prompt_ids.size(1)
+    #         prompt_ids = prompt_completion_ids[:, :prompt_length]
+    #         completion_ids = prompt_completion_ids[:, prompt_length:]
+    #         prompt_mask = prompt_mask.repeat_interleave(self.num_generations, dim=0)
+
+    #     # Mask everything after the first EOS token
+    #     is_eos = completion_ids == self.processing_class.eos_token_id
+    #     device = self.accelerator.device
+    #     eos_idx = torch.full((is_eos.size(0),), is_eos.size(1), dtype=torch.long, device=device)
+    #     eos_idx[is_eos.any(dim=1)] = is_eos.int().argmax(dim=1)[is_eos.any(dim=1)]
+    #     sequence_indices = torch.arange(is_eos.size(1), device=device).expand(is_eos.size(0), -1)
+    #     completion_mask = (sequence_indices <= eos_idx.unsqueeze(1)).int()
+
+    #     # Concatenate prompt_mask with completion_mask for logit computation
+    #     attention_mask = torch.cat([prompt_mask, completion_mask], dim=1)  # (B*G, P+C) 
+        
+    #     # Handle pixel values appropriately based on model type
+    #     if isinstance(self.processing_class, JanusProcessor):
+    #         if is_janus_model:
+    #             # For Janus models with JanusProcessor, handle the 5D tensor
+    #             if pixel_values.ndim == 5:
+    #                 # Reshape to 4D
+    #                 processed_pixel_values = pixel_values.squeeze(1)
+    #                 # Repeat for num_generations
+    #                 processed_pixel_values = processed_pixel_values.repeat(self.num_generations, 1, 1, 1)
+    #             else:
+    #                 processed_pixel_values = pixel_values.repeat(self.num_generations, 1, 1, 1)
+    #         else:
+    #             # For non-Janus models with JanusProcessor (unusual case)
+    #             processed_pixel_values = pixel_values.repeat(self.num_generations, 1, 1, 1, 1)
+            
+    #         image_grid_thw = None
+    #     else:
+    #         # For non-Janus processors
+    #         processed_pixel_values = pixel_values.repeat(self.num_generations, 1)
+    #         if image_grid_thw is not None:
+    #             image_grid_thw = image_grid_thw.repeat_interleave(self.num_generations, dim=0)
+
+    #     # Get log probabilities
+    #     per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
+    #     # Get rid of the prompt (-1 because of the shift done in get_per_token_logps)
+    #     per_token_logps = per_token_logps[:, prompt_length - 1 :]
+
+    #     with torch.inference_mode():
+    #         if self.ref_model is not None:
+    #             ref_per_token_logps = self._get_per_token_logps(self.ref_model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
+    #         else:
+    #             with self.accelerator.unwrap_model(model).disable_adapter():
+    #                 ref_per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
+    #     ref_per_token_logps = ref_per_token_logps[:, prompt_length - 1 :]
+
+    #     # Rest of the function remains the same
+    #     # Compute the KL divergence between the model and the reference model
+    #     per_token_kl = torch.exp(ref_per_token_logps - per_token_logps) - (ref_per_token_logps - per_token_logps) - 1
+
+    #     # Decode the generated completions
+    #     completions = self.processing_class.batch_decode(completion_ids, skip_special_tokens=True)
+        
+    #     # Log completions to wandb if enabled
+    #     if is_wandb_available() and self.args.report_to and "wandb" in self.args.report_to:
+    #         if wandb.run is not None and self.state.global_step % 10 == 0:  # Log every 10 steps
+    #             completion_samples = []
+    #             for i in range(min(3, len(completions))):  # Log up to 3 samples
+    #                 if i < len(inputs) and "problem" in inputs[i]:
+    #                     problem = inputs[i]["problem"]
+    #                 else:
+    #                     problem = "N/A"
+                    
+    #                 completion_samples.append({
+    #                     "step": self.state.global_step,
+    #                     "problem": problem,
+    #                     "completion": completions[i],
+    #                     "has_think_tags": "<think>" in completions[i] and "</think>" in completions[i],
+    #                     "has_answer_tags": "<answer>" in completions[i] and "</answer>" in completions[i]
+    #                 })
+                
+    #             # Create a wandb Table
+    #             columns = ["step", "problem", "completion", "has_think_tags", "has_answer_tags"]
+    #             wandb_table = wandb.Table(columns=columns)
+                
+    #             for sample in completion_samples:
+    #                 wandb_table.add_data(
+    #                     sample["step"],
+    #                     sample["problem"],
+    #                     sample["completion"],
+    #                     sample["has_think_tags"],
+    #                     sample["has_answer_tags"]
+    #                 )
+                
+    #             wandb.log({"completion_samples": wandb_table}, step=self.state.global_step)
+        
+    #     if is_conversational(inputs[0]):
+    #         completions = [[{"role": "assistant", "content": completion}] for completion in completions]
+
+    #     # Compute the rewards
+    #     prompts = [prompt for prompt in prompts for _ in range(self.num_generations)]
+
+    #     rewards_per_func = torch.zeros(len(prompts), len(self.reward_funcs), device=device)
+    #     for i, (reward_func, reward_processing_class) in enumerate(
+    #         zip(self.reward_funcs, self.reward_processing_classes)
+    #     ):
+    #         if isinstance(reward_func, PreTrainedModel):
+    #             if is_conversational(inputs[0]):
+    #                 messages = [{"messages": p + c} for p, c in zip(prompts, completions)]
+    #                 texts = [apply_chat_template(x, reward_processing_class)["text"] for x in messages]
+    #             else:
+    #                 texts = [p + c for p, c in zip(prompts, completions)]
+    #             reward_inputs = reward_processing_class(
+    #                 texts, return_tensors="pt", padding=True, padding_side="right", add_special_tokens=False
+    #             )
+    #             reward_inputs = super()._prepare_inputs(reward_inputs)
+    #             with torch.inference_mode():
+    #                 rewards_per_func[:, i] = reward_func(**reward_inputs).logits[:, 0]  # Shape (B*G,)
+    #         else:
+    #             # Repeat all input columns (but "prompt" and "completion") to match the number of generations
+    #             reward_kwargs = {key: [] for key in inputs[0].keys() if key not in ["prompt", "completion"]}
+    #             for key in reward_kwargs:
+    #                 for example in inputs:
+    #                     # Repeat each value in the column for `num_generations` times
+    #                     reward_kwargs[key].extend([example[key]] * self.num_generations)
+    #             output_reward_func = reward_func(prompts=prompts, completions=completions, **reward_kwargs)
+    #             rewards_per_func[:, i] = torch.tensor(output_reward_func, dtype=torch.float32, device=device)
+
+    #     # Sum the rewards from all reward functions
+    #     rewards = rewards_per_func.sum(dim=1)
+
+    #     # Compute grouped-wise rewards
+    #     mean_grouped_rewards = rewards.view(-1, self.num_generations).mean(dim=1)
+    #     std_grouped_rewards = rewards.view(-1, self.num_generations).std(dim=1)
+
+    #     # Normalize the rewards to compute the advantages
+    #     mean_grouped_rewards = mean_grouped_rewards.repeat_interleave(self.num_generations, dim=0)
+    #     std_grouped_rewards = std_grouped_rewards.repeat_interleave(self.num_generations, dim=0)
+    #     advantages = (rewards - mean_grouped_rewards) / (std_grouped_rewards + 1e-4)
+
+    #     # x - x.detach() allows for preserving gradients from x
+    #     per_token_loss = torch.exp(per_token_logps - per_token_logps.detach()) * advantages.unsqueeze(1)
+    #     per_token_loss = -(per_token_loss - self.beta * per_token_kl)
+    #     loss = ((per_token_loss * completion_mask).sum(dim=1) / completion_mask.sum(dim=1)).mean()
+
+    #     # Log the metrics
+    #     completion_length = self.accelerator.gather_for_metrics(completion_mask.sum(1)).float().mean().item()
+    #     self._metrics["completion_length"].append(completion_length)
+
+    #     reward_per_func = self.accelerator.gather_for_metrics(rewards_per_func).mean(0)
+    #     for i, reward_func in enumerate(self.reward_funcs):
+    #         if isinstance(reward_func, PreTrainedModel):
+    #             reward_func_name = reward_func.config._name_or_path.split("/")[-1]
+    #         else:
+    #             reward_func_name = reward_func.__name__
+    #         self._metrics[f"rewards/{reward_func_name}"].append(reward_per_func[i].item())
+
+    #     self._metrics["reward"].append(self.accelerator.gather_for_metrics(rewards).mean().item())
+
+    #     self._metrics["reward_std"].append(self.accelerator.gather_for_metrics(std_grouped_rewards).mean().item())
+
+    #     mean_kl = ((per_token_kl * completion_mask).sum(dim=1) / completion_mask.sum(dim=1)).mean()
+    #     self._metrics["kl"].append(self.accelerator.gather_for_metrics(mean_kl).mean().item())
+
+    #     return loss
+
+
+    
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        # if return_outputs:
+        #     raise ValueError("The GRPOTrainer does not support returning outputs")
+
+        # device = self.accelerator.device
+        
+        # # Extract prompts and scoring criteria from inputs
+        # # Each item in inputs is a dictionary, and the values are lists
+        # prompts = [item.get("explicit_prompt", item.get("prompt", [""]))[0] for item in inputs]
+        # scene_scoring = [item.get("scene_scoring", "") for item in inputs]
+        # real_scoring = [item.get("real_scoring", "") for item in inputs]
+        
+        # # Process the input texts for text generation
+        # # For Janus processor, ensure text is a flat list of strings, not nested
+
+        # #TODO: FIRST LET"S DO GENERATE AN IMAGE
+        # processed_prompts = []
+        # # Generate images for all prompts
+        # generated_images_list = []
+        # decoded_images_list = []
+        # images_list = []
+
+        # for processed_prompt in processed_prompts:
+        #     # Prepare inputs
+        #     image_gen_inputs = self.processing_class(
+        #         text=processed_prompt,
+        #         generation_mode="image",
+        #         return_tensors="pt"
+        #     ).to(self.model.device)
+
+        #     try:
+        #         # Generate images
+        #         generated_images = self.model.generate(
+        #             **image_gen_inputs,
+        #             generation_mode="image",
+        #             do_sample=True,
+        #             use_cache=True
+        #         )
+        #         decoded_image = self.model.decode_image_tokens(generated_images)
+        #         images = self.processing_class.postprocess(
+        #             list(decoded_image.float()), 
+        #             return_tensors="PIL.Image.Image"
+        #         )
+                
+        #         # Save the images if flag is set
+        #         if self.args.save_images:
+        #             for i, image in enumerate(images["pixel_values"]):
+        #                 image.save(f"image_{processed_prompt}_{i}.png")
+                
+        #         # Store images
+        #         generated_images_list.append(generated_images)
+        #         decoded_images_list.append(decoded_image)
+        #         images_list.append(images)
+        #     except Exception as e:
+        #         print(f"Error generating images: {e}")
+        #         # Add empty placeholders
+        #         generated_images_list.append(None)
+        #         decoded_images_list.append(None)
+        #         images_list.append(None)
+
         if return_outputs:
             raise ValueError("The GRPOTrainer does not support returning outputs")
+        
+        device = self.accelerator.device
+        #TODO: FIRST LET"S DO GENERATE AN IMAGE
 
-        prompts = [x["prompt"] for x in inputs]
-        prompts_text = [maybe_apply_chat_template(example, self.processing_class)["prompt"] for example in inputs]
-        images = [x["image"] for x in inputs]
+        
+        # Debug input data
+        print(f"Number of input items: {len(inputs)}")
+        
+        # Extract prompts and scoring criteria from inputs
+        prompts = []
+        for item in inputs:
+            prompt_data = item.get("explicit_prompt", item.get("prompt", [""]))
+            if isinstance(prompt_data, list) and len(prompt_data) > 0:
+                # Handle list of message dictionaries
+                if isinstance(prompt_data[0], dict) and "content" in prompt_data[0]:
+                    # Extract text from message format
+                    content = prompt_data[0]["content"]
+                    if isinstance(content, list) and len(content) > 0:
+                        if isinstance(content[0], dict) and "text" in content[0]:
+                            prompts.append(content[0]["text"])
+                        else:
+                            prompts.append(str(content[0]))
+                    else:
+                        prompts.append(str(content))
+                else:
+                    prompts.append(str(prompt_data[0]))
+            else:
+                prompts.append(str(prompt_data))
+        
+        scene_scoring = [item.get("scene_scoring", "") for item in inputs]
+        real_scoring = [item.get("real_scoring", "") for item in inputs]
+        
+        print(f"First prompt: {prompts[0][:50]}..." if prompts else "No prompts found")
+        
+        # Step 1: Process prompts correctly for Janus
+        processed_prompts = []
+        for prompt in prompts:
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt}
+                    ]
+                }
+            ]
+            processed_prompt = self.processing_class.apply_chat_template(messages, add_generation_prompt=True)
+            processed_prompts.append(processed_prompt)
+        
+        print(f"Number of processed prompts: {len(processed_prompts)}")
+        print(f"First processed prompt: {processed_prompts[0][:50]}..." if processed_prompts else "No processed prompts")
+        
+        # Step 2: Generate images for each prompt
+        generated_images_list = []
+        decoded_images_list = []
+        images_list = []
+        
+        for i, processed_prompt in enumerate(processed_prompts):
+            print(f"Generating images for prompt {i}")
+            
+            # Prepare inputs for image generation
+            image_gen_inputs = self.processing_class(
+                text=processed_prompt,
+                generation_mode="image",
+                return_tensors="pt"
+            ).to(self.model.device)
+            
+            try:
+                # Generate images
+                print(f"Generating {self.num_generations} images")
+                generated_images = self.model.generate(
+                    **image_gen_inputs,
+                    generation_mode="image",
+                    do_sample=True,
+                    use_cache=True,
+                    num_return_sequences=self.num_generations
+                )
+                decoded_image = self.model.decode_image_tokens(generated_images)
+                images = self.processing_class.postprocess(
+                    list(decoded_image.float()), 
+                    return_tensors="PIL.Image.Image"
+                )
+                
+                # Save images if needed
+                if hasattr(self.args, 'save_images') and self.args.save_images:
+                    for j, image in enumerate(images["pixel_values"]):
+                        safe_prompt = "".join(c if c.isalnum() else "_" for c in prompt[:20])
+                        image.save(f"prompt_{i}_{safe_prompt}_{j}.png")
+                
+                # Store generated images
+                generated_images_list.append(generated_images)
+                decoded_images_list.append(decoded_image)
+                images_list.append(images)
+                
+                print(f"Generated {len(images['pixel_values'])} images for prompt {i}")
+                
+                # Log first image to wandb if enabled
+                if is_wandb_available() and self.args.report_to and "wandb" in self.args.report_to:
+                    if wandb.run is not None and len(images["pixel_values"]) > 0:
+                        # Log the first generated image for this prompt
+                        wandb.log({
+                            f"generated_image/prompt_{i}": wandb.Image(
+                                images["pixel_values"][0], 
+                                caption=f"Prompt: {prompt[:100]}..."
+                            )
+                        }, step=self.state.global_step)
+                
+            except Exception as e:
+                print(f"Error generating images for prompt {i}: {e}")
+                generated_images_list.append(None)
+                decoded_images_list.append(None)
+                images_list.append(None)
+
+
+        #TODO: NOW LET'S DO THE VQA
         if isinstance(self.processing_class, JanusProcessor):
-            images = [image.convert("RGB") for image in images]
-        prompt_inputs = self.processing_class(
-            text=prompts_text,
-            images=images,
-            return_tensors="pt",
-            padding=True,
-            padding_side="left",
-            add_special_tokens=False,
-        )
-        prompt_inputs = super()._prepare_inputs(prompt_inputs)
-
+            # For Janus models, we need to prepare text-only inputs
+            processed_inputs = self.processing_class(
+                text=prompts,
+                return_tensors="pt",
+                padding=True,
+                padding_side="left",
+                add_special_tokens=False,
+            )
+        else:
+            # For other models that might need images
+            processed_inputs = self.processing_class(
+                text=prompts,
+                return_tensors="pt",
+                padding=True,
+                padding_side="left",
+                add_special_tokens=False,
+            )
+        
+        print(f"Input processing complete, keys: {processed_inputs.keys()}")
+        
+        # Now prepare the processed inputs
+        prompt_inputs = super()._prepare_inputs(processed_inputs)
         prompt_ids, prompt_mask = prompt_inputs["input_ids"], prompt_inputs["attention_mask"]
-        pixel_values = prompt_inputs["pixel_values"]
+        pixel_values = prompt_inputs.get("pixel_values", None)
+        
+        # Debug shapes
+        print(f"prompt_ids shape: {prompt_ids.shape}")
+        if pixel_values is not None:
+            print(f"pixel_values shape: {pixel_values.shape}")
+
         
         # Determine if we're using a Janus model
         unwrapped_model = self.accelerator.unwrap_model(model)
         is_janus_model = isinstance(unwrapped_model, JanusForConditionalGeneration)
         
-        if isinstance(self.processing_class, JanusProcessor):
+        # Handle different model architectures appropriately
+        if isinstance(self.processing_class, JanusProcessor) and pixel_values is not None:
             image_grid_thw = None
-            # For Janus models, reshape pixel_values if needed
             if is_janus_model and pixel_values.ndim == 5:
-                # Create a copy of prompt_inputs with reshaped pixel_values for generation
                 generation_inputs = prompt_inputs.copy()
                 generation_inputs["pixel_values"] = pixel_values.squeeze(1)
             else:
                 generation_inputs = prompt_inputs
         else:
-            image_grid_thw = prompt_inputs["image_grid_thw"]
+            image_grid_thw = prompt_inputs.get("image_grid_thw", None)
             generation_inputs = prompt_inputs
         
         if self.max_prompt_length is not None:
-            prompt_ids = prompt_ids[:, -self.max_prompt_length :]
-            prompt_mask = prompt_mask[:, -self.max_prompt_length :]
+            prompt_ids = prompt_ids[:, -self.max_prompt_length:]
+            prompt_mask = prompt_mask[:, -self.max_prompt_length:]
 
-        # Generate completions
+        # Generate text completions
         with unwrap_model_for_generation(model, self.accelerator) as unwrapped_model:
             prompt_completion_ids = unwrapped_model.generate(**generation_inputs, generation_config=self.generation_config)
-
+            
             prompt_length = prompt_ids.size(1)
             prompt_ids = prompt_completion_ids[:, :prompt_length]
             completion_ids = prompt_completion_ids[:, prompt_length:]
             prompt_mask = prompt_mask.repeat_interleave(self.num_generations, dim=0)
-
+        
         # Mask everything after the first EOS token
         is_eos = completion_ids == self.processing_class.eos_token_id
-        device = self.accelerator.device
         eos_idx = torch.full((is_eos.size(0),), is_eos.size(1), dtype=torch.long, device=device)
         eos_idx[is_eos.any(dim=1)] = is_eos.int().argmax(dim=1)[is_eos.any(dim=1)]
         sequence_indices = torch.arange(is_eos.size(1), device=device).expand(is_eos.size(0), -1)
         completion_mask = (sequence_indices <= eos_idx.unsqueeze(1)).int()
-
-        # Concatenate prompt_mask with completion_mask for logit computation
-        attention_mask = torch.cat([prompt_mask, completion_mask], dim=1)  # (B*G, P+C) 
         
-        # Handle pixel values appropriately based on model type
-        if isinstance(self.processing_class, JanusProcessor):
-            if is_janus_model:
-                # For Janus models with JanusProcessor, handle the 5D tensor
-                if pixel_values.ndim == 5:
-                    # Reshape to 4D
-                    processed_pixel_values = pixel_values.squeeze(1)
-                    # Repeat for num_generations
-                    processed_pixel_values = processed_pixel_values.repeat(self.num_generations, 1, 1, 1)
+        # Concatenate masks
+        attention_mask = torch.cat([prompt_mask, completion_mask], dim=1)
+        
+        # Process pixel values based on model type
+        if pixel_values is not None:
+            if isinstance(self.processing_class, JanusProcessor):
+                if is_janus_model:
+                    if pixel_values.ndim == 5:
+                        processed_pixel_values = pixel_values.squeeze(1)
+                        processed_pixel_values = processed_pixel_values.repeat(self.num_generations, 1, 1, 1)
+                    else:
+                        processed_pixel_values = pixel_values.repeat(self.num_generations, 1, 1, 1)
                 else:
-                    processed_pixel_values = pixel_values.repeat(self.num_generations, 1, 1, 1)
+                    processed_pixel_values = pixel_values.repeat(self.num_generations, 1, 1, 1, 1)
+                image_grid_thw = None
             else:
-                # For non-Janus models with JanusProcessor (unusual case)
-                processed_pixel_values = pixel_values.repeat(self.num_generations, 1, 1, 1, 1)
-            
-            image_grid_thw = None
+                processed_pixel_values = pixel_values.repeat(self.num_generations, 1)
+                if image_grid_thw is not None:
+                    image_grid_thw = image_grid_thw.repeat_interleave(self.num_generations, dim=0)
         else:
-            # For non-Janus processors
-            processed_pixel_values = pixel_values.repeat(self.num_generations, 1)
-            if image_grid_thw is not None:
-                image_grid_thw = image_grid_thw.repeat_interleave(self.num_generations, dim=0)
-
-        # Get log probabilities
+            processed_pixel_values = None
+        
+        # Calculate log probabilities for GRPO
         per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
-        # Get rid of the prompt (-1 because of the shift done in get_per_token_logps)
-        per_token_logps = per_token_logps[:, prompt_length - 1 :]
-
+        per_token_logps = per_token_logps[:, prompt_length - 1:]
+        
+        # Get reference model log probabilities
         with torch.inference_mode():
             if self.ref_model is not None:
                 ref_per_token_logps = self._get_per_token_logps(self.ref_model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
             else:
                 with self.accelerator.unwrap_model(model).disable_adapter():
                     ref_per_token_logps = self._get_per_token_logps(model, prompt_completion_ids, attention_mask, processed_pixel_values, image_grid_thw)
-        ref_per_token_logps = ref_per_token_logps[:, prompt_length - 1 :]
-
-        # Rest of the function remains the same
-        # Compute the KL divergence between the model and the reference model
+        ref_per_token_logps = ref_per_token_logps[:, prompt_length - 1:]
+        
+        # Compute KL divergence for GRPO
         per_token_kl = torch.exp(ref_per_token_logps - per_token_logps) - (ref_per_token_logps - per_token_logps) - 1
-
-        # Decode the generated completions
+        
+        # Decode completions
         completions = self.processing_class.batch_decode(completion_ids, skip_special_tokens=True)
         
-        # Log completions to wandb if enabled
-        if is_wandb_available() and self.args.report_to and "wandb" in self.args.report_to:
-            if wandb.run is not None and self.state.global_step % 10 == 0:  # Log every 10 steps
-                completion_samples = []
-                for i in range(min(3, len(completions))):  # Log up to 3 samples
-                    if i < len(inputs) and "problem" in inputs[i]:
-                        problem = inputs[i]["problem"]
-                    else:
-                        problem = "N/A"
+        # Setup for Janus image generation and VQA
+        janus_model_id = "deepseek-community/Janus-Pro-1B"
+        janus_processor = JanusProcessor.from_pretrained(janus_model_id)
+        
+        # Determine dtype for Janus model
+        dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+        
+        # Initialize Janus model for image generation and VQA
+        janus_model = JanusForConditionalGeneration.from_pretrained(
+            janus_model_id,
+            torch_dtype=dtype,
+            device_map="auto",
+            trust_remote_code=True
+        )
+        
+        # Create output directory for generated images
+        output_dir = os.path.join(self.args.output_dir, "generated_images")
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Prepare for batch rewards
+        batch_rewards = []
+        num_images_per_completion = self.num_generations  # Number of images to generate per completion
+        
+        # For each completion, generate images and compute rewards
+        expanded_prompts = [prompt for prompt in processed_prompts for _ in range(self.num_generations)]
+        expanded_scene_scoring = [score for score in scene_scoring for _ in range(self.num_generations)]
+        expanded_real_scoring = [score for score in real_scoring for _ in range(self.num_generations)]
+        
+        # Generate and evaluate images for each completion
+        for i, (completion, scene_score, real_score) in enumerate(zip(completions, expanded_scene_scoring, expanded_real_scoring)):
+            total_score = 0
+            images_generated = 0
+            
+            try:
+                # Prepare input for image generation
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": completion}
+                        ]
+                    }
+                ]
+                
+                # Apply chat template
+                prompt = janus_processor.apply_chat_template(messages, add_generation_prompt=True)
+                
+                # Prepare inputs
+                image_gen_inputs = janus_processor(
+                    text=prompt,
+                    generation_mode="image",
+                    return_tensors="pt"
+                ).to(janus_model.device)
+                
+                # Generate images
+                with torch.inference_mode():
+                    outputs = janus_model.generate(
+                        **image_gen_inputs,
+                        generation_mode="image",
+                        do_sample=True,
+                        use_cache=True,
+                        num_return_sequences=self.num_generations
+                    )
                     
-                    completion_samples.append({
-                        "step": self.state.global_step,
-                        "problem": problem,
-                        "completion": completions[i],
-                        "has_think_tags": "<think>" in completions[i] and "</think>" in completions[i],
-                        "has_answer_tags": "<answer>" in completions[i] and "</answer>" in completions[i]
-                    })
-                
-                # Create a wandb Table
-                columns = ["step", "problem", "completion", "has_think_tags", "has_answer_tags"]
-                wandb_table = wandb.Table(columns=columns)
-                
-                for sample in completion_samples:
-                    wandb_table.add_data(
-                        sample["step"],
-                        sample["problem"],
-                        sample["completion"],
-                        sample["has_think_tags"],
-                        sample["has_answer_tags"]
+                    # Decode the generated image tokens
+                    decoded_image = janus_model.decode_image_tokens(outputs)
+                    
+                    # Convert to PIL images
+                    images = janus_processor.postprocess(
+                        list(decoded_image.float()), 
+                        return_tensors="PIL.Image.Image"
                     )
                 
-                wandb.log({"completion_samples": wandb_table}, step=self.state.global_step)
-        
-        if is_conversational(inputs[0]):
-            completions = [[{"role": "assistant", "content": completion}] for completion in completions]
-
-        # Compute the rewards
-        prompts = [prompt for prompt in prompts for _ in range(self.num_generations)]
-
-        rewards_per_func = torch.zeros(len(prompts), len(self.reward_funcs), device=device)
-        for i, (reward_func, reward_processing_class) in enumerate(
-            zip(self.reward_funcs, self.reward_processing_classes)
-        ):
-            if isinstance(reward_func, PreTrainedModel):
-                if is_conversational(inputs[0]):
-                    messages = [{"messages": p + c} for p, c in zip(prompts, completions)]
-                    texts = [apply_chat_template(x, reward_processing_class)["text"] for x in messages]
+                # For each generated image, perform VQA
+                for img_idx, image in enumerate(images["pixel_values"]):
+                    # Prepare VQA questions using the dataset's scoring criteria
+                    questions = []
+                    if scene_score:
+                        questions.append(f"Evaluate this image based on the following criteria:\n{scene_score}")
+                    if real_score:
+                        questions.append(f"Evaluate this image based on the following criteria:\n{real_score}")
+                    
+                    # Save the generated image
+                    safe_caption = "".join(c if c.isalnum() else "_" for c in completion[:30])
+                    image_filename = f"{safe_caption}_{i}_{img_idx}.png"
+                    image_path = os.path.join(output_dir, image_filename)
+                    image.save(image_path)
+                    
+                    # Log first image of each completion to wandb if enabled
+                    if img_idx == 0 and is_wandb_available() and self.args.report_to and "wandb" in self.args.report_to:
+                        if wandb.run is not None:
+                            wandb.log({
+                                f"janus_generated_image/completion_{i}": wandb.Image(
+                                    image, 
+                                    caption=f"Completion: {completion[:100]}..."
+                                )
+                            }, step=self.state.global_step)
+                    
+                    # Perform VQA for each question
+                    vqa_results = {}
+                    for question in questions:
+                        vqa_messages = [
+                            {
+                                "role": "user",
+                                "content": [
+                                    {"type": "image", "image": image},
+                                    {"type": "text", "text": question}
+                                ]
+                            }
+                        ]
+                        
+                        # Apply chat template for VQA
+                        vqa_inputs = janus_processor.apply_chat_template(
+                            vqa_messages,
+                            add_generation_prompt=True,
+                            generation_mode="text",
+                            tokenize=True,
+                            return_dict=True,
+                            return_tensors="pt"
+                        ).to(janus_model.device)
+                        
+                        # Generate VQA response
+                        with torch.inference_mode():
+                            vqa_outputs = janus_model.generate(
+                                **vqa_inputs,
+                                max_new_tokens=512,
+                                generation_mode="text",
+                                do_sample=False,
+                                num_beams=3,
+                            )
+                            
+                            # Decode answer
+                            raw_answer = janus_processor.decode(vqa_outputs[0], skip_special_tokens=True)
+                            
+                            # Clean answer
+                            if "ASSISTANT:" in raw_answer:
+                                answer = raw_answer.split("ASSISTANT:", 1)[1].strip()
+                            else:
+                                answer = raw_answer.strip()
+                            
+                            # Improve answer extraction with patterns
+                            answer_patterns = [
+                                "Answer:", "answer:", 
+                                "Score:", "score:", 
+                                "The reality score", "the reality score",
+                                "The scene score", "the scene score",
+                                "Result:", "result:"
+                            ]
+                            
+                            clean_answer = answer
+                            # Try to find answer patterns
+                            for pattern in answer_patterns:
+                                if pattern in answer:
+                                    clean_answer = answer.split(pattern, 1)[1].strip()
+                                    break
+                            
+                            # Try colon approach if needed
+                            if clean_answer == answer and ":" in answer:
+                                colon_parts = answer.split(":")
+                                last_part = colon_parts[-1].strip()
+                                if len(last_part) < 100 and not last_part.startswith("-"):
+                                    clean_answer = last_part
+                            
+                            # Look for point statements
+                            if len(clean_answer) > 100 and "point" in clean_answer.lower():
+                                lines = clean_answer.split("\n")
+                                for i in range(len(lines) - 1, -1, -1):
+                                    if "point" in lines[i].lower():
+                                        if len(lines[i]) < 30 and not lines[i].startswith("-"):
+                                            clean_answer = lines[i].strip()
+                                            break
+                            
+                            vqa_results[question] = clean_answer
+                    
+                    # Extract scores from answers
+                    image_score = 0
+                    for question, answer in vqa_results.items():
+                        score = 0
+                        if "points" in answer.lower() or "point" in answer.lower():
+                            import re
+                            matches = re.findall(r'(\d+)\s*points?', answer.lower())
+                            if matches:
+                                score = int(matches[0])
+                            else:
+                                numbers = re.findall(r'\b(\d+)\b', answer)
+                                if numbers:
+                                    score = int(numbers[0])
+                        
+                        image_score += score
+                    
+                    total_score += image_score
+                    images_generated += len(questions)  # Count a successful evaluation for each question
+                    
+                # Calculate average score
+                if images_generated > 0:
+                    avg_score = total_score / images_generated
+                    batch_rewards.append(float(avg_score))
                 else:
-                    texts = [p + c for p, c in zip(prompts, completions)]
-                reward_inputs = reward_processing_class(
-                    texts, return_tensors="pt", padding=True, padding_side="right", add_special_tokens=False
-                )
-                reward_inputs = super()._prepare_inputs(reward_inputs)
-                with torch.inference_mode():
-                    rewards_per_func[:, i] = reward_func(**reward_inputs).logits[:, 0]  # Shape (B*G,)
-            else:
-                # Repeat all input columns (but "prompt" and "completion") to match the number of generations
-                reward_kwargs = {key: [] for key in inputs[0].keys() if key not in ["prompt", "completion"]}
-                for key in reward_kwargs:
-                    for example in inputs:
-                        # Repeat each value in the column for `num_generations` times
-                        reward_kwargs[key].extend([example[key]] * self.num_generations)
-                output_reward_func = reward_func(prompts=prompts, completions=completions, **reward_kwargs)
-                rewards_per_func[:, i] = torch.tensor(output_reward_func, dtype=torch.float32, device=device)
-
-        # Sum the rewards from all reward functions
+                    batch_rewards.append(0.0)
+                    
+            except Exception as e:
+                print(f"Error in image generation/VQA for completion {i}: {str(e)}")
+                batch_rewards.append(0.0)
+        
+        # Convert rewards to tensor
+        rewards = torch.tensor(batch_rewards, dtype=torch.float32, device=device)
+        
+        # Create rewards per function format for compatibility
+        rewards_per_func = torch.zeros(len(rewards), 1, device=device)
+        rewards_per_func[:, 0] = rewards
+        
+        # Sum rewards from all functions (just our VQA function here)
         rewards = rewards_per_func.sum(dim=1)
-
-        # Compute grouped-wise rewards
+        
+        # Compute grouped-wise rewards for GRPO
         mean_grouped_rewards = rewards.view(-1, self.num_generations).mean(dim=1)
         std_grouped_rewards = rewards.view(-1, self.num_generations).std(dim=1)
-
-        # Normalize the rewards to compute the advantages
+        
+        # Normalize rewards to compute advantages
         mean_grouped_rewards = mean_grouped_rewards.repeat_interleave(self.num_generations, dim=0)
         std_grouped_rewards = std_grouped_rewards.repeat_interleave(self.num_generations, dim=0)
         advantages = (rewards - mean_grouped_rewards) / (std_grouped_rewards + 1e-4)
-
-        # x - x.detach() allows for preserving gradients from x
+        
+        # Compute the loss
         per_token_loss = torch.exp(per_token_logps - per_token_logps.detach()) * advantages.unsqueeze(1)
         per_token_loss = -(per_token_loss - self.beta * per_token_kl)
-        loss = ((per_token_loss * completion_mask).sum(dim=1) / completion_mask.sum(dim=1)).mean()
+        loss = ((per_token_loss * completion_mask).sum(dim=1) / completion_mask.sum(dim=1)).mean()      
 
-        # Log the metrics
         completion_length = self.accelerator.gather_for_metrics(completion_mask.sum(1)).float().mean().item()
         self._metrics["completion_length"].append(completion_length)
-
-        reward_per_func = self.accelerator.gather_for_metrics(rewards_per_func).mean(0)
-        for i, reward_func in enumerate(self.reward_funcs):
-            if isinstance(reward_func, PreTrainedModel):
-                reward_func_name = reward_func.config._name_or_path.split("/")[-1]
-            else:
-                reward_func_name = reward_func.__name__
-            self._metrics[f"rewards/{reward_func_name}"].append(reward_per_func[i].item())
-
         self._metrics["reward"].append(self.accelerator.gather_for_metrics(rewards).mean().item())
-
         self._metrics["reward_std"].append(self.accelerator.gather_for_metrics(std_grouped_rewards).mean().item())
-
         mean_kl = ((per_token_kl * completion_mask).sum(dim=1) / completion_mask.sum(dim=1)).mean()
         self._metrics["kl"].append(self.accelerator.gather_for_metrics(mean_kl).mean().item())
-
+        
         return loss
 
     def log(self, logs: dict[str, float], start_time: Optional[float] = None) -> None:
