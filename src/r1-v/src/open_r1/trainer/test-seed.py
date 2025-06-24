@@ -131,7 +131,7 @@ class JanusGRPOTrainer:
     
     def __init__(self, output_dir="./janus_grpo_results"):
         # Load Janus-Pro model and processor
-        model_id = "deepseek-community/Janus-Pro-1B"
+        model_id = "deepseek-community/Janus-Pro-7B"
         self.processor = JanusProcessor.from_pretrained(model_id)
         
         # Determine proper dtype for the device

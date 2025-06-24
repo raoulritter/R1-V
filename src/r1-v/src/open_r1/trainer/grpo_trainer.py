@@ -872,6 +872,46 @@ class Qwen2VLGRPOTrainer(Trainer):
             processed_prompt = self.processing_class.apply_chat_template(messages, add_generation_prompt=True)
             processed_prompts.append(processed_prompt)
         
+        # Step 1.5: Create evaluation prompts for text generation
+        evaluation_prompts = []
+        for i, (prompt, scene_score, real_score) in enumerate(zip(prompts, scene_scoring, real_scoring)):
+            # Combine the scoring criteria into evaluation questions
+            evaluation_questions = []
+            if scene_score:
+                evaluation_questions.append(f"Does this image match and adhere to: '{prompt}'? Use the following criteria: {scene_score}. Give a score from 0-10.")
+            if real_score:
+                evaluation_questions.append(f"Evaluate the realism of this image showing: '{prompt}'. Use the following criteria: {real_score}. Give a score from 0-10.")
+            
+            # If no scoring criteria, use a default evaluation question
+            if not evaluation_questions:
+                evaluation_questions.append(f"Does this image match and adhere to: '{prompt}'? Give a score from 0-10, where 0 means not at all and 10 means perfectly. Explain your reasoning.")
+            
+            # Combine all evaluation questions
+            combined_evaluation = " ".join(evaluation_questions)
+            evaluation_prompts.append(combined_evaluation)
+        
+        print(f"First evaluation prompt: {evaluation_prompts[0][:100]}..." if evaluation_prompts else "No evaluation prompts")
+        
+        # Step 1.5: Create evaluation prompts for text generation
+        evaluation_prompts = []
+        for i, (prompt, scene_score, real_score) in enumerate(zip(prompts, scene_scoring, real_scoring)):
+            # Combine the scoring criteria into evaluation questions
+            evaluation_questions = []
+            if scene_score:
+                evaluation_questions.append(f"Does this image match and adhere to: '{prompt}'? Use the following criteria: {scene_score}. Give a score from 0-10.")
+            if real_score:
+                evaluation_questions.append(f"Evaluate the realism of this image showing: '{prompt}'. Use the following criteria: {real_score}. Give a score from 0-10.")
+            
+            # If no scoring criteria, use a default evaluation question
+            if not evaluation_questions:
+                evaluation_questions.append(f"Does this image match and adhere to: '{prompt}'? Give a score from 0-10, where 0 means not at all and 10 means perfectly. Explain your reasoning.")
+            
+            # Combine all evaluation questions
+            combined_evaluation = " ".join(evaluation_questions)
+            evaluation_prompts.append(combined_evaluation)
+        
+        print(f"First evaluation prompt: {evaluation_prompts[0][:100]}..." if evaluation_prompts else "No evaluation prompts")
+        
         print(f"Number of processed prompts: {len(processed_prompts)}")
         print(f"First processed prompt: {processed_prompts[0][:50]}..." if processed_prompts else "No processed prompts")
         
@@ -939,18 +979,18 @@ class Qwen2VLGRPOTrainer(Trainer):
 
         #TODO: NOW LET'S DO THE VQA
         if isinstance(self.processing_class, JanusProcessor):
-            # For Janus models, we need to prepare text-only inputs
+            # For Janus models, we need to prepare text-only inputs using evaluation prompts
             processed_inputs = self.processing_class(
-                text=prompts,
+                text=evaluation_prompts,
                 return_tensors="pt",
                 padding=True,
                 padding_side="left",
                 add_special_tokens=False,
             )
         else:
-            # For other models that might need images
+            # For other models that might need images using evaluation prompts
             processed_inputs = self.processing_class(
-                text=prompts,
+                text=evaluation_prompts,
                 return_tensors="pt",
                 padding=True,
                 padding_side="left",
@@ -1046,6 +1086,12 @@ class Qwen2VLGRPOTrainer(Trainer):
         
         # Decode completions
         completions = self.processing_class.batch_decode(completion_ids, skip_special_tokens=True)
+        # import pdb; pdb.set_trace()
+        
+        # # Log completions for debugging
+        # print(f"Number of completions generated: {len(completions)}")
+        for i, completion in enumerate(completions[:3]):  # Log first 3 completions
+            print(f"Completion {i}: {completion[:100]}..." if len(completion) > 100 else f"Completion {i}: {completion}")
         
         # Setup for Janus image generation and VQA
         janus_model_id = "deepseek-community/Janus-Pro-1B"
