@@ -211,7 +211,9 @@ class Qwen2VLGRPOTrainerFixed(Qwen2VLGRPOTrainer):
                     
                     # Perform VQA evaluation
                     # vqa_question = f"Does this image match and adhere to: '{prompt}'? Give a score from 0-10, where 0 means not at all and 10 means perfectly. Explain your reasoning."
-                    vqa_question = f"Does this image match and adhere to: '{prompt}'? You MUST only give a score from 0-10. ONLY GIVE A SCORE, NO EXPLANATION."
+                    # vqa_question = f"Does this image match and adhere to: '{prompt}'? You MUST only give a score from 0-10. ONLY GIVE A SCORE, NO EXPLANATION."
+                    # vqa_question = f"Does this image match and adhere to: '{prompt}'? You MUST only give a score from 0-10. ONLY GIVE A SCORE, NO EXPLANATION."
+                    vqa_question = f"Score: How well does this image match ’{prompt}’ ? Scale 0-10. Answer with number only:"
                     
                     
                     # Format VQA messages
@@ -250,7 +252,7 @@ class Qwen2VLGRPOTrainerFixed(Qwen2VLGRPOTrainer):
                     
                     # Extract assistant's response
                     answer = raw_answer
-                    print(f"Raw answer: {raw_answer}")
+                    # print(f"Raw answer: {raw_answer}")
                     if "<|Assistant|>:" in raw_answer:
                         assistant_part = raw_answer.split("<|Assistant|>:", 1)[1]
                         if "<｜end▁of▁sentence｜>" in assistant_part:
@@ -270,7 +272,10 @@ class Qwen2VLGRPOTrainerFixed(Qwen2VLGRPOTrainer):
                     all_prompt_ids.append(prompt_ids)
                     all_completion_ids.append(completion_ids)
                     
-                    # Log first image per prompt to wandb
+                    # Log first image per prompt to wandb 
+
+                    #TODO: CHANGE THIS SO IT LOGS THE SAME PROMPT FOR ALL GENERATIONS. IN ORDER TO TRACK THE PROGRESS OF THE MODEL.
+                    #THERE IS A VALUE IN THE LOGGING OF THE IMAGES.
                     if gen_idx == 0 and is_wandb_available() and self.args.report_to and "wandb" in self.args.report_to:
                         if wandb.run is not None:
                             wandb.log({

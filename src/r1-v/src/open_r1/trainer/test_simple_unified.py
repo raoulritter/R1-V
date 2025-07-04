@@ -39,20 +39,22 @@ def main():
     parser = argparse.ArgumentParser(description="Simple unified GRPO pipeline")
     parser.add_argument("--dataset", type=str, default="BLIP3o/BLIP3o-60k", 
                         help="Dataset name")
-    parser.add_argument("--num_prompts", type=int, default=2, 
+    parser.add_argument("--num_prompts", type=int, default=None, 
                         help="Number of prompts to use")
-    parser.add_argument("--num_generations", type=int, default=3, 
+    parser.add_argument("--num_generations", type=int, default=8, 
                         help="Number of generations per prompt")
-    parser.add_argument("--max_steps", type=int, default=5, 
-                        help="Maximum training steps")
-    parser.add_argument("--output_dir", type=str, default="./unified_grpo_results", 
+    parser.add_argument("--max_epochs", type=int, default=10, 
+                        help="Number of epochs (full passes through dataset)")
+    parser.add_argument("--output_dir", type=str, default="./unified_grpo_results-4e-5lr", 
                         help="Output directory")
-    parser.add_argument("--learning_rate", type=float, default=5e-6,
+    parser.add_argument("--learning_rate", type=float, default=4e-5, #FROM PAPER
                         help="Learning rate")
     parser.add_argument("--beta", type=float, default=0.1,
                         help="KL penalty coefficient")
     parser.add_argument("--base_seed", type=int, default=42,
                         help="Base seed for reproducibility")
+    parser.add_argument("--batch_size", type=int, default=4, 
+                        help="Number of prompts to process in parallel")
     
     args = parser.parse_args()
     
@@ -60,11 +62,12 @@ def main():
     print(f"Dataset: {args.dataset}")
     print(f"Number of prompts: {args.num_prompts}")
     print(f"Generations per prompt: {args.num_generations}")
-    print(f"Max training steps: {args.max_steps}")
+    print(f"Max epochs: {args.max_epochs}")
     print(f"Output directory: {args.output_dir}")
     
     # Load model and processor
     model_id = "deepseek-community/Janus-Pro-1B"
+    # model_id = "deepseek-community/Janus-Pro-7B"
     print(f"\nLoading model: {model_id}")
     processor = JanusProcessor.from_pretrained(model_id)
     
@@ -98,6 +101,10 @@ def main():
     
     print(f"Selected {len(dataset)} prompts")
     
+    # Calculate steps properly
+    steps_per_epoch = (len(dataset) + args.batch_size - 1) // args.batch_size
+    total_steps = steps_per_epoch * args.max_epochs
+    
     # Format dataset for GRPO
     formatted_dataset = format_dataset_for_grpo(dataset, "text")
     
@@ -116,18 +123,18 @@ def main():
     
     grpo_config = GRPOConfig(
         output_dir=args.output_dir,
-        run_name="unified-grpo",
+        run_name=f"unified-grpo-1b-blip3o-{len(dataset)}prompts-{args.max_epochs}epochs-4e-5lr",
         beta=args.beta,
         num_generations=args.num_generations,
         max_prompt_length=512,
         max_completion_length=1024,  # Increased for image generation
         temperature=1.0,
-        max_steps=args.max_steps,
-        per_device_train_batch_size=1,
+        max_steps=total_steps,  # Use calculated total steps
+        per_device_train_batch_size=args.batch_size,  # Process multiple prompts in parallel
         gradient_accumulation_steps=1,
         learning_rate=args.learning_rate,
         logging_steps=1,
-        save_steps=100,
+        save_steps=len(dataset),  # Save after each epoch
         bf16=use_bf16,
         fp16=use_fp16,
         report_to="wandb",  # Disable wandb for testing
@@ -154,7 +161,8 @@ def main():
     print("2. Evaluate each image with VQA to get a score (0-10)")
     print("3. Use VQA scores as rewards for GRPO")
     print("4. Update the model to prefer higher-scoring generations")
-    print(f"\nImages will be saved to: {os.path.join(args.output_dir, 'generated_images')}")
+    print(f"\nWill process {len(dataset)} prompts for {args.max_epochs} epochs each")
+    print(f"Images will be saved to: {os.path.join(args.output_dir, 'generated_images')}")
     
     # Train
     trainer.train()
@@ -169,9 +177,10 @@ def main():
     # Print summary
     print("\n=== Summary ===")
     print(f"Total prompts processed: {len(dataset)}")
-    print(f"Images generated per prompt per step: {args.num_generations}")
-    print(f"Total training steps: {args.max_steps}")
-    print(f"Total images generated: {len(dataset) * args.num_generations * args.max_steps}")
+    print(f"Images generated per prompt per epoch: {args.num_generations}")
+    print(f"Total epochs: {args.max_epochs}")
+    print(f"Total training steps: {total_steps}")
+    print(f"Total images generated: {len(dataset) * args.num_generations * args.max_epochs}")
     print(f"\nCheck the generated images in: {os.path.join(args.output_dir, 'generated_images')}")
 
 
