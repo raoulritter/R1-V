@@ -226,7 +226,9 @@ class Qwen2VLGRPOTrainerOptimized(Qwen2VLGRPOTrainer):
         if not images:
             return []
         
-        vqa_question = f"Score: How well does this image match '{prompt}' ? Scale 0-10. Answer with number only:"
+        # vqa_question = f"Score: How well does this image match '{prompt}' ? Scale 0-10. Answer with number only:"
+        vqa_question = f"Score: Does this image PERFECTLY matches the prompt '{prompt}'. Only give a score of 10 if the image is EXACTLY what was requested with no errors or missing elements. Give 0 scores for partial matches or inaccuracies. Scale 0-10. Answer with number only:"
+
         rewards = []
         
         # Process VQA evaluations - we can't easily batch these due to different image sizes
